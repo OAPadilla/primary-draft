@@ -34,7 +34,7 @@ footer {
 	color: #FFFFFF;
 	padding: 20px 2rem 30px;
 	flex-direction: column;
-	width: 950px;
+	max-width: 950px;
 	margin: auto;
 }
 

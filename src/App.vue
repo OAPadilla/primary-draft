@@ -15,7 +15,8 @@ import Footer from "./components/Footer.vue";
 <style scoped>
 .content {
   flex:1;
-  width: 950px;
+  max-width: 950px;
   margin: 2rem auto;
+  padding: 0 2rem;
 }
 </style>
