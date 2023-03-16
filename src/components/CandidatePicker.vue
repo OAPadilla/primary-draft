@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 
-const numOfCandidates: number = 12;
+const numOfCandidates: number = 8;
 const defaultCandidateNames: string[] = ['Donald J. Trump', 'Ron DeSantis', 'Nikki Haley'];
 const defaultColors: string[] = [
-	'#FF2400',
-	'#FFD1DC', // light pink
-	'#87CEEB', 
-	'#D1B6E1', // light lavender
-	'#FFB347', // orange
-	'#00BFFF', // light blue
-	'#FED8B1', // light peach
-	'#5F4B8B', // dark lavender
-	'#F0C8C9', // light pinkish-red
-	'#FFDEAD', // light peachy-beige
-	'#CDB38B', // light yellowish-tan
-	'#FF6961'  // coral red
+	'#FFC8B4', // light peach
+	'#B5EAD7', // pastel teal
+	'#E8D6CB', // pale pink
+	'#C9E4CA', // pale green
+	'#FFE0C2', // light orange
+	'#C7CEEA', // pale lavender
+	'#D4E6F1', // light blue
+	'#E9D1D1', // light rose
 ];
 
 // Reactive object to keep track of the selected candidate's index
@@ -29,13 +25,13 @@ const state = reactive({
 		<!-- Custom candidate choices -->
 		<div v-for="item, idx in numOfCandidates" class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === idx }" @click="state.selectedCand = idx">
 			<div :class="`c-candidatePicker_choice item${idx}`">
-				<input type="text" :value="defaultCandidateNames[idx]" placeholder="Available Slot">
+				<input type="text" v-model="defaultCandidateNames[idx]" placeholder="Available Slot" :style="{'background-color': defaultColors[idx]}">
 			</div>
 		</div>
 
-		<!-- "Picker" choice: Interact with visualizations without candidate selected -->
+		<!-- "None" choice: To interact with visualizations without candidate selected -->
 		<div class="c-candidatePicker_choiceWrapper none" :class="{ selected: state.selectedCand === -1 }" @click="state.selectedCand = -1">
-			<div class="c-candidatePicker_choice">None</div>
+			<div class="c-candidatePicker_choice itemNone">None</div>
 		</div>
 	</div>
 </template>
@@ -51,30 +47,44 @@ const state = reactive({
 .c-candidatePicker_choiceWrapper {
 	width: 200px;
 	height: 40px;
-	margin: 5px;
+	margin: 6px;
 	border-radius: 20px;
+}
+
+.c-candidatePicker_choice {
+	width: 100%;
+	border: 3px solid #FFFFFF;
+	border-radius: 25px;
+}
+
+.c-candidatePicker_choice.itemNone {
+	padding: 8px 0;
+	text-align: center;
+	color: #FFFFFF;
+	background-color: #808080;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.selected .c-candidatePicker_choice {
+	border-color: #000000;
 }
 
 input {
-	padding: 10px;
-	border: 0;
-	background-color: #000000;
-	border-radius: 20px;
 	width: 180px;
+	padding: 10px;
+	color: black;
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	font-size: 16px;
+	font-weight: bold;
 	text-align: center;
-	outline: none;
-}
-
-.none .c-candidatePicker_choice {
-	padding-top: 9px;
-}
-
-.none {
-	color: #FFFFFF;
-	background-color: #000000;
+	border: 0;
 	border-radius: 20px;
-	text-align: center;
+	outline: none;
+	cursor: pointer;
+}
+
+input::placeholder {
+	font-weight: lighter;
 }
 </style>
