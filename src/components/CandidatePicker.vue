@@ -1,18 +1,11 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useCandidatesStore } from '../stores/candidates';
 
-const numOfCandidates: number = 8;
-const defaultCandidateNames: string[] = ['Donald J. Trump', 'Ron DeSantis', 'Nikki Haley'];
-const defaultColors: string[] = [
-	'#FFC8B4', // light peach
-	'#B5EAD7', // pastel teal
-	'#E8D6CB', // pale pink
-	'#C9E4CA', // pale green
-	'#FFE0C2', // light orange
-	'#C7CEEA', // pale lavender
-	'#D4E6F1', // light blue
-	'#E9D1D1', // light rose
-];
+const candidatesStore = useCandidatesStore();
+
+const { candidates } = storeToRefs(candidatesStore);
 
 // Reactive object to keep track of the selected candidate's index
 const state = reactive({
@@ -23,9 +16,9 @@ const state = reactive({
 <template>
 	<div class="c-candidatePicker">
 		<!-- Custom candidate choices -->
-		<div v-for="item, idx in numOfCandidates" class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === idx }" @click="state.selectedCand = idx">
+		<div v-for="candidate, idx in candidates" class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === idx }" @click="state.selectedCand = idx">
 			<div :class="`c-candidatePicker_choice item${idx}`">
-				<input type="text" v-model="defaultCandidateNames[idx]" placeholder="Available Slot" :style="{'background-color': defaultColors[idx]}">
+				<input type="text" v-model="candidate.name" placeholder="Available Slot" :style="{'background-color': candidate.color}">
 			</div>
 		</div>
 
