@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
+
 import { useCandidatesStore } from '../stores/candidates';
 
 const candidatesStore = useCandidatesStore();
 
 const { candidates } = storeToRefs(candidatesStore);
+
+const isEditMode: Ref<boolean> = ref(false);
 
 // Reactive object to keep track of the selected candidate's index
 const state = reactive({
@@ -14,17 +17,26 @@ const state = reactive({
 </script>
 
 <template>
-	<div class="c-candidatePicker">
+	<div class="c-candidatePicker" :class="{ isEditMode }">
 		<!-- Custom candidate choices -->
-		<div v-for="candidate, idx in candidates" class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === idx }" @click="state.selectedCand = idx">
-			<div :class="`c-candidatePicker_choice item${idx}`">
-				<input type="text" v-model="candidate.name" placeholder="Available Slot" :style="{'background-color': candidate.color}">
+		<div v-for="candidate, idx in candidates" class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === idx }" @click="state.selectedCand = isEditMode ? state.selectedCand : idx">
+			<div :class="`c-candidatePicker_choice item ${idx}`">
+				<input type="text" v-model="candidate.name" :placeholder="isEditMode ? '________' : 'Available Slot'" :style="{'background-color': candidate.color}" :readonly="!isEditMode">
 			</div>
 		</div>
 
-		<!-- "None" choice: To interact with visualizations without candidate selected -->
-		<div class="c-candidatePicker_choiceWrapper none" :class="{ selected: state.selectedCand === -1 }" @click="state.selectedCand = -1">
-			<div class="c-candidatePicker_choice itemNone">None</div>
+		<div class="c-candidatePicker_tools">
+			<div class="c-candidatePicker_edit"></div>
+
+			<!-- "None" choice: To interact with visualizations without candidate selected -->
+			<div class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === -1 }" @click="state.selectedCand = isEditMode ? state.selectedCand : -1">
+				<div class="c-candidatePicker_choice itemNone noneBtn">None</div>
+			</div>
+
+			<!-- Edit button: To change candidate names -->
+			<div class="c-candidatePicker_edit" @click="isEditMode = !isEditMode">
+				<div class="c-candidatePicker_choice itemNone editBtn">Edit</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -37,7 +49,7 @@ const state = reactive({
 	margin-bottom: 20px;
 }
 
-.c-candidatePicker_choiceWrapper {
+.c-candidatePicker_choiceWrapper, .c-candidatePicker_edit {
 	width: 200px;
 	height: 40px;
 	margin: 6px;
@@ -46,7 +58,7 @@ const state = reactive({
 
 .c-candidatePicker_choice {
 	width: 100%;
-	border: 3px solid #FFFFFF;
+	border: 4px solid #FFFFFF;
 	border-radius: 25px;
 }
 
@@ -63,10 +75,30 @@ const state = reactive({
 	border-color: #000000;
 }
 
+.c-candidatePicker_tools {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.c-candidatePicker_edit {
+	width: 50px;
+}
+
+.isEditMode .c-candidatePicker_choice.item, 
+.isEditMode .c-candidatePicker_choice.editBtn 
+{
+	border-color: #000000;
+}
+
+.isEditMode .c-candidatePicker_choice.noneBtn {
+	border-color: #FFFFFF;
+}
+
 input {
 	width: 180px;
 	padding: 10px;
-	color: black;
+	color: #000000;
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	font-weight: bold;
@@ -79,5 +111,9 @@ input {
 
 input::placeholder {
 	font-weight: lighter;
+}
+
+.isEditMode input {
+	color: #808080;
 }
 </style>
