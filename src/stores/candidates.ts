@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-interface ICandidate {
+export interface ICandidate {
   id: number,
   color: string,
   delegates: number,

@@ -4,12 +4,14 @@ import * as d3 from 'd3';
 import { storeToRefs } from 'pinia';
 
 import { useCandidatesStore, ICandidate } from '../stores/candidates';
+import { useStore } from '../stores/store';
 
 const candidatesStore = useCandidatesStore();
 const { candidates } = storeToRefs(candidatesStore);
+const mainStore = useStore();
+const { totalDelegates } = storeToRefs(mainStore);
 
 const className: string = 'c-delegateBar';
-const totalDelegates: number = 500;
 
 candidatesStore.$subscribe(() => {
 	updateBar(Array.from(candidates.value));
@@ -20,7 +22,7 @@ candidatesStore.$subscribe(() => {
  * 
  * @param d 
  */
-function sortData(d: ICandidate[]) {
+function sortData(d: ICandidate[]) { // TODO: Sort rects when needed / reset bar
 	d.sort((a: ICandidate, b: ICandidate) => {
 		return b.delegates - a.delegates;
 	});
@@ -36,7 +38,7 @@ function sortData(d: ICandidate[]) {
  */
 function processData(data: ICandidate[], totalDelegates: number) {
 	const percent = d3.scaleLinear().domain([0, totalDelegates]).range([0, 100]);
-	let cumulativeDelegates = 0; // Keeps track of how many delegates assigned as we iterate over data
+	let cumulativeDelegates: number = 0; // Keeps track of how many delegates assigned as we iterate over data
 
 	// Filter and format data for D3
 	const procData = data.map((d: ICandidate) => {
@@ -72,13 +74,13 @@ function processData(data: ICandidate[], totalDelegates: number) {
  * @param data
  */
 function updateBar(data: ICandidate[]) {
-	const componentSelector = '.' + className;
-	const currentWidth = parseInt(d3.select(componentSelector).style('width'), 10);
-	const procData = processData(data, totalDelegates);
-	const margin = {top: 0, right: 20, bottom: 0, left: 20};
+	const componentSelector: string = '.' + className;
+	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
+	const procData: Array<any> = processData(data, totalDelegates.value);
+	const margin: any = {top: 0, right: 20, bottom: 0, left: 20};
 
 	const xScale = d3.scaleLinear()
-		.domain([0, totalDelegates])
+		.domain([0, totalDelegates.value])
 		.range([0, currentWidth - margin.left - margin.right]);
 
 	procData.forEach((d: any) => {
@@ -86,13 +88,6 @@ function updateBar(data: ICandidate[]) {
 			.attr('width', xScale(d.delegates))
 			.attr('x', xScale(d.cumulative));
 	});
-}
-
-/**
- * Re-create bar chart with up-to-date store data
- */
-function resetBar() {
-	createBar(Array.from(candidates.value));
 }
 
 /**
@@ -106,7 +101,7 @@ function createBar(data: ICandidate[]) {
 	const currentWidth = parseInt(d3.select(componentSelector).style('width'), 10);
 	const height = 100;
 	const margin = {top: 0, right: 20, bottom: 0, left: 20};
-	const procData = processData(data, totalDelegates);
+	const procData = processData(data, totalDelegates.value);
 
 	// Remove SVG if exists
 	d3.select(componentSelector + ' svg').remove();
@@ -119,7 +114,7 @@ function createBar(data: ICandidate[]) {
 	
 	// Set up horizontal scale
 	const xScale = d3.scaleLinear()
-		.domain([0, totalDelegates])
+		.domain([0, totalDelegates.value])
 		.range([0, currentWidth - margin.left - margin.right]);
 
 	// Attach data
@@ -135,6 +130,13 @@ function createBar(data: ICandidate[]) {
 		.attr('height', height)
 		.attr('width', (d: any) => xScale(d.delegates))
 		.style('fill', (d: any) => d.color);
+}
+
+/**
+ * Re-create bar chart with up-to-date store data
+ */
+ function resetBar() {
+	createBar(Array.from(candidates.value));
 }
 
 onMounted(() => {
