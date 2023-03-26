@@ -18,11 +18,11 @@ candidatesStore.$subscribe(() => {
 });
 
 /**
- * Sorts candidate data in descending order of delegate amount
+ * Sorts candidate data in descending order by delegate amount
  * 
  * @param d 
  */
-function sortData(d: ICandidate[]) { // TODO: Sort rects when needed / reset bar
+function sortData(d: ICandidate[]) {
 	d.sort((a: ICandidate, b: ICandidate) => {
 		return b.delegates - a.delegates;
 	});
@@ -38,6 +38,7 @@ function sortData(d: ICandidate[]) { // TODO: Sort rects when needed / reset bar
  */
 function processData(data: ICandidate[], totalDelegates: number) {
 	const percent = d3.scaleLinear().domain([0, totalDelegates]).range([0, 100]);
+	sortData(data);
 	let cumulativeDelegates: number = 0; // Keeps track of how many delegates assigned as we iterate over data
 
 	// Filter and format data for D3
@@ -155,22 +156,7 @@ onMounted(() => {
 	margin-bottom: 20px;
 }
 
-/* rect {
-	animation: create-bar 1s ease-in-out forwards;
-} */
-
 rect {
 	transition: all 200ms ease-out;
 }
-
-/* @keyframes create-bar {
-	from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-} */
-
-
 </style>
