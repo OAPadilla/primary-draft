@@ -5,7 +5,6 @@ import { storeToRefs } from 'pinia';
 import { useCandidatesStore } from '../stores/candidates';
 
 const candidatesStore = useCandidatesStore();
-
 const { candidates } = storeToRefs(candidatesStore);
 
 const isEditMode: Ref<boolean> = ref(false);

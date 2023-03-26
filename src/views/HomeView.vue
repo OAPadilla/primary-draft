@@ -6,7 +6,6 @@ import NationalMap from "../components/NationalMap.vue";
 import RebalancerTool from "../components/RebalancerTool.vue";
 
 const partyName = ref('Republican Party');
-
 </script>
 
 <template>
