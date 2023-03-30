@@ -49,17 +49,18 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
 
 	// Filter and format data for D3
 	const procData: ICandidateBarChart[] = data.map((d: ICandidate) => {
-		cumulativeDelegates += d.delegates
+		const delegates = Math.max(d.delegates, 0);
+		cumulativeDelegates += delegates;
 	
 		return {
 			id: d.id,
-			delegates: d.delegates,
+			delegates: delegates,
 			color: d.color,
-			cumulative: cumulativeDelegates - d.delegates,
+			cumulative: cumulativeDelegates - delegates,
 			name: d.name,
-			percent: percent(d.delegates)
+			percent: percent(delegates)
 		}
-	}).filter((d: ICandidateBarChart) => d.delegates > 0)
+	});
 
 	// Empty/unallocated space
 	const leftoverDelegates: number = totalDelegates - cumulativeDelegates;
@@ -70,9 +71,9 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
 		cumulative: cumulativeDelegates,
 		name: 'Unallocated',
 		percent: percent(leftoverDelegates)
-	})
+	});
 
-	return procData
+	return procData;
 };
 
 /**
@@ -230,9 +231,9 @@ rect {
 	text-align: center;
 }
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
 	.c-delegateBarTooltip {
 		display: none;
 	}
-}
+} */
 </style>
