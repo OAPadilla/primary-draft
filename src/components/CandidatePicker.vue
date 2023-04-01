@@ -1,3 +1,50 @@
+
+<template>
+	<div 
+		class="c-candidatePicker" 
+		:class="{ isEditMode }"
+	>
+		<!-- Custom candidate choices -->
+		<div
+			v-for="candidate in candidates"
+			class="c-candidatePicker_choiceWrapper"
+			:class="{ selected: state.selectedCand === candidate.id }"
+			:key="candidate.id" 
+			@click="state.selectedCand = isEditMode ? state.selectedCand : candidate.id"
+		>
+			<div :class="`c-candidatePicker_choice item ${candidate.id}`">
+				<input
+					type="text" 
+					v-model="candidate.name" 
+					:placeholder="isEditMode ? '________' : 'Available Slot'" 
+					:style="{'background-color': candidate.color}" :readonly="!isEditMode"
+				>
+			</div>
+		</div>
+
+		<div class="c-candidatePicker_tools">
+			<div class="c-candidatePicker_edit"></div>
+
+			<!-- "None" choice: To interact with visualizations without candidate selected -->
+			<div
+				class="c-candidatePicker_choiceWrapper"
+				:class="{ selected: state.selectedCand === -1 }"
+				@click="state.selectedCand = isEditMode ? state.selectedCand : -1"
+			>
+				<div class="c-candidatePicker_choice itemNone noneBtn">None</div>
+			</div>
+
+			<!-- Edit button: To change candidate names -->
+			<div 
+				class="c-candidatePicker_edit" 
+				@click="isEditMode = !isEditMode"
+			>
+				<div class="c-candidatePicker_choice itemNone editBtn">Edit</div>
+			</div>
+		</div>
+	</div>
+</template>
+
 <script setup lang="ts">
 import { reactive, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -9,38 +56,13 @@ const { candidates } = storeToRefs(candidatesStore);
 
 const isEditMode: Ref<boolean> = ref(false);
 
-// Reactive object to keep track of the selected candidate's index
+// Reactive object to keep track of the selected candidate's id
 const state = reactive({
 	selectedCand: -1
 });
 </script>
 
-<template>
-	<div class="c-candidatePicker" :class="{ isEditMode }">
-		<!-- Custom candidate choices -->
-		<div v-for="candidate, idx in candidates" class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === idx }" @click="state.selectedCand = isEditMode ? state.selectedCand : idx">
-			<div :class="`c-candidatePicker_choice item ${idx}`">
-				<input type="text" v-model="candidate.name" :placeholder="isEditMode ? '________' : 'Available Slot'" :style="{'background-color': candidate.color}" :readonly="!isEditMode">
-			</div>
-		</div>
-
-		<div class="c-candidatePicker_tools">
-			<div class="c-candidatePicker_edit"></div>
-
-			<!-- "None" choice: To interact with visualizations without candidate selected -->
-			<div class="c-candidatePicker_choiceWrapper" :class="{ selected: state.selectedCand === -1 }" @click="state.selectedCand = isEditMode ? state.selectedCand : -1">
-				<div class="c-candidatePicker_choice itemNone noneBtn">None</div>
-			</div>
-
-			<!-- Edit button: To change candidate names -->
-			<div class="c-candidatePicker_edit" @click="isEditMode = !isEditMode">
-				<div class="c-candidatePicker_choice itemNone editBtn">Edit</div>
-			</div>
-		</div>
-	</div>
-</template>
-
-<style>
+<style scoped>
 .c-candidatePicker {
 	display: flex;
 	flex-wrap: wrap;

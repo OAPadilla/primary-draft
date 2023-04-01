@@ -18,7 +18,7 @@ import { RouterLink } from "vue-router";
 			
 			<!-- Copyright -->
 			<div class="c-footer_copyright">
-				<h4>© 2019-2023 Oscar Padilla</h4>
+				<h4>© 2023 Oscar Padilla</h4>
 			</div>
 		</div>
 	</footer>
