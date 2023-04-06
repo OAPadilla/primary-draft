@@ -1,5 +1,7 @@
-import { computed, ref } from 'vue';
-import { defineStore } from 'pinia';
+import { ref, watchEffect } from 'vue';
+import { defineStore, storeToRefs } from 'pinia';
+
+import { useCandidatesStore } from './candidates';
 
 type IAllocationType =
   | 'proportional' 
@@ -31,6 +33,9 @@ interface IState {
 }
 
 export const useUsStatesStore = defineStore('usStates', () => {
+  const candidatesStore = useCandidatesStore();
+  const { candidates } = storeToRefs(candidatesStore);
+
   // State (data)
 
   let usStates = ref<IState[]>([
@@ -60,6 +65,13 @@ export const useUsStatesStore = defineStore('usStates', () => {
       unallocatedDelegates: 36
     }
   ]);
+
+  watchEffect(() => {
+    // Update candidate total delegate count when a state's results changes
+    for (const candidate of candidates.value) {
+      candidate.delegates = getCandidateTotalDelegates(candidate.id);
+    }
+  })
 
   // Getters (computed values)
 
@@ -99,7 +111,22 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function getCandidateDelegates(candidateId: number, stateId: number) {
-    return this.usStates?.[stateId]?.results?.[candidateId]?.delegates || 0;
+    return usStates.value?.[stateId]?.results?.[candidateId]?.delegates || 0;
+  }
+
+  /**
+   * Get a candidate's total number of delegates for all states
+   * 
+   * @param candidateId 
+   */
+  function getCandidateTotalDelegates(candidateId: number) {
+    let totalDelegates = 0;
+  
+    for (const state of usStates.value) { // TODO: Investigate reactivity here
+      totalDelegates += getCandidateDelegates(candidateId, state.id);
+    }
+  
+    return totalDelegates;
   }
 
   /**
@@ -111,7 +138,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     let sum = 0;
     const stateResults = this.usStates[stateId].results;
 
-    for (let candidates of stateResults) {
+    for (const candidates of stateResults) {
       sum += candidates.delegates;
     }
 
@@ -159,6 +186,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     usStates,
     fetchStatesData,
     getCandidateDelegates,
+    getCandidateTotalDelegates,
     getStateAllocatedDelegates,
     getStateTotalDelegates,
     getStateUnallocatedDelegates,

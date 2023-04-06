@@ -38,6 +38,7 @@ const sliderValue = ref(props.initialValue);
 
 watchEffect(() => {
   if (props.isUnallocatedItem) {
+    // make this logic in a separate function?
     const unallocatedDel = usStatesStore.getStateUnallocatedDelegates(props.stateId);
     const totalDel = usStatesStore.getStateTotalDelegates(props.stateId);
     sliderValue.value = (unallocatedDel / totalDel) * 100;
@@ -52,9 +53,26 @@ const formattedPercentage = computed(() => {
   return Number(sliderValue.value).toFixed(1);
 });
 
-function onInput() {
+const unallocatedPercentage = computed(() => {
+  const unallocatedDel = usStatesStore.getStateUnallocatedDelegates(props.stateId);
+  const totalDel = usStatesStore.getStateTotalDelegates(props.stateId);
+  return (unallocatedDel / totalDel) * 100;
+});
+
+const maxSliderValue = computed(() => {
+  return props.initialValue + unallocatedPercentage.value;
+});
+
+function onInput(event: any) {
   if (props.candidateId !== null) {
     // TODO: have to use allocation type rules
+
+    // Limit slider to max what is available to allocate
+    const value = parseInt(event.target.value);
+    if (value > maxSliderValue.value) {
+      sliderValue.value = maxSliderValue.value;
+    }
+
     usStatesStore.updateCandidateDelegates(props.candidateId, props.stateId, delegates.value);
   }
 };
