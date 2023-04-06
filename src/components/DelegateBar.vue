@@ -1,3 +1,8 @@
+<template>
+	<div :class="className"></div>
+	<div class="c-delegateBarTooltip"></div>
+</template>
+
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import * as d3 from 'd3';
@@ -18,7 +23,7 @@ const { totalDelegates } = storeToRefs(mainStore);
 
 const className: string = 'c-delegateBar';
 
-candidatesStore.$subscribe(() => {
+candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
 	updateBar(Array.from(candidates.value));
 });
 
@@ -113,7 +118,6 @@ function updateBar(data: ICandidate[]) {
  * @param data 
  */
 function createBar(data: ICandidate[]) {
-	console.log('createBar', data)
 	const componentSelector: string = '.' + className;
 	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const height: number = 90;
@@ -187,22 +191,17 @@ function createBar(data: ICandidate[]) {
 /**
  * Re-create bar chart with up-to-date store data
  */
- function resetBar() {
+function resetBar() {
 	createBar(Array.from(candidates.value));
 }
 
 onMounted(() => {
 	createBar(Array.from(candidates.value));
-	window.addEventListener('resize', resetBar);
+	window.addEventListener('resize', resetBar); // TODO: debounce and destroy
 });
 
 // Test - on resize, on store data change, mobile
 </script>
-
-<template>
-	<div :class="className"></div>
-	<div class="c-delegateBarTooltip"></div>
-</template>
   
 <style>
 .c-delegateBar {
@@ -219,6 +218,7 @@ rect {
 }
 
 .tooltip {
+	z-index: 999;
 	position: absolute;
 	width: 200px;
 	margin: 5px;

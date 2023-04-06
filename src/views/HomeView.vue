@@ -1,3 +1,13 @@
+<template>
+	<div class="c-homeView">
+		<h2>{{ partyName }} Presidential Primary Map</h2>
+		<CandidatePicker />
+		<NationalMap />
+		<DelegateBar />
+		<RebalancerTool />
+	</div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import CandidatePicker from "../components/CandidatePicker.vue";
@@ -8,16 +18,6 @@ import RebalancerTool from "../components/RebalancerTool.vue";
 const partyName = ref('Republican Party');
 </script>
 
-<template>
-	<div class="c-homeView">
-		<h2>{{ partyName }} Presidential Primary Map</h2>
-		<CandidatePicker />
-		<NationalMap />
-		<DelegateBar />
-		<RebalancerTool />
-	</div>
-</template>
-  
 <style>
 h2 {
 	text-align: center;

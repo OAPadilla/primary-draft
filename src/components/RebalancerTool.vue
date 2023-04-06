@@ -1,23 +1,21 @@
 <template>
 	<div class="c-rebalancerTool">
 		<div class="c-rebalancerTool_header">
-				<!-- <div class="c-rebalancerTool_stateDelegates">
-					{{ selectedState.totalDelegates }} delegates
-				</div> -->
-
 				<div class="c-rebalancerTool_stateName">
 					{{ selectedState.name }}
 				</div>
 
 				<div class="c-rebalancerTool_stateAllocationType">
-					{{ selectedState.totalDelegates }} delegates, {{ selectedState.allocation }}, {{ selectedState.electionType }}
+					{{ stateTotalDelegates }} delegates, {{ selectedState.allocation }}, {{ selectedState.electionType }}
 				</div>
 		</div>
 
 		<RebalancerToolItem
 			class="c-rebalancerTool_unallocated"
-			:allocatedDelegates="30"
-			candidateName="Unallocated" :stateId="selectedStateId" :candidateId="0"
+			:allocatedDelegates="stateUnallocatedDelegates"
+			candidateName="Unallocated"
+			:percentOfStateDel="(stateUnallocatedDelegates / stateTotalDelegates) * 100" 
+			:stateId="selectedStateId"
 		/>
 
 		<div class="c-rebalancerTool_list">
@@ -25,10 +23,10 @@
 				<RebalancerToolItem
 					v-if="candidate.name"
 					class="c-rebalancerTool_candidate"
-					:allocatedDelegates="getCandidateDelegates(candidate.id)"
+					:allocatedDelegates="getCandidateDelegates(candidate.id, selectedStateId)"
 					:candidateId="candidate.id"
 					:candidateName="candidate.name"
-					:percentOfStateDel="getCandidateDelegates(candidate.id) / stateTotalDelegates"
+					:percentOfStateDel="(getCandidateDelegates(candidate.id, selectedStateId) / stateTotalDelegates) * 100"
 					:stateId="selectedStateId"
 				/>
 			</template>
@@ -57,13 +55,16 @@ const selectedState = computed(() => {
 	return allUsStates.value[selectedStateId.value]; // TODO: Use Pinia action
 });
 
-const stateTotalDelegates = computed(() => {
+const stateTotalDelegates: Ref<number> = computed(() => {
 	return selectedState.value.totalDelegates;
 });
 
-function getCandidateDelegates(candidateId: number) {
-	// console.log(usStatesStore.getAllocatedDelegates(0, candidateId));
-	return allUsStates.value[selectedStateId.value]?.results[candidateId]?.delegates; // TODO: Use Pinia action
+const stateUnallocatedDelegates = computed(() => {
+	return usStatesStore.getStateUnallocatedDelegates(selectedState.value.id);
+});
+
+function getCandidateDelegates(candidateId: number, stateId: number) {
+	return this.usStatesStore.getCandidateDelegates(candidateId, stateId);
 };
 
 // Name sourced from candidates store, other state info from usStates store

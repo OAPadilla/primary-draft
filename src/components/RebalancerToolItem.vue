@@ -7,11 +7,9 @@
     <div class="c-rebalancerToolItem_sliderWrap">
       <RebalancerToolSlider 
         :candidateId="candidateId"
+        :initialValue="percentOfStateDel"
         :stateId="stateId"
       />
-      <div class="c-rebalancerToolItem_percent">
-        {{ percentageOfDelegates }}
-      </div>
       <div class="c-rebalancerToolItem_delegates">
         {{ allocatedDelegates }} del.
       </div>
@@ -20,22 +18,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref } from 'vue';
-
 import RebalancerToolSlider from "./RebalancerToolSlider.vue";
 
-const props = defineProps({ 
+defineProps({ 
   allocatedDelegates: { type: Number, default: 0 },
-  candidateId: { type: Number, required: true },
-  candidateName: { type: String, required: true },
+  candidateId: { type: Number, default: null },
+  candidateName: { type: String, default: '' },
   percentOfStateDel: { type: Number, default: 0 },
   stateId: { type: Number, required: true }
 });
-
-const percentageOfDelegates: Ref<string> = computed(() => {
-  return `${(Number(props.percentOfStateDel * 100).toFixed(1)).toString()}%`;
-});
-
 </script>
   
 <style scoped>
@@ -53,13 +44,13 @@ const percentageOfDelegates: Ref<string> = computed(() => {
   width: 100%;
 }
 
-.c-rebalancerToolItem_delegates, .c-rebalancerToolItem_percent {
+.c-rebalancerToolItem_delegates {
 	width: 5rem;
 	right: auto;
 	text-align: right;
 }
 
-@media (max-width: 512px) {
+@media (max-width: 700px) {
 	.c-rebalancerToolItem {
 		flex-direction: column;
 	}

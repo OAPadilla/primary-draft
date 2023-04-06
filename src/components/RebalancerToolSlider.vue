@@ -3,14 +3,20 @@
 		<input 
       type="range"
       v-model="sliderValue"
-      min="1" 
+      :disabled="candidateId === null"
+      min="0" 
       max="100"
+      step="0.1"
+      @input="onInput"
     >
+    <div class="c-rebalancerToolSlider_percent">
+      {{ formattedPercentage }}%
+    </div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, ref, Ref } from 'vue';
+import { computed, defineProps, onMounted, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from '../stores/candidates';
@@ -21,24 +27,31 @@ const usStatesStore = useUsStatesStore();
 const { candidates } = storeToRefs(candidatesStore);
 const { usStates } = storeToRefs(usStatesStore);
 
-const allocatedPercentage = ref(0);
-
 const props = defineProps({
   candidateId: { type: Number, default: null },
-  defaultValue: { type: String, default: '0' },
+  initialValue: { type: Number, default: 0 },
   stateId: { type: Number, required: true }
 });
 
-const initialValue = computed(() => {
-  return (Number(delegates) / usStates.value[props.stateId].totalDelegates * 100).toFixed(1);
-});
+const sliderValue = ref(props.initialValue);
 
 const delegates: Ref<number> = computed(() => {
-  return usStates.value[props.stateId].results[props.candidateId].delegates;
+  return Math.floor((sliderValue.value / 100) * usStatesStore.getStateTotalDelegates(props.stateId));
 });
 
-const sliderValue = computed(() => {
-  return initialValue;
+const formattedPercentage = computed(() => {
+  return Number(sliderValue.value).toFixed(1);
+});
+
+function onInput() {
+  if (props.candidateId !== null) {
+    // TODO: have to use allocation type rules
+    usStatesStore.updateCandidateDelegates(props.candidateId, props.stateId, delegates.value);
+  }
+};
+
+onMounted (() => {
+  console.log('initialValue', props.initialValue);
 });
 
 // Default value set to that of whats in store. Use state id to get state. Use candidate id to get value from results in state store.
@@ -55,6 +68,11 @@ const sliderValue = computed(() => {
 	width: 100%;
 	min-height: 25px;
 	align-items: center;
+}
+
+.c-rebalancerToolSlider_percent {
+	width: 5rem;
+	text-align: right;
 }
 
 .c-rebalancerToolSlider input {

@@ -24,7 +24,7 @@
 
 		<div class="c-candidatePicker_tools">
 			<div class="c-candidatePicker_edit"></div>
-
+			<!-- TODO: Make button components -->
 			<!-- "None" choice: To interact with visualizations without candidate selected -->
 			<div
 				class="c-candidatePicker_choiceWrapper"
@@ -79,7 +79,7 @@ const state = reactive({
 
 .c-candidatePicker_choice {
 	width: 100%;
-	border: 4px solid #FFFFFF;
+	border: 3px solid #FFFFFF;
 	border-radius: 25px;
 }
 

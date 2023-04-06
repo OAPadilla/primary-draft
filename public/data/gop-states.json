@@ -1,0 +1,77 @@
+[
+  {
+    "id": 0,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "AL",
+    "name": "alabama",
+    "results": [
+      {
+        "id": 0,
+        "delegates": 12
+      },
+      {
+        "id": 1,
+        "delegates": 7
+      },
+      {
+        "id": 2,
+        "delegates": 9
+      }
+    ],
+    "totalDelegates": 49,
+    "unallocatedDelegates": 21
+  },
+  {
+    "id": 1,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "closed caucus",
+    "initials": "AK",
+    "name": "alaska",
+    "results": [
+      {
+        "id": 0,
+        "delegates": 0
+      },
+      {
+        "id": 1,
+        "delegates": 0
+      },
+      {
+        "id": 2,
+        "delegates": 9
+      }
+    ],
+    "totalDelegates": 28,
+    "unallocatedDelegates": 19
+  },
+  {
+    "id": 2,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "AR",
+    "name": "arkansas",
+    "results": [
+      {
+        "id": 0,
+        "delegates": 5
+      },
+      {
+        "id": 1,
+        "delegates": 10
+      },
+      {
+        "id": 2,
+        "delegates": 9
+      }
+    ],
+    "totalDelegates": 40,
+    "unallocatedDelegates": 14
+  }
+]
