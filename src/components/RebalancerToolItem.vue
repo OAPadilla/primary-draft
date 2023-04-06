@@ -1,14 +1,15 @@
 <template>
 	<div class="c-rebalancerToolItem">
 		<div class="c-rebalancerToolItem_name">
-      {{ candidateName }}
+      {{ label }}
     </div>
 
     <div class="c-rebalancerToolItem_sliderWrap">
       <RebalancerToolSlider 
-        :candidateId="candidateId"
-        :initialValue="percentOfStateDel"
-        :stateId="stateId"
+        :candidate-id="candidateId"
+        :initial-value="percentOfStateDel"
+        :is-unallocated-item="isUnallocatedItem"
+        :state-id="stateId"
       />
       <div class="c-rebalancerToolItem_delegates">
         {{ allocatedDelegates }} del.
@@ -23,7 +24,8 @@ import RebalancerToolSlider from "./RebalancerToolSlider.vue";
 defineProps({ 
   allocatedDelegates: { type: Number, default: 0 },
   candidateId: { type: Number, default: null },
-  candidateName: { type: String, default: '' },
+  isUnallocatedItem: { type: Boolean, default: false },
+  label: { type: String, default: '' },
   percentOfStateDel: { type: Number, default: 0 },
   stateId: { type: Number, required: true }
 });

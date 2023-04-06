@@ -84,12 +84,12 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   function updateCandidateDelegates(candidateId: number, stateId: number, delegates: number) {
-    console.log(delegates);
-    // const diff = this.usStates[stateId].results[candidateId].delegate - delegates;
-    // this.usStates[stateId]
+    // Update unallocated delegate value to the diff between previous delegate count and new count
+    const diff = this.usStates[stateId].results[candidateId].delegate - delegates;
+    this.usStates[stateId].unallocatedDelegates = this.usStates[stateId].unallocatedDelegates + diff;
 
+    // Update candidate delegates
     this.usStates[stateId].results[candidateId].delegates = delegates;
-
   }
 
   /**

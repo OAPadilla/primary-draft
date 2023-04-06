@@ -1,9 +1,9 @@
 <template>
-	<div class="c-rebalancerToolSlider">
+	<div class="c-rebalancerToolSlider" :class="{ 'is-unallocated': isUnallocatedItem }">
 		<input 
       type="range"
       v-model="sliderValue"
-      :disabled="candidateId === null"
+      :disabled="isUnallocatedItem || candidateId === null"
       min="0" 
       max="100"
       step="0.1"
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, onMounted, ref, Ref } from 'vue';
+import { computed, defineProps, onMounted, ref, Ref, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from '../stores/candidates';
@@ -30,10 +30,19 @@ const { usStates } = storeToRefs(usStatesStore);
 const props = defineProps({
   candidateId: { type: Number, default: null },
   initialValue: { type: Number, default: 0 },
+  isUnallocatedItem: { type: Boolean, default: false },
   stateId: { type: Number, required: true }
 });
 
 const sliderValue = ref(props.initialValue);
+
+watchEffect(() => {
+  if (props.isUnallocatedItem) {
+    const unallocatedDel = usStatesStore.getStateUnallocatedDelegates(props.stateId);
+    const totalDel = usStatesStore.getStateTotalDelegates(props.stateId);
+    sliderValue.value = (unallocatedDel / totalDel) * 100;
+  }
+})
 
 const delegates: Ref<number> = computed(() => {
   return Math.floor((sliderValue.value / 100) * usStatesStore.getStateTotalDelegates(props.stateId));
@@ -107,4 +116,18 @@ onMounted (() => {
   background: black;
   cursor: pointer;
 }
+
+.c-rebalancerToolSlider.is-unallocated input:hover {
+  opacity: initial;
+}
+
+.c-rebalancerToolSlider.is-unallocated {
+  pointer-events: none;
+}
+
+.c-rebalancerToolSlider.is-unallocated input::-webkit-slider-thumb {
+  height: 5px;
+  cursor: default
+}
+
 </style>

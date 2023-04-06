@@ -12,10 +12,11 @@
 
 		<RebalancerToolItem
 			class="c-rebalancerTool_unallocated"
-			:allocatedDelegates="stateUnallocatedDelegates"
-			candidateName="Unallocated"
-			:percentOfStateDel="(stateUnallocatedDelegates / stateTotalDelegates) * 100" 
-			:stateId="selectedStateId"
+			:allocated-delegates="stateUnallocatedDelegates"
+			label="Unallocated"
+			:percent-of-state-del="(stateUnallocatedDelegates / stateTotalDelegates) * 100"
+			:is-unallocated-item="true"
+			:state-id="selectedStateId"
 		/>
 
 		<div class="c-rebalancerTool_list">
@@ -23,11 +24,11 @@
 				<RebalancerToolItem
 					v-if="candidate.name"
 					class="c-rebalancerTool_candidate"
-					:allocatedDelegates="getCandidateDelegates(candidate.id, selectedStateId)"
-					:candidateId="candidate.id"
-					:candidateName="candidate.name"
-					:percentOfStateDel="(getCandidateDelegates(candidate.id, selectedStateId) / stateTotalDelegates) * 100"
-					:stateId="selectedStateId"
+					:allocated-delegates="getCandidateDelegates(candidate.id, selectedStateId)"
+					:candidate-id="candidate.id"
+					:label="candidate.name"
+					:percent-of-state-del="(getCandidateDelegates(candidate.id, selectedStateId) / stateTotalDelegates) * 100"
+					:state-id="selectedStateId"
 				/>
 			</template>
 		</div>
