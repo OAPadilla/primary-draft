@@ -4,6 +4,7 @@ import { defineStore, storeToRefs } from 'pinia';
 import { useCandidatesStore } from './candidates';
 
 type IAllocationType =
+  | 'delegate selection'
   | 'proportional' 
   | 'winner-take-all'
   | 'winner-take-most'
@@ -11,6 +12,7 @@ type IAllocationType =
 type IElectionType =
   | 'closed caucus'
   | 'closed primary'
+  | 'modified primary'
   | 'open caucus'
   | 'open primary'
 
@@ -179,6 +181,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
       for (const usState of this.usStates) {
         this.usStates[usState.id].results = defaultResults.value;
+        this.usStates[usState.id].unallocatedDelegates = this.usStates[usState.id].totalDelegates;
       };
     } catch (error) {
       console.log(error);

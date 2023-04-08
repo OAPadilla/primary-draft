@@ -1,18 +1,6 @@
 [
   {
     "id": 0,
-    "allocation": "winner-take-most",
-    "color": "",
-    "electionDate": "2024-03-05",
-    "electionType": "open primary",
-    "initials": "AL",
-    "name": "alabama",
-    "results": [],
-    "totalDelegates": 49,
-    "unallocatedDelegates": 21
-  },
-  {
-    "id": 1,
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
@@ -20,8 +8,18 @@
     "initials": "AK",
     "name": "alaska",
     "results": [],
-    "totalDelegates": 28,
-    "unallocatedDelegates": 19
+    "totalDelegates": 28
+  },
+  {
+    "id": 1,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "AL",
+    "name": "alabama",
+    "results": [],
+    "totalDelegates": 49
   },
   {
     "id": 2,
@@ -32,7 +30,193 @@
     "initials": "AR",
     "name": "arkansas",
     "results": [],
-    "totalDelegates": 40,
-    "unallocatedDelegates": 14
+    "totalDelegates": 40
+  },
+  {
+    "id": 3,
+    "allocation": "delegate selection",
+    "color": "",
+    "electionDate": "2024-03-20",
+    "electionType": "open caucus",
+    "initials": "AS",
+    "name": "american samoa",
+    "results": [],
+    "totalDelegates": 9
+  },
+  {
+    "id": 4,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-03-19",
+    "electionType": "closed primary",
+    "initials": "AZ",
+    "name": "arizona",
+    "results": [],
+    "totalDelegates": 43
+  },
+  {
+    "id": 5,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "closed primary",
+    "initials": "CA",
+    "name": "california",
+    "results": [],
+    "totalDelegates": 169
+  },
+  {
+    "id": 6,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "modified primary",
+    "initials": "CO",
+    "name": "colorado",
+    "results": [],
+    "totalDelegates": 37
+  },
+  {
+    "id": 7,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-04-30",
+    "electionType": "closed primary",
+    "initials": "CT",
+    "name": "connecticut",
+    "results": [],
+    "totalDelegates": 28
+  },
+  {
+    "id": 8,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-06-04",
+    "electionType": "closed primary",
+    "initials": "DC",
+    "name": "district of columbia",
+    "results": [],
+    "totalDelegates": 19
+  },
+  {
+    "id": 9,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-04-23",
+    "electionType": "closed primary",
+    "initials": "DE",
+    "name": "delaware",
+    "results": [],
+    "totalDelegates": 16
+  },
+  {
+    "id": 10,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-03-19",
+    "electionType": "closed primary",
+    "initials": "FL",
+    "name": "florida",
+    "results": [],
+    "totalDelegates": 125
+  },
+  {
+    "id": 11,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-03-26",
+    "electionType": "modified primary",
+    "initials": "GA",
+    "name": "georgia",
+    "results": [],
+    "totalDelegates": 59
+  },
+  {
+    "id": 12,
+    "allocation": "delegate selection",
+    "color": "",
+    "electionDate": "2024-03-09",
+    "electionType": "closed caucus",
+    "initials": "GU",
+    "name": "guam",
+    "results": [],
+    "totalDelegates": 9
+  },
+  {
+    "id": 13,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-12",
+    "electionType": "closed caucus",
+    "initials": "HI",
+    "name": "hawaii",
+    "results": [],
+    "totalDelegates": 19
+  },
+  {
+    "id": 14,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-02-05",
+    "electionType": "closed caucus",
+    "initials": "IA",
+    "name": "iowa",
+    "results": [],
+    "totalDelegates": 40
+  },
+  {
+    "id": 15,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-05-21",
+    "electionType": "closed primary",
+    "initials": "ID",
+    "name": "idaho",
+    "results": [],
+    "totalDelegates": 32
+  },
+  {
+    "id": 16,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-03-19",
+    "electionType": "open primary",
+    "initials": "IL",
+    "name": "illinois",
+    "results": [],
+    "totalDelegates": 64
+  },
+  {
+    "id": 17,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-05-07",
+    "electionType": "open primary",
+    "initials": "IN",
+    "name": "indiana",
+    "results": [],
+    "totalDelegates": 58
+  },
+  {
+    "id": 18,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-03-09",
+    "electionType": "closed primary",
+    "initials": "KS",
+    "name": "kansas",
+    "results": [],
+    "totalDelegates": 39
+  },
+  {
+    "id": 19,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-05-21",
+    "electionType": "closed primary",
+    "initials": "KY",
+    "name": "kentucky",
+    "results": [],
+    "totalDelegates": 46
   }
 ]
