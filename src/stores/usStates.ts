@@ -64,8 +64,14 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
   // Getters (computed values)
 
-  const defaultResults = computed(() => {
-    let defaultResults = [];
+
+  // Actions (methods)
+
+  /**
+   * Return the default/reset results for a state. All assigned 0 delegates.
+   */
+  function defaultResults(): ICandidateResult[] {
+    let defaultResults: ICandidateResult[] = [];
   
     for (let i = 0; i <= candidates.value.length; i++) {
       defaultResults.push({
@@ -75,9 +81,66 @@ export const useUsStatesStore = defineStore('usStates', () => {
     };
   
     return defaultResults;
-  });
+  }
 
-  // Actions (methods)
+  /**
+   * Get a candidate's number of delegates for a state
+   * 
+   * @param candidateId 
+   * @param stateId 
+   */
+  function getCandidateDelegates(candidateId: number, stateId: number) {
+    return usStates.value?.[stateId]?.results?.[candidateId]?.delegates || 0;
+  }
+
+  /**
+   * Get a candidate's total number of delegates for all states
+   * 
+   * @param candidateId 
+   */
+  function getCandidateTotalDelegates(candidateId: number): number {
+    let totalDelegates = 0;
+  
+    for (const state of usStates.value) { // TODO: Investigate reactivity here
+      totalDelegates += getCandidateDelegates(candidateId, state.id);
+    }
+  
+    return totalDelegates;
+  }
+
+  /**
+   * Get number of delegates allocated to a candidate in a state
+   * 
+   * @param stateId 
+   */
+  function getStateAllocatedDelegates(stateId: number): number {
+    let sum = 0;
+    const stateResults = this.usStates[stateId].results;
+
+    for (const candidates of stateResults) {
+      sum += candidates.delegates;
+    }
+
+    return sum;
+  }
+
+  /**
+   * Get a state's total delegates
+   * 
+   * @param stateId 
+   */
+  function getStateTotalDelegates(stateId: number): number {
+    return this.usStates[stateId].totalDelegates;
+  }
+
+  /**
+   * Get number of delegates not yet allocated to a candidate in a state
+   * 
+   * @param stateId 
+   */
+  function getStateUnallocatedDelegates(stateId: number): number {
+    return this.usStates[stateId].totalDelegates - this.getStateAllocatedDelegates(stateId);
+  }
 
   /**
    * Update a candidate's number of delegates for a state
@@ -96,70 +159,11 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
-   * Get a candidate's number of delegates for a state
-   * 
-   * @param candidateId 
-   * @param stateId 
-   */
-  function getCandidateDelegates(candidateId: number, stateId: number) {
-    return usStates.value?.[stateId]?.results?.[candidateId]?.delegates || 0;
-  }
-
-  /**
-   * Get a candidate's total number of delegates for all states
-   * 
-   * @param candidateId 
-   */
-  function getCandidateTotalDelegates(candidateId: number) {
-    let totalDelegates = 0;
-  
-    for (const state of usStates.value) { // TODO: Investigate reactivity here
-      totalDelegates += getCandidateDelegates(candidateId, state.id);
-    }
-  
-    return totalDelegates;
-  }
-
-  /**
-   * Get number of delegates allocated to a candidate in a state
-   * 
-   * @param stateId 
-   */
-  function getStateAllocatedDelegates(stateId: number) {
-    let sum = 0;
-    const stateResults = this.usStates[stateId].results;
-
-    for (const candidates of stateResults) {
-      sum += candidates.delegates;
-    }
-
-    return sum;
-  }
-
-  /**
-   * Get a state's total delegates
-   * 
-   * @param stateId 
-   */
-  function getStateTotalDelegates(stateId: number) {
-    return this.usStates[stateId].totalDelegates;
-  }
-
-  /**
-   * Get number of delegates not yet allocated to a candidate in a state
-   * 
-   * @param stateId 
-   */
-  function getStateUnallocatedDelegates(stateId: number) {
-    return this.usStates[stateId].totalDelegates - this.getStateAllocatedDelegates(stateId);
-  }
-
-  /**
    * Reset the results of all states
    */
   function resetAllResults() {
     for (const usState of this.usStates) {
-      this.usStates[usState.id].results = defaultResults.value;
+      this.usStates[usState.id].results = defaultResults();
     };
   };
 
@@ -169,7 +173,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function resetStateResults(stateId: number) {
-    this.usStates[stateId].results = defaultResults;
+    this.usStates[stateId].results = defaultResults();
   }
 
   /**
@@ -180,7 +184,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
       this.usStates = await fetch('/data/gop-states.json').then((response) => response.json());
 
       for (const usState of this.usStates) {
-        this.usStates[usState.id].results = defaultResults.value;
+        this.usStates[usState.id].results = defaultResults();
         this.usStates[usState.id].unallocatedDelegates = this.usStates[usState.id].totalDelegates;
       };
     } catch (error) {

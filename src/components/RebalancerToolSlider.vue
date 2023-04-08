@@ -7,6 +7,7 @@
       min="0" 
       max="100"
       step="0.1"
+      :style="{ 'background-color': candidateColor }"
       @input="onInput"
     >
     <div class="c-rebalancerToolSlider_percent">
@@ -16,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, onMounted, ref, Ref, watchEffect } from 'vue';
+import { computed, defineProps, ref, Ref, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from '../stores/candidates';
@@ -24,7 +25,6 @@ import { useUsStatesStore } from '../stores/usStates';
 
 const candidatesStore = useCandidatesStore();
 const usStatesStore = useUsStatesStore();
-const { candidates } = storeToRefs(candidatesStore);
 const { usStates } = storeToRefs(usStatesStore);
 
 const props = defineProps({
@@ -53,6 +53,14 @@ const formattedPercentage = computed(() => {
   return Number(sliderValue.value).toFixed(1);
 });
 
+const candidateColor = computed(() => {
+  if (props.candidateId == null) {
+    return null;
+  }
+
+  return candidatesStore.getCandidateColor(props.candidateId);
+});
+
 const unallocatedPercentage = computed(() => {
   const unallocatedDel = usStatesStore.getStateUnallocatedDelegates(props.stateId);
   const totalDel = usStatesStore.getStateTotalDelegates(props.stateId);
@@ -76,17 +84,6 @@ function onInput(event: any) {
     usStatesStore.updateCandidateDelegates(props.candidateId, props.stateId, delegates.value);
   }
 };
-
-onMounted (() => {
-  console.log('initialValue', props.initialValue);
-});
-
-// Default value set to that of whats in store. Use state id to get state. Use candidate id to get value from results in state store.
-// When slider moves, update the candidate delegate count in usState store. Formula is % of total delegates.
-// Add limitations on slider based on whats available for a state.
-// usStore should handle updating candidate store with new total delegate count.
-
-
 </script>
   
 <style scoped>
@@ -121,9 +118,9 @@ onMounted (() => {
 .c-rebalancerToolSlider input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 6px;
-  height: 16px;
-  background: black;
+  width: 5px;
+  height: 14px;
+  background: #000000;
   cursor: pointer;
 }
 
@@ -131,8 +128,12 @@ onMounted (() => {
 .c-rebalancerToolSlider input::-moz-range-thumb { 
   width: 6px;
   height: 16px;
-  background: black;
+  background: #000000;
   cursor: pointer;
+}
+
+.c-rebalancerToolSlider input::-webkit-slider-runnable-track {
+
 }
 
 .c-rebalancerToolSlider.is-unallocated input:hover {
