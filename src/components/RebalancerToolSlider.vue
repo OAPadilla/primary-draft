@@ -132,10 +132,6 @@ function onInput(event: any) {
   cursor: pointer;
 }
 
-.c-rebalancerToolSlider input::-webkit-slider-runnable-track {
-
-}
-
 .c-rebalancerToolSlider.is-unallocated input:hover {
   opacity: initial;
 }

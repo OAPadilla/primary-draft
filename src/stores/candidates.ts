@@ -9,7 +9,8 @@ export interface ICandidate {
 }
 
 export const useCandidatesStore = defineStore('candidates', () => {
-  // state / data
+  // State (data)
+
   const candidates = ref<ICandidate[]>([
     { id: 0, color: '#FFC8B4', delegates: 0, name: 'Donald J. Trump' }, // light peach
     { id: 1, color: '#B5EAD7', delegates: 0, name: 'Ron DeSantis' },    // pastel teal
@@ -21,5 +22,17 @@ export const useCandidatesStore = defineStore('candidates', () => {
     { id: 7, color: '#E9D1D1', delegates: 0, name: '' }                 // light rose
   ]);
 
-  return { candidates }
+  // Getters (computed values)
+
+
+  // Actions (methods)
+
+  function getCandidateColor(candidateId: number) {
+    return this.candidates[candidateId].color;
+  }
+
+  return { 
+    candidates,
+    getCandidateColor
+  }
 });
