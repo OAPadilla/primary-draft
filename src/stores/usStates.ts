@@ -1,4 +1,4 @@
-import { ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from './candidates';
@@ -43,26 +43,13 @@ export const useUsStatesStore = defineStore('usStates', () => {
       id: 0,
       allocation: 'proportional',
       color: '',
-      electionDate: '2020-03-03',
+      electionDate: '',
       electionType: 'open primary',
-      initials: 'AL',
-      name: 'alabama',
-      results: [
-        {
-          id: 0,
-          delegates: 10
-        },
-        {
-          id: 1,
-          delegates: 2
-        },
-        {
-          id: 2,
-          delegates: 6
-        }
-      ],
-      totalDelegates: 52,
-      unallocatedDelegates: 36
+      initials: '',
+      name: '',
+      results: [],
+      totalDelegates: 1,
+      unallocatedDelegates: 0
     }
   ]);
 
@@ -75,29 +62,31 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
   // Getters (computed values)
 
+  const defaultResults = computed(() => {
+    let defaultResults = [];
+  
+    for (let i = 0; i <= candidates.value.length; i++) {
+      defaultResults.push({
+        id: i,
+        delegates: 0
+      })
+    };
+  
+    return defaultResults;
+  });
 
   // Actions (methods)
 
-  function addDelegates(stateId: number, candidateId: number, delegates: number) {
-
-  }
-
-  function removeDelegates(stateId: number, candidateId: number, delegates: number) {
-
-  }
-
-  function countAllocatedDelegates() {
-
-  }
-
-  function updateCandidateTotal(candidateId: number) {
-    // increment over all states' results for candidate x
-    // This could be a watcher in candidates store
-  }
-
+  /**
+   * Update a candidate's number of delegates for a state
+   * 
+   * @param candidateId 
+   * @param stateId 
+   * @param delegates 
+   */
   function updateCandidateDelegates(candidateId: number, stateId: number, delegates: number) {
     // Update unallocated delegate value to the diff between previous delegate count and new count
-    const diff = this.usStates[stateId].results[candidateId].delegate - delegates;
+    const diff = this.usStates[stateId].results[candidateId].delegates - delegates;
     this.usStates[stateId].unallocatedDelegates = this.usStates[stateId].unallocatedDelegates + diff;
 
     // Update candidate delegates
@@ -164,23 +153,37 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
+   * Reset the results of all states
+   */
+  function resetAllResults() {
+    for (const usState of this.usStates) {
+      this.usStates[usState.id].results = defaultResults.value;
+    };
+  };
+
+  /**
+   * Reset the results of a state
    * 
+   * @param stateId 
+   */
+  function resetStateResults(stateId: number) {
+    this.usStates[stateId].results = defaultResults;
+  }
+
+  /**
+   * Fetch US state data
    */
   async function fetchStatesData() {
-    // usStates = [];
     try {
       this.usStates = await fetch('/data/gop-states.json').then((response) => response.json());
+
+      for (const usState of this.usStates) {
+        this.usStates[usState.id].results = defaultResults.value;
+      };
     } catch (error) {
       console.log(error);
     }
   }
-
-
-
-  // Update results for state
-
-  // When creating 
-  // We should update candidates store everytime we update a states results
 
   return { 
     usStates,

@@ -7,20 +7,7 @@
     "electionType": "open primary",
     "initials": "AL",
     "name": "alabama",
-    "results": [
-      {
-        "id": 0,
-        "delegates": 12
-      },
-      {
-        "id": 1,
-        "delegates": 7
-      },
-      {
-        "id": 2,
-        "delegates": 9
-      }
-    ],
+    "results": [],
     "totalDelegates": 49,
     "unallocatedDelegates": 21
   },
@@ -32,20 +19,7 @@
     "electionType": "closed caucus",
     "initials": "AK",
     "name": "alaska",
-    "results": [
-      {
-        "id": 0,
-        "delegates": 0
-      },
-      {
-        "id": 1,
-        "delegates": 0
-      },
-      {
-        "id": 2,
-        "delegates": 9
-      }
-    ],
+    "results": [],
     "totalDelegates": 28,
     "unallocatedDelegates": 19
   },
@@ -57,20 +31,7 @@
     "electionType": "open primary",
     "initials": "AR",
     "name": "arkansas",
-    "results": [
-      {
-        "id": 0,
-        "delegates": 5
-      },
-      {
-        "id": 1,
-        "delegates": 10
-      },
-      {
-        "id": 2,
-        "delegates": 9
-      }
-    ],
+    "results": [],
     "totalDelegates": 40,
     "unallocatedDelegates": 14
   }
