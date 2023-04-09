@@ -17,8 +17,8 @@ interface ICandidateBarChart extends ICandidate {
 }
 
 const candidatesStore = useCandidatesStore();
-const { candidates } = storeToRefs(candidatesStore);
 const mainStore = useStore();
+const { candidates } = storeToRefs(candidatesStore);
 const { totalDelegates } = storeToRefs(mainStore);
 
 const className: string = 'c-delegateBar';

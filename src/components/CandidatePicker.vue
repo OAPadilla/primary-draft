@@ -8,9 +8,9 @@
 		<div
 			v-for="candidate in candidates"
 			class="c-candidatePicker_choiceWrapper"
-			:class="{ selected: state.selectedCand === candidate.id }"
+			:class="{ selected: selectedCandidateId === candidate.id }"
 			:key="candidate.id" 
-			@click="state.selectedCand = isEditMode ? state.selectedCand : candidate.id"
+			@click="onChoiceClick(candidate.id)"
 		>
 			<div :class="`c-candidatePicker_choice item ${candidate.id}`">
 				<input
@@ -28,8 +28,8 @@
 			<!-- "None" choice: To interact with visualizations without candidate selected -->
 			<div
 				class="c-candidatePicker_choiceWrapper"
-				:class="{ selected: state.selectedCand === -1 }"
-				@click="state.selectedCand = isEditMode ? state.selectedCand : -1"
+				:class="{ selected: selectedCandidateId === noneChoiceId }"
+				@click="onChoiceClick(noneChoiceId)"
 			>
 				<div class="c-candidatePicker_choice itemNone noneBtn">None</div>
 			</div>
@@ -46,20 +46,31 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, Ref } from 'vue';
+import { computed, reactive, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from '../stores/candidates';
+import { useStore } from '../stores/store';
 
 const candidatesStore = useCandidatesStore();
+const mainStore = useStore();
 const { candidates } = storeToRefs(candidatesStore);
 
 const isEditMode: Ref<boolean> = ref(false);
+const noneChoiceId = -1;
 
-// Reactive object to keep track of the selected candidate's id
-const state = reactive({
-	selectedCand: -1
+const selectedCandidateId: Ref<number> = computed(() => {
+	return mainStore.getSelectedCandidateId.value;
 });
+
+function setSelectedCandidateId(id: number) {
+	mainStore.setSelectedCandidateId(id);
+}
+
+function onChoiceClick(candidateId: number) {
+	const newId = isEditMode.value ? selectedCandidateId.value : candidateId;
+	setSelectedCandidateId(newId);
+}
 </script>
 
 <style scoped>
