@@ -1,5 +1,8 @@
 <template>
-	<div class="c-rebalancerTool">
+	<div 
+		class="c-rebalancerTool"
+		v-show="selectedStateId !== null"
+	>
 		<div class="c-rebalancerTool_header">
 				<div class="c-rebalancerTool_stateName">
 					{{ selectedState.name }}
@@ -14,7 +17,7 @@
 			class="c-rebalancerTool_unallocated"
 			:allocated-delegates="stateUnallocatedDelegates"
 			label="Unallocated"
-			:percent-of-state-del="(stateUnallocatedDelegates / stateTotalDelegates) * 100"
+			:percent-of-state-del="getUnallocatedPercentage()"
 			:is-unallocated-item="true"
 			:state-id="selectedStateId"
 		/>
@@ -24,10 +27,10 @@
 				<RebalancerToolItem
 					v-if="candidate.name"
 					class="c-rebalancerTool_candidate"
-					:allocated-delegates="getCandidateDelegates(candidate.id, selectedStateId)"
+					:allocated-delegates="getCandidateDelegates(candidate.id)"
 					:candidate-id="candidate.id"
 					:label="candidate.name"
-					:percent-of-state-del="(getCandidateDelegates(candidate.id, selectedStateId) / stateTotalDelegates) * 100"
+					:percent-of-state-del="getCandidatePercentage(candidate.id)"
 					:state-id="selectedStateId"
 				/>
 			</template>
@@ -36,46 +39,47 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, Ref } from 'vue';
+import { computed, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import RebalancerToolItem from "./RebalancerToolItem.vue";
 
 import { useCandidatesStore } from '../stores/candidates';
-import { useUsStatesStore } from '../stores/usStates';
+import { useStore } from '../stores/store';
+import { useUsStatesStore, IState } from '../stores/usStates';
 
 const candidatesStore = useCandidatesStore();
+const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
 const { candidates } = storeToRefs(candidatesStore);
-const { usStates } = storeToRefs(usStatesStore);
 
-const allUsStates = ref(usStates);
-const selectedStateId: Ref<number> = ref(0);
+const selectedStateId: Ref<number> = computed(() => {
+	return mainStore.getSelectedStateId.value;
+});
 
-const selectedState = computed(() => {
-	return allUsStates.value[selectedStateId.value]; // TODO: Use Pinia action
+const selectedState: Ref<IState> = computed(() => {
+	return usStatesStore.getStateById(selectedStateId.value);
 });
 
 const stateTotalDelegates: Ref<number> = computed(() => {
-	return selectedState.value.totalDelegates;
+	return usStatesStore.getStateTotalDelegates(selectedStateId.value);
 });
 
-const stateUnallocatedDelegates = computed(() => {
-	return usStatesStore.getStateUnallocatedDelegates(selectedState.value.id);
+const stateUnallocatedDelegates: Ref<number> = computed(() => {
+	return usStatesStore.getStateUnallocatedDelegates(selectedStateId.value);
 });
 
-function getCandidateDelegates(candidateId: number, stateId: number) {
-	return this.usStatesStore.getCandidateDelegates(candidateId, stateId);
+function getCandidateDelegates(candidateId: number): number {
+	return usStatesStore.getCandidateDelegates(candidateId, selectedStateId.value);
 };
 
-// Name sourced from candidates store, other state info from usStates store
-// Slider updates:
-// (1) state delegates allocated shown in 3rd column
-// (2) candidates store delegate count
-// (3) us state store delegate count for state
-// Unallocated slider logic
+function getCandidatePercentage(candidateId: number): number {
+	return usStatesStore.getCandidatePercentage(candidateId, selectedStateId.value);
+};
 
-// On hover or slider move, highlight row with candidate color
+function getUnallocatedPercentage() {
+	return usStatesStore.getStateUnallocatedPercentage(selectedStateId.value);
+};
 </script>
   
 <style scoped>

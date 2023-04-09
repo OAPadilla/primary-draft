@@ -1,4 +1,4 @@
-import { computed, ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from './candidates';
@@ -16,12 +16,13 @@ type IElectionType =
   | 'open caucus'
   | 'open primary'
 
-interface ICandidateResult {
+export interface ICandidateResult {
   id: number,
-  delegates: number
+  delegates: number,
+  percent: number
 }
 
-interface IState {
+export interface IState {
   id: number,
   allocation: IAllocationType,
   color: string,
@@ -31,7 +32,8 @@ interface IState {
   name: string,
   results: ICandidateResult[],
   totalDelegates: number,
-  unallocatedDelegates: number
+  unallocatedDelegates: number,
+  unallocatedPercentage: number
 }
 
 export const useUsStatesStore = defineStore('usStates', () => {
@@ -51,7 +53,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
       name: '',
       results: [],
       totalDelegates: 1,
-      unallocatedDelegates: 0
+      unallocatedDelegates: 0,
+      unallocatedPercentage: 0
     }
   ]);
 
@@ -76,7 +79,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
     for (let i = 0; i <= candidates.value.length; i++) {
       defaultResults.push({
         id: i,
-        delegates: 0
+        delegates: 0,
+        percent: 0
       })
     };
   
@@ -94,6 +98,16 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
+   * Get a candidate's percentage of the vote for a state
+   * 
+   * @param candidateId 
+   * @param stateId 
+   */
+   function getCandidatePercentage(candidateId: number, stateId: number) {
+    return getStateById(stateId).results[candidateId]?.percent || 0;
+  }
+
+  /**
    * Get a candidate's total number of delegates for all states
    * 
    * @param candidateId 
@@ -106,6 +120,10 @@ export const useUsStatesStore = defineStore('usStates', () => {
     }
   
     return totalDelegates;
+  }
+
+  function getStateById(stateId: number) {
+    return usStates.value[stateId];
   }
 
   /**
@@ -134,12 +152,21 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
-   * Get number of delegates not yet allocated to a candidate in a state
+   * Get number of delegates not yet allocated in a state
    * 
    * @param stateId 
    */
   function getStateUnallocatedDelegates(stateId: number): number {
     return this.usStates[stateId].totalDelegates - this.getStateAllocatedDelegates(stateId);
+  }
+
+  /**
+   * Get the percentage of the vote not yet allocated in a state
+   * 
+   * @param stateId 
+   */
+  function getStateUnallocatedPercentage(stateId: number): number {
+    return getStateById(stateId).unallocatedPercentage;
   }
 
   /**
@@ -151,11 +178,47 @@ export const useUsStatesStore = defineStore('usStates', () => {
    */
   function updateCandidateDelegates(candidateId: number, stateId: number, delegates: number) {
     // Update unallocated delegate value to the diff between previous delegate count and new count
-    const diff = this.usStates[stateId].results[candidateId].delegates - delegates;
-    this.usStates[stateId].unallocatedDelegates = this.usStates[stateId].unallocatedDelegates + diff;
+    const changeInDelegates = getCandidateDelegates(candidateId, stateId) - delegates;
+    setStateUnallocatedDelegates(stateId, getStateById(stateId).unallocatedDelegates + changeInDelegates);
 
     // Update candidate delegates
-    this.usStates[stateId].results[candidateId].delegates = delegates;
+    getStateById(stateId).results[candidateId].delegates = delegates;
+  }
+
+  /**
+   * Update a candidate's percentage of the vote for a state
+   * 
+   * @param candidateId 
+   * @param stateId 
+   * @param percent 
+   */
+  function updateCandidatePercentage(candidateId: number, stateId: number, percent: number) {
+    // Update unallocated percentage value to the diff between previous delegate count and new count
+    const changeInPercent = getStateById(stateId).results[candidateId].percent - percent;
+    setStateUnallocatedPercentage(stateId, Math.max(0,  getStateUnallocatedPercentage(stateId) + changeInPercent));
+
+    // Update candidate percentage of vote
+    getStateById(stateId).results[candidateId].percent = Math.max(0, Number(percent));
+  }
+
+  /**
+   * Set number of delegates not yet allocated in a state
+   * 
+   * @param stateId
+   * @param delegates 
+   */
+  function setStateUnallocatedDelegates(stateId: number, delegates: number) {
+    getStateById(stateId).unallocatedDelegates = delegates;
+  }
+
+  /**
+   * Set the percentage of the vote not yet allocated in a state
+   * 
+   * @param stateId 
+   * @param percent 
+   */
+  function setStateUnallocatedPercentage(stateId: number, percent: number) {
+    getStateById(stateId).unallocatedPercentage = Math.max(0, percent);
   }
 
   /**
@@ -186,6 +249,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
       for (const usState of this.usStates) {
         this.usStates[usState.id].results = defaultResults();
         this.usStates[usState.id].unallocatedDelegates = this.usStates[usState.id].totalDelegates;
+        this.usStates[usState.id].unallocatedPercentage = 100;
       };
     } catch (error) {
       console.log(error);
@@ -194,12 +258,16 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
   return { 
     usStates,
+    getStateById,
     fetchStatesData,
     getCandidateDelegates,
+    getCandidatePercentage,
     getCandidateTotalDelegates,
     getStateAllocatedDelegates,
     getStateTotalDelegates,
     getStateUnallocatedDelegates,
-    updateCandidateDelegates
+    getStateUnallocatedPercentage,
+    updateCandidateDelegates,
+    updateCandidatePercentage
   }
 });
