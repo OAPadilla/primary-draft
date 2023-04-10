@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from '../stores/candidates';
@@ -57,7 +57,7 @@ const mainStore = useStore();
 const { candidates } = storeToRefs(candidatesStore);
 
 const isEditMode: Ref<boolean> = ref(false);
-const noneChoiceId = -1;
+const noneChoiceId: number = -1;
 
 const selectedCandidateId: Ref<number> = computed(() => {
 	return mainStore.getSelectedCandidateId.value;
