@@ -438,5 +438,181 @@
     "name": "oklahoma",
     "results": [],
     "totalDelegates": 43
+  },
+  {
+    "id": 40,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-05-21",
+    "electionType": "closed primary",
+    "initials": "OR",
+    "name": "oregon",
+    "results": [],
+    "totalDelegates": 31
+  },
+  {
+    "id": 41,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-04-23",
+    "electionType": "closed primary",
+    "initials": "PA",
+    "name": "pennsylvania",
+    "results": [],
+    "totalDelegates": 67
+  },
+  {
+    "id": 42,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-10",
+    "electionType": "open primary",
+    "initials": "PR",
+    "name": "puerto rico",
+    "results": [],
+    "totalDelegates": 23
+  },
+  {
+    "id": 43,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-04-23",
+    "electionType": "modified primary",
+    "initials": "RI",
+    "name": "rhode island",
+    "results": [],
+    "totalDelegates": 19
+  },
+  {
+    "id": 44,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-02-01",
+    "electionType": "open primary",
+    "initials": "SC",
+    "name": "south carolina",
+    "results": [],
+    "totalDelegates": 50
+  },
+  {
+    "id": 45,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-06-04",
+    "electionType": "closed primary",
+    "initials": "SD",
+    "name": "south dekota",
+    "results": [],
+    "totalDelegates": 29
+  },
+  {
+    "id": 46,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "TN",
+    "name": "tennessee",
+    "results": [],
+    "totalDelegates": 58
+  },
+  {
+    "id": 47,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "TX",
+    "name": "texas",
+    "results": [],
+    "totalDelegates": 162
+  },
+  {
+    "id": 48,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "closed primary",
+    "initials": "UT",
+    "name": "utah",
+    "results": [],
+    "totalDelegates": 40
+  },
+  {
+    "id": 49,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "VA",
+    "name": "virginia",
+    "results": [],
+    "totalDelegates": 48
+  },
+  {
+    "id": 50,
+    "allocation": "delegate selection",
+    "color": "",
+    "electionDate": "2024-05-01",
+    "electionType": "closed caucus",
+    "initials": "VI",
+    "name": "virgin islands",
+    "results": [],
+    "totalDelegates": 9
+  },
+  {
+    "id": 51,
+    "allocation": "winner-take-most",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionType": "open primary",
+    "initials": "VT",
+    "name": "vermont",
+    "results": [],
+    "totalDelegates": 17
+  },
+  {
+    "id": 52,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-12",
+    "electionType": "closed primary",
+    "initials": "WA",
+    "name": "washington",
+    "results": [],
+    "totalDelegates": 43
+  },
+  {
+    "id": 53,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-04-02",
+    "electionType": "open primary",
+    "initials": "WI",
+    "name": "wisconsin",
+    "results": [],
+    "totalDelegates": 41
+  },
+  {
+    "id": 54,
+    "allocation": "winner-take-all",
+    "color": "",
+    "electionDate": "2024-05-07",
+    "electionType": "modified primary",
+    "initials": "WV",
+    "name": "west virginia",
+    "results": [],
+    "totalDelegates": 31
+  },
+  {
+    "id": 55,
+    "allocation": "delegate selection",
+    "color": "",
+    "electionDate": "2024-04-20",
+    "electionType": "closed caucus",
+    "initials": "WY",
+    "name": "wyoming",
+    "results": [],
+    "totalDelegates": 29
   }
 ]
