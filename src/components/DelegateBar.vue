@@ -209,7 +209,7 @@ onMounted(() => {
 	margin-bottom: 20px;
 }
 
-rect {
+.c-delegateBar rect {
 	transition: all 200ms ease-out;
 }
 
@@ -217,7 +217,7 @@ rect {
 	position: absolute;
 }
 
-.tooltip {
+.c-delegateBarTooltip .tooltip {
 	z-index: 999;
 	position: absolute;
 	width: 200px;

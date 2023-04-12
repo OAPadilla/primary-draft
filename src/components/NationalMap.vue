@@ -8,24 +8,80 @@
 	import * as topojson  from 'topojson-client';
 
 	import { useStore } from '../stores/store';
+	import { useUsStatesStore, IState } from '../stores/usStates';
 
 	const mainStore = useStore();
+	const usStatesStore = useUsStatesStore();
 
 	const usMapJSON = 'https://d3js.org/us-10m.v1.json';
 	const stateNamesTSV = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
 
-	function createStateRect(svg: any, x: number, y: number) {
+	const selectedStateId: Ref<number> = computed(() => {
+		return mainStore.getSelectedStateId.value;
+	});
+
+	function updateSelectedState(stateId: number) {
+		mainStore.setSelectedStateId(stateId);
+	};
+
+	/**
+	 * Get the store state id from provided state initials. 
+	 * TSV uses different state IDs, instead we can utilize state initials to help create unison data.
+	 * 
+	 * @param stateInitial
+	 */
+	function getStateIdFromInitials(stateInitial: string): number {
+		const usState = usStatesStore.getStateByInitial(stateInitial);
+		return usState?.id;
+	}
+
+	/**
+	 * Get and format TSV data tied to topojson geo data to workable state data inline with store
+	 * 
+	 * @param geoStateTSV 
+	 */
+	function getGeoStateData(geoStateTSV: any): Record<string, number> {
+		const geoStates: Record<string, number> = {};
+
+		geoStateTSV.forEach((state: Record<string, string>) => {
+			let key: string = state?.id;
+
+			if (key) {
+				if (state?.id?.length === 1) {
+					key = '0' + state.id;
+				}
+
+				if (state?.code) {
+					geoStates[key] = getStateIdFromInitials(state.code);
+				}
+			}
+		});
+
+		return geoStates;
+	}
+
+	/**
+	 * Create rect for easier/alternative access to clickable state/territories
+	 * 
+	 * @param svg 
+	 * @param x x-axis position
+	 * @param y y-axis position
+	 * @param stateId 
+	 */
+	function createStateRect(svg: any, x: number, y: number, stateId: number) {
 		svg.append('rect')
 			.attr('x', x)
 			.attr('y', y)
 			.attr('width', 40)
-			.attr('height', 40);
+			.attr('height', 40)
+			.on('click', () => {
+				updateSelectedState(stateId);
+			});
 	}
 
  	async function createMap() {
 		const currentWidth: number = parseInt(d3.select('.c-nationalMap').style('width'), 10);
 		const height: number = 600;
-		let stateName = '';
 
 		const svg = d3.select('.c-nationalMap')
 			.append('svg')
@@ -34,44 +90,28 @@
 			.attr('preserveAspectRatio', 'xMidYMid meet')
 			.attr('viewBox', `0 0 ${currentWidth} ${height}`);
 
-		// console.log(currentWidth);
-
 		const path: any = d3.geoPath();
 
 		const jsonData: any = await d3.json(usMapJSON);
 		const stateGeoFeatures: any = topojson.feature(jsonData, jsonData?.objects?.states).features;
 		
-		const names: Record<string, string> = {};
-		const stateNames = await d3.tsv(stateNamesTSV);
-		stateNames.forEach((state) => {
-			let key: string = state?.id || '';
-			if (key) {
-				if (state?.id?.length === 1) {
-					key = '0' + state.id;
-				}
-
-				if (state?.name) {
-					names[key] = state.name;
-				}
-			}
-		});
-
-		// console.log(names) 697 x 408
+		// Setup state ids to match state data from TSV
+		const geoStateNames = await d3.tsv(stateNamesTSV);
+		const geoStates: Record<string, number> = getGeoStateData(geoStateNames);
 
 		svg.append('g')
 			.attr('class', 'states')
-			// .attr('fill', '#bfbfbf')
 			.selectAll('path')
 			.data(stateGeoFeatures)
 			.enter()
 			.append('path')
 			.attr('d', path)
-			.on('mousedown', (event, d) => {
-				stateName = names[d.id];
-				console.log(d)
-			})
-			// .on("click", selectState);
-
+			.on("click", (event, d: any) => {
+				const stateId: number = geoStates[d.id];
+				if (stateId !== null) {
+					updateSelectedState(stateId);
+				}
+			});
 
 		svg.append('path')
 			.attr('class', 'state-borders')
@@ -80,28 +120,30 @@
 			})));
 
 		// Territories
-		createStateRect(svg, 525, 550); // American Samoa
-		createStateRect(svg, 575, 550); // Guam
-		createStateRect(svg, 625, 550); // Northern Marianas
-		createStateRect(svg, 675, 550); // Virgin Islands
+		createStateRect(svg, 525, 550, geoStates['60']); // American Samoa
+		createStateRect(svg, 575, 550, geoStates['66']); // Guam
+		createStateRect(svg, 625, 550, geoStates['69']); // Northern Marianas
+		createStateRect(svg, 675, 550, geoStates['78']); // Virgin Islands
 
 		// Small states
-		createStateRect(svg, 875, 225); // MA
-		createStateRect(svg, 875, 275); // RI
-		createStateRect(svg, 875, 325); // CT
-		createStateRect(svg, 875, 375); // NJ
-		createStateRect(svg, 875, 425); // DE
-		createStateRect(svg, 875, 475); // MD
-		createStateRect(svg, 875, 525); // DC
+		createStateRect(svg, 875, 225, geoStates['25']); // MA
+		createStateRect(svg, 875, 275, geoStates['44']); // RI
+		createStateRect(svg, 875, 325, geoStates['09']); // CT
+		createStateRect(svg, 875, 375, geoStates['34']); // NJ
+		createStateRect(svg, 875, 425, geoStates['10']); // DE
+		createStateRect(svg, 875, 475, geoStates['24']); // MD
+		createStateRect(svg, 875, 525, geoStates['11']); // DC
 	}
 
-	const selectedStateId: Ref<number> = computed(() => {
-		return mainStore.getSelectedStateId.value;
-	});
+	function resetMap() {
+
+	}
 
 	onMounted(() => {
 		console.log(selectedStateId.value);
 		createMap();
+
+		window.addEventListener('resize', resetMap); // TODO: debounce and destroy
 	});
 </script>
 
