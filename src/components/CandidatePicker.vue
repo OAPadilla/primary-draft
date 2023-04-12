@@ -98,7 +98,7 @@ function onChoiceClick(candidateId: number) {
 	padding: 8px 0;
 	text-align: center;
 	color: #FFFFFF;
-	background-color: #808080;
+	background-color: #bfbfbf;
 	font-weight: bold;
 	cursor: pointer;
 }

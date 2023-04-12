@@ -129,7 +129,7 @@ function createBar(data: ICandidate[]) {
 	d3.select('.c-delegateBarTooltip div').remove();
 
 	// Initialize new SVG area with height
-	const svg = d3.select(componentSelector)
+	d3.select(componentSelector)
 		.append('svg')
 		.attr('height', height)
 		.attr('width', currentWidth - margin.right);
@@ -140,7 +140,7 @@ function createBar(data: ICandidate[]) {
 		.range([0, currentWidth - margin.left - margin.right]);
 
 	// Attach/join an array of data
-	const join = d3.select('svg').selectAll('g')
+	const join = d3.select(componentSelector + ' svg').selectAll('g')
 		.data(procData)
 		.join('g')
 		.attr('transform', `translate(${margin.left},${margin.top})`);
