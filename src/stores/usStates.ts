@@ -126,6 +126,16 @@ export const useUsStatesStore = defineStore('usStates', () => {
     return usStates.value[stateId];
   }
 
+  function getStateByInitial(stateInitial: string) {
+    for (const usState of this.usStates) {
+      if (usState.initials === stateInitial) {
+        return usState;
+      }
+    };
+
+    return {};
+  }
+
   /**
    * Get number of delegates allocated to a candidate in a state
    * 
@@ -264,6 +274,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getCandidatePercentage,
     getCandidateTotalDelegates,
     getStateAllocatedDelegates,
+    getStateByInitial,
     getStateTotalDelegates,
     getStateUnallocatedDelegates,
     getStateUnallocatedPercentage,

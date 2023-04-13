@@ -1,5 +1,5 @@
 <template>
-	<div class="c-nationalMap"></div>
+	<div :class="className"></div>
 </template>
 
 <script setup lang="ts">
@@ -13,6 +13,7 @@
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
 
+	const className: string = 'c-nationalMap';
 	const usMapJSON = 'https://d3js.org/us-10m.v1.json';
 	const stateNamesTSV = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
 
@@ -79,24 +80,29 @@
 			});
 	}
 
- 	async function createMap() {
-		const currentWidth: number = parseInt(d3.select('.c-nationalMap').style('width'), 10);
-		const height: number = 600;
+	/**
+	 * Create map using D3 and TopoJSON
+	 */
+ 	function createMap(jsonData: any, geoStateNames: any) {
+		const componentSelector: string = '.' + className;
+		const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
+		
+		// Remove SVG elements for resets
+		d3.select(componentSelector + ' svg').remove();
+
+		d3.select('.c-nationalMap')
+			.attr('width', currentWidth);
 
 		const svg = d3.select('.c-nationalMap')
 			.append('svg')
-			.attr('height', height)
-			.attr('width', currentWidth)
 			.attr('preserveAspectRatio', 'xMidYMid meet')
-			.attr('viewBox', `0 0 ${currentWidth} ${height}`);
+			.attr('viewBox', `0 0 950 600`);
 
 		const path: any = d3.geoPath();
 
-		const jsonData: any = await d3.json(usMapJSON);
 		const stateGeoFeatures: any = topojson.feature(jsonData, jsonData?.objects?.states).features;
 		
 		// Setup state ids to match state data from TSV
-		const geoStateNames = await d3.tsv(stateNamesTSV);
 		const geoStates: Record<string, number> = getGeoStateData(geoStateNames);
 
 		svg.append('g')
@@ -135,15 +141,16 @@
 		createStateRect(svg, 875, 525, geoStates['11']); // DC
 	}
 
-	function resetMap() {
+	onMounted(async () => {
+		const jsonData: any = await d3.json(usMapJSON);
+		const geoStateNames: any = await d3.tsv(stateNamesTSV);
 
-	}
+		createMap(jsonData, geoStateNames);
 
-	onMounted(() => {
-		console.log(selectedStateId.value);
-		createMap();
-
-		window.addEventListener('resize', resetMap); // TODO: debounce and destroy
+		window.addEventListener('resize', () => {
+			console.log('resize reset')
+			createMap(jsonData, geoStateNames);
+		}); // TODO: debounce and destroy
 	});
 </script>
 
