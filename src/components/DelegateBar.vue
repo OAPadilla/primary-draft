@@ -90,12 +90,11 @@ function updateBar(data: ICandidate[]) {
 	const componentSelector: string = '.' + className;
 	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
-	const margin: any = {top: 0, right: 20, bottom: 0, left: 20};
 	const tooltip = d3.select('.c-delegateBarTooltip .tooltip');
 
 	const xScale = d3.scaleLinear()
 		.domain([0, totalDelegates.value])
-		.range([0, currentWidth - margin.left - margin.right]);
+		.range([0, currentWidth]);
 
 	const mousemove = function(event: any, d: ICandidateBarChart) {
 		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
@@ -121,7 +120,6 @@ function createBar(data: ICandidate[]) {
 	const componentSelector: string = '.' + className;
 	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const height: number = 90;
-	const margin: any = {top: 0, right: 20, bottom: 0, left: 20};
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
 
 	// Remove SVG and tooltip elements
@@ -131,19 +129,17 @@ function createBar(data: ICandidate[]) {
 	// Initialize new SVG area with height
 	d3.select(componentSelector)
 		.append('svg')
-		.attr('height', height)
-		.attr('width', currentWidth - margin.right);
+		.attr('height', height);
 	
 	// Set up horizontal scale
 	const xScale = d3.scaleLinear()
 		.domain([0, totalDelegates.value])
-		.range([0, currentWidth - margin.left - margin.right]);
+		.range([0, currentWidth]);
 
 	// Attach/join an array of data
 	const join = d3.select(componentSelector + ' svg').selectAll('g')
 		.data(procData)
-		.join('g')
-		.attr('transform', `translate(${margin.left},${margin.top})`);
+		.join('g');
 
 	// Create tooltip
 	const tooltip = d3.select('.c-delegateBarTooltip')
@@ -206,7 +202,12 @@ onMounted(() => {
 <style>
 .c-delegateBar {
 	display: flex;
+	width: 100%;
 	margin-bottom: 20px;
+}
+
+.c-delegateBar svg {
+	width: 100%;
 }
 
 .c-delegateBar rect {

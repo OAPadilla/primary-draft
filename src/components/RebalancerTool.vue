@@ -84,7 +84,7 @@ function getUnallocatedPercentage() {
   
 <style scoped>
 .c-rebalancerTool {
-	margin: 0 20px 20px;
+	margin-bottom: 20px;
 }
 
 .c-rebalancerTool_header {

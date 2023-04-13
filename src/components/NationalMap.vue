@@ -90,9 +90,6 @@
 		// Remove SVG elements for resets
 		d3.select(componentSelector + ' svg').remove();
 
-		d3.select('.c-nationalMap')
-			.attr('width', currentWidth);
-
 		const svg = d3.select('.c-nationalMap')
 			.append('svg')
 			.attr('preserveAspectRatio', 'xMidYMid meet')
@@ -148,7 +145,6 @@
 		createMap(jsonData, geoStateNames);
 
 		window.addEventListener('resize', () => {
-			console.log('resize reset')
 			createMap(jsonData, geoStateNames);
 		}); // TODO: debounce and destroy
 	});
@@ -157,6 +153,7 @@
 <style>
 .c-nationalMap {
 	display: flex;
+	width: 100%;
 	margin-bottom: 20px;
 }
 
