@@ -63,6 +63,12 @@ export const useUsStatesStore = defineStore('usStates', () => {
     for (const candidate of candidates.value) {
       candidate.delegates = getCandidateTotalDelegates(candidate.id);
     }
+
+    // Watch state results and update state color based on leading candidate
+    for (const usState of usStates.value) {
+      let leadingCandidateId = getStateLeadingCandidate(usState.id);
+      usState.color = candidatesStore.getCandidateColor(leadingCandidateId) || '';
+    }
   })
 
   // Getters (computed values)
@@ -103,7 +109,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param candidateId 
    * @param stateId 
    */
-   function getCandidatePercentage(candidateId: number, stateId: number) {
+  function getCandidatePercentage(candidateId: number, stateId: number) {
     return getStateById(stateId).results[candidateId]?.percent || 0;
   }
 
@@ -150,6 +156,44 @@ export const useUsStatesStore = defineStore('usStates', () => {
     }
 
     return sum;
+  }
+
+  /**
+   * Get leading candidate by percentage of vote in a state
+   * 
+   * @param stateId 
+   */
+  function getStateLeadingCandidate(stateId: number): number {
+    let leadingCandidateId: number = -1;
+    let leadingCandidatePercent = 0;
+
+    for (const candidate of getStateById(stateId).results) {
+      if (candidate.percent > leadingCandidatePercent) {
+        leadingCandidateId = candidate.id
+        leadingCandidatePercent = candidate.percent;
+      }
+    }
+
+    return leadingCandidateId;
+  }
+
+  /**
+   * Get candidate with lowest percentage results above 0%.
+   * 
+   * @param stateId
+   * @param excludeId Id of candidate to exclude from check
+   */
+  function _getStateLosingCandidate(stateId: number, excludeId: number): any {
+    const stateResults = usStates.value[stateId].results;
+    let leadingCandidate = { id: -1, percent: 100 };
+
+    for (const candidate of stateResults) {
+      if (candidate.percent <= leadingCandidate.percent && candidate.id !== excludeId && candidate.percent > 0) {
+        leadingCandidate = candidate;
+      }
+    }
+
+    return leadingCandidate;
   }
 
   /**
@@ -203,12 +247,85 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param percent 
    */
   function updateCandidatePercentage(candidateId: number, stateId: number, percent: number) {
-    // Update unallocated percentage value to the diff between previous delegate count and new count
-    const changeInPercent = getStateById(stateId).results[candidateId].percent - percent;
-    setStateUnallocatedPercentage(stateId, Math.max(0,  getStateUnallocatedPercentage(stateId) + changeInPercent));
+    if (candidateId === null || candidateId < 0) {
+      return;
+    }
 
-    // Update candidate percentage of vote
+    // Get amount of percentage we are removing/adding to candidate
+    let changeInPercent = percent - getCandidatePercentage(candidateId, stateId);
+    let unallocatedPerc = getStateUnallocatedPercentage(stateId);
+
+    // Update candidate percentage
     getStateById(stateId).results[candidateId].percent = Math.max(0, Number(percent));
+
+    // Remove percentages from unallocation pool and other candidates as needed
+    _unallocatePercentages(stateId, changeInPercent, candidateId);
+
+    // Allocate delegates based on percentage
+    // allocateStateDelegates(candidateId, stateId, percent);
+
+    // const del = Math.round((getCandidatePercentage(candidateId, stateId) / 100) * getStateTotalDelegates(stateId));
+    // updateCandidateDelegates(candidateId, stateId, del);
+  }
+
+  function allocateStateDelegates(candidateId: number, stateId: number, percent: number) {
+    const allocationType = getStateById(stateId).allocation;
+
+    switch(allocationType) {
+      case 'delegate selection':
+        break;
+      case 'proportional':
+        // Allocate proportionally to candidates who meet minimum threshold (varies by state). Add to data.
+        break;
+      case 'winner-take-all':
+        break;
+      case 'winner-take-most':
+        break;
+      default:
+        // last
+    }
+
+    // Proportional. Move into switch statement
+    const del = Math.round((percent / 100) * getStateTotalDelegates(stateId));
+    console.log(del);
+    updateCandidateDelegates(candidateId, stateId, del);
+  }
+
+  /**
+   * Handles unallocation of percentage points in cases where a candidate in a state was assigned a specific amount of percentage points
+   * 
+   * @param stateId 
+   * @param unallocateTarget 
+   * @param candidateId 
+   */
+  function _unallocatePercentages(stateId: number, unallocateTarget: number, candidateId: number) {
+    const unallocatedPool = getStateUnallocatedPercentage(stateId);
+
+    // If unallocated pool large enough, take from there
+    if (unallocateTarget <= unallocatedPool) {
+      setStateUnallocatedPercentage(stateId, unallocatedPool - unallocateTarget);
+    // Otherwise, take what you can and move on to taking candidate percentages
+    } else {
+      // Remove all of the unallocated pool from the leftover target
+      let leftoverTarget = unallocateTarget - unallocatedPool;
+      setStateUnallocatedPercentage(stateId, 0);
+
+      // Get candidate with lowest percent and remove from leftover target
+      const lowestCandidate = _getStateLosingCandidate(stateId, candidateId);
+
+      // If last place candidate can't cover leftover target, we remove all of their percentage
+      if (leftoverTarget > lowestCandidate.percent) {
+        leftoverTarget = leftoverTarget - lowestCandidate.percent;
+        getStateById(stateId).results[lowestCandidate.id].percent = 0;
+
+        // Then with a new, reduced target we can run this function recursively for the next lowest candidate
+        _unallocatePercentages(stateId, leftoverTarget, candidateId);
+      // Else we can assign whats left back to the last place candidate
+      } else {
+        leftoverTarget = lowestCandidate.percent - leftoverTarget;
+        getStateById(stateId).results[lowestCandidate.id].percent = leftoverTarget;
+      }
+    }
   }
 
   /**

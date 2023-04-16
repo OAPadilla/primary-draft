@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, onMounted, Ref } from 'vue';
+	import { computed, onMounted, watchEffect, Ref } from 'vue';
 	import * as d3 from 'd3';
 	import * as topojson  from 'topojson-client';
 
@@ -17,13 +17,17 @@
 	const usMapJSON = 'https://d3js.org/us-10m.v1.json';
 	const stateNamesTSV = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
 
-	const selectedStateId: Ref<number> = computed(() => {
-		return mainStore.getSelectedStateId.value;
+	const selectedCandidateId: Ref<number> = computed(() => {
+		return mainStore.getSelectedCandidateId.value;
 	});
 
-	function updateSelectedState(stateId: number) {
-		mainStore.setSelectedStateId(stateId);
-	};
+	watchEffect(() => {
+		// Watch US states store for changes in color based on results
+		for (const usState of usStatesStore.usStates) {
+			d3.select(`.state-${usState.id}`)
+				.style('fill', usState.color);
+    }
+	});
 
 	/**
 	 * Get the store state id from provided state initials. 
@@ -34,7 +38,7 @@
 	function getStateIdFromInitials(stateInitial: string): number {
 		const usState = usStatesStore.getStateByInitial(stateInitial);
 		return usState?.id;
-	}
+	};
 
 	/**
 	 * Get and format TSV data tied to topojson geo data to workable state data inline with store
@@ -59,6 +63,31 @@
 		});
 
 		return geoStates;
+	};
+
+	/**
+	 * Updated selected state identifier in store
+	 * 
+	 * @param stateId 
+	 */
+	function setSelectedState(stateId: number) {
+		mainStore.setSelectedStateId(stateId);
+	};
+
+	/**
+	 * Allocate percentage of vote to candidate in state results.
+	 * Default allocation is a majority of the vote (50.1%). If amount not available we deduct from lowest ranked candidate.
+	 * 
+	 * @param stateId 
+	 * @param percent
+	 */
+	function updateStateResult(stateId: number, percent: number = 50.1) {
+		usStatesStore.updateCandidatePercentage(selectedCandidateId.value, stateId, percent);
+	};
+
+	function onStateClick(stateId: number) {
+		setSelectedState(stateId);
+		updateStateResult(stateId);
 	}
 
 	/**
@@ -71,14 +100,15 @@
 	 */
 	function createStateRect(svg: any, x: number, y: number, stateId: number) {
 		svg.append('rect')
+			.attr('class', `state-${stateId}`)
 			.attr('x', x)
 			.attr('y', y)
 			.attr('width', 40)
 			.attr('height', 40)
 			.on('click', () => {
-				updateSelectedState(stateId);
+				onStateClick(stateId);
 			});
-	}
+	};
 
 	/**
 	 * Create map using D3 and TopoJSON
@@ -102,6 +132,7 @@
 		// Setup state ids to match state data from TSV
 		const geoStates: Record<string, number> = getGeoStateData(geoStateNames);
 
+		// Build paths for US states and add on click event
 		svg.append('g')
 			.attr('class', 'states')
 			.selectAll('path')
@@ -109,13 +140,15 @@
 			.enter()
 			.append('path')
 			.attr('d', path)
+			.attr('class', (d: any) => `state-${geoStates[d.id]}`)
 			.on("click", (event, d: any) => {
 				const stateId: number = geoStates[d.id];
 				if (stateId !== null) {
-					updateSelectedState(stateId);
+					onStateClick(stateId);
 				}
 			});
 
+		// Borders
 		svg.append('path')
 			.attr('class', 'state-borders')
 			.attr('d', path(topojson.mesh(jsonData, jsonData?.objects?.states, (a, b) => {
@@ -136,7 +169,7 @@
 		createStateRect(svg, 875, 425, geoStates['10']); // DE
 		createStateRect(svg, 875, 475, geoStates['24']); // MD
 		createStateRect(svg, 875, 525, geoStates['11']); // DC
-	}
+	};
 
 	onMounted(async () => {
 		const jsonData: any = await d3.json(usMapJSON);

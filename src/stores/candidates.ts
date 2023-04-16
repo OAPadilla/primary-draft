@@ -28,7 +28,9 @@ export const useCandidatesStore = defineStore('candidates', () => {
   // Actions (methods)
 
   function getCandidateColor(candidateId: number) {
-    return this.candidates[candidateId].color;
+    if (candidates.value[candidateId]) {
+      return candidates.value[candidateId].color;
+    }
   }
 
   return { 
