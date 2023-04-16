@@ -43,10 +43,6 @@ watchEffect(() => {
   }
 })
 
-const calculateDelegates: Ref<number> = computed(() => {
-  return Math.round((sliderValue.value / 100) * usStatesStore.getStateTotalDelegates(props.stateId));
-});
-
 const candidateColor = computed(() => {
   if (props.candidateId == null) {
     return null;
@@ -72,7 +68,6 @@ function onInput(event: any) {
       sliderValue.value = maxSliderValue.value;
     }
 
-    usStatesStore.updateCandidateDelegates(props.candidateId, props.stateId, calculateDelegates.value);
     usStatesStore.updateCandidatePercentage(props.candidateId, props.stateId, sliderValue.value);
   }
 };

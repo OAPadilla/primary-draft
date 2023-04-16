@@ -66,8 +66,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
     // Watch state results and update state color based on leading candidate
     for (const usState of usStates.value) {
-      let leadingCandidateId = getStateLeadingCandidate(usState.id);
-      usState.color = candidatesStore.getCandidateColor(leadingCandidateId) || '';
+      const leadingCandidate = _getStateLeadingCandidate(usState.id);
+      usState.color = candidatesStore.getCandidateColor(leadingCandidate.id) || '';
     }
   })
 
@@ -163,18 +163,16 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * 
    * @param stateId 
    */
-  function getStateLeadingCandidate(stateId: number): number {
-    let leadingCandidateId: number = -1;
-    let leadingCandidatePercent = 0;
+  function _getStateLeadingCandidate(stateId: number): ICandidateResult {
+    let leadingCandidate = { id: -1, percent: 0, delegates: 0 }
 
     for (const candidate of getStateById(stateId).results) {
-      if (candidate.percent > leadingCandidatePercent) {
-        leadingCandidateId = candidate.id
-        leadingCandidatePercent = candidate.percent;
+      if (candidate.percent > leadingCandidate.percent) {
+        leadingCandidate = candidate;
       }
     }
 
-    return leadingCandidateId;
+    return leadingCandidate;
   }
 
   /**
@@ -183,17 +181,17 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId
    * @param excludeId Id of candidate to exclude from check
    */
-  function _getStateLosingCandidate(stateId: number, excludeId: number): any {
+  function _getStateLosingCandidate(stateId: number, excludeId: number): ICandidateResult {
     const stateResults = usStates.value[stateId].results;
-    let leadingCandidate = { id: -1, percent: 100 };
+    let losingCandidate = { id: -1, percent: 100, delegates: 0  };
 
     for (const candidate of stateResults) {
-      if (candidate.percent <= leadingCandidate.percent && candidate.id !== excludeId && candidate.percent > 0) {
-        leadingCandidate = candidate;
+      if (candidate.percent <= losingCandidate.percent && candidate.id !== excludeId && candidate.percent > 0) {
+        losingCandidate = candidate;
       }
     }
 
-    return leadingCandidate;
+    return losingCandidate;
   }
 
   /**
@@ -261,34 +259,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
     // Remove percentages from unallocation pool and other candidates as needed
     _unallocatePercentages(stateId, changeInPercent, candidateId);
 
-    // Allocate delegates based on percentage
-    // allocateStateDelegates(candidateId, stateId, percent);
-
-    // const del = Math.round((getCandidatePercentage(candidateId, stateId) / 100) * getStateTotalDelegates(stateId));
-    // updateCandidateDelegates(candidateId, stateId, del);
-  }
-
-  function allocateStateDelegates(candidateId: number, stateId: number, percent: number) {
-    const allocationType = getStateById(stateId).allocation;
-
-    switch(allocationType) {
-      case 'delegate selection':
-        break;
-      case 'proportional':
-        // Allocate proportionally to candidates who meet minimum threshold (varies by state). Add to data.
-        break;
-      case 'winner-take-all':
-        break;
-      case 'winner-take-most':
-        break;
-      default:
-        // last
-    }
-
-    // Proportional. Move into switch statement
-    const del = Math.round((percent / 100) * getStateTotalDelegates(stateId));
-    console.log(del);
-    updateCandidateDelegates(candidateId, stateId, del);
+    // Allocate delegates based on percentage results
+    updateStateDelegates(getStateById(stateId));
   }
 
   /**
@@ -325,6 +297,31 @@ export const useUsStatesStore = defineStore('usStates', () => {
         leftoverTarget = lowestCandidate.percent - leftoverTarget;
         getStateById(stateId).results[lowestCandidate.id].percent = leftoverTarget;
       }
+    }
+  }
+
+  function updateStateDelegates(usState: IState) {
+    switch(usState.allocation) {
+      case 'winner-take-all':
+      case 'winner-take-most':
+        // Plurality winner wins all
+        const winningCandidate = _getStateLeadingCandidate(usState.id);
+        for (const candidate of usState.results) {
+          updateCandidateDelegates(candidate.id, usState.id, 0);
+          if (candidate.id == winningCandidate.id) {
+            updateCandidateDelegates(winningCandidate.id, usState.id, usState.totalDelegates);
+          }
+        }
+        break;
+      case 'delegate selection':
+      case 'proportional':
+      default:
+        // Allocate proportionally to candidates who meet minimum threshold (varies by state). Add to data.
+        for (const candidate of usState.results) {
+          const delegates = Math.round((candidate.percent / 100) * usState.totalDelegates);
+          updateCandidateDelegates(candidate.id, usState.id, delegates);
+        }
+        break;
     }
   }
 

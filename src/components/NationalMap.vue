@@ -24,7 +24,7 @@
 	watchEffect(() => {
 		// Watch US states store for changes in color based on results
 		for (const usState of usStatesStore.usStates) {
-			d3.select(`.state-${usState.id}`)
+			d3.selectAll(`.state-${usState.id}`)
 				.style('fill', usState.color);
     }
 	});
