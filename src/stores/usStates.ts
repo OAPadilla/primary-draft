@@ -22,11 +22,17 @@ export interface ICandidateResult {
   percent: number
 }
 
+export interface IElectionRules {
+  minThreshold?: number,
+  wtaTrigger?: number
+}
+
 export interface IState {
   id: number,
   allocation: IAllocationType,
   color: string,
   electionDate: string,
+  electionRules: IElectionRules,
   electionType: IElectionType,
   initials: string,
   name: string,
@@ -48,6 +54,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
       allocation: 'proportional',
       color: '',
       electionDate: '',
+      electionRules: {},
       electionType: 'open primary',
       initials: '',
       name: '',
@@ -79,7 +86,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
   /**
    * Return the default/reset results for a state. All assigned 0 delegates.
    */
-  function defaultResults(): ICandidateResult[] {
+  function _defaultResults(): ICandidateResult[] {
     let defaultResults: ICandidateResult[] = [];
   
     for (let i = 0; i <= candidates.value.length; i++) {
@@ -100,7 +107,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function getCandidateDelegates(candidateId: number, stateId: number) {
-    return usStates.value?.[stateId]?.results?.[candidateId]?.delegates || 0;
+    return getStateById(stateId).results?.[candidateId]?.delegates || 0;
   }
 
   /**
@@ -121,25 +128,35 @@ export const useUsStatesStore = defineStore('usStates', () => {
   function getCandidateTotalDelegates(candidateId: number): number {
     let totalDelegates = 0;
   
-    for (const state of usStates.value) { // TODO: Investigate reactivity here
+    for (const state of usStates.value) {
       totalDelegates += getCandidateDelegates(candidateId, state.id);
     }
   
     return totalDelegates;
   }
 
-  function getStateById(stateId: number) {
+  /**
+   * Get state by id
+   * 
+   * @param stateId 
+   */
+  function getStateById(stateId: number): IState {
     return usStates.value[stateId];
   }
 
-  function getStateByInitial(stateInitial: string) {
-    for (const usState of this.usStates) {
+  /**
+   * Get state by state initials
+   * 
+   * @param stateInitial 
+   */
+  function getStateByInitial(stateInitial: string): IState|null {
+    for (const usState of usStates.value) {
       if (usState.initials === stateInitial) {
         return usState;
       }
     };
 
-    return {};
+    return null;
   }
 
   /**
@@ -147,16 +164,16 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * 
    * @param stateId 
    */
-  function getStateAllocatedDelegates(stateId: number): number {
-    let sum = 0;
-    const stateResults = this.usStates[stateId].results;
+  // function getStateAllocatedDelegates(stateId: number): number {
+  //   let sum = 0;
+  //   const stateResults = getStateById(stateId).results;
 
-    for (const candidates of stateResults) {
-      sum += candidates.delegates;
-    }
+  //   for (const candidates of stateResults) {
+  //     sum += candidates.delegates;
+  //   }
 
-    return sum;
-  }
+  //   return sum;
+  // }
 
   /**
    * Get leading candidate by percentage of vote in a state
@@ -181,11 +198,10 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId
    * @param excludeId Id of candidate to exclude from check
    */
-  function _getStateLosingCandidate(stateId: number, excludeId: number): ICandidateResult {
-    const stateResults = usStates.value[stateId].results;
+  function _getStateLosingCandidate(stateId: number, excludeId: number = -1): ICandidateResult {
     let losingCandidate = { id: -1, percent: 100, delegates: 0  };
 
-    for (const candidate of stateResults) {
+    for (const candidate of getStateById(stateId).results) {
       if (candidate.percent <= losingCandidate.percent && candidate.id !== excludeId && candidate.percent > 0) {
         losingCandidate = candidate;
       }
@@ -200,7 +216,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function getStateTotalDelegates(stateId: number): number {
-    return this.usStates[stateId].totalDelegates;
+    return getStateById(stateId).totalDelegates;
   }
 
   /**
@@ -209,7 +225,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function getStateUnallocatedDelegates(stateId: number): number {
-    return this.usStates[stateId].totalDelegates - this.getStateAllocatedDelegates(stateId);
+    return getStateById(stateId).unallocatedDelegates;
   }
 
   /**
@@ -231,7 +247,32 @@ export const useUsStatesStore = defineStore('usStates', () => {
   function updateCandidateDelegates(candidateId: number, stateId: number, delegates: number) {
     // Update unallocated delegate value to the diff between previous delegate count and new count
     const changeInDelegates = getCandidateDelegates(candidateId, stateId) - delegates;
-    setStateUnallocatedDelegates(stateId, getStateById(stateId).unallocatedDelegates + changeInDelegates);
+    const unallocatedDelegates = getStateUnallocatedDelegates(stateId) + changeInDelegates;
+
+    // Handle delegate remainders after unallocated percentage at 0
+    // let unallocatedDelegates = getStateById(stateId).unallocatedDelegates + changeInDelegates;
+    // if (unallocatedDelegates < 0) {
+    //   unallocatedDelegates = 0;
+    //   const lowestCandidate = _getStateLosingCandidate(stateId);
+    //   lowestCandidate.delegates = lowestCandidate.delegates - 1;
+    // }
+    // } else if (unallocatedDelegates == 1 && getStateById(stateId).unallocatedPercentage == 0) {
+    //   const leadingCandidate = _getStateLeadingCandidate(stateId);
+    //   leadingCandidate.delegates = leadingCandidate.delegates + 1;
+    // }
+
+
+    // if (unallocatedDelegates < 0) {
+    //   unallocatedDelegates = 0;
+    //   delegates--;
+    // } else if (unallocatedDelegates == 1 && getStateById(stateId).unallocatedPercentage == 0) {
+    //   unallocatedDelegates = 0;
+    //   const leadingCandidate = _getStateLeadingCandidate(stateId);
+    //   leadingCandidate.delegates = leadingCandidate.delegates + 1;
+    // }
+
+
+    _setStateUnallocatedDelegates(stateId, unallocatedDelegates);
 
     // Update candidate delegates
     getStateById(stateId).results[candidateId].delegates = delegates;
@@ -251,7 +292,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
     // Get amount of percentage we are removing/adding to candidate
     let changeInPercent = percent - getCandidatePercentage(candidateId, stateId);
-    let unallocatedPerc = getStateUnallocatedPercentage(stateId);
 
     // Update candidate percentage
     getStateById(stateId).results[candidateId].percent = Math.max(0, Number(percent));
@@ -260,7 +300,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     _unallocatePercentages(stateId, changeInPercent, candidateId);
 
     // Allocate delegates based on percentage results
-    updateStateDelegates(getStateById(stateId));
+    _updateStateDelegates(getStateById(stateId));
   }
 
   /**
@@ -275,12 +315,12 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
     // If unallocated pool large enough, take from there
     if (unallocateTarget <= unallocatedPool) {
-      setStateUnallocatedPercentage(stateId, unallocatedPool - unallocateTarget);
+      _setStateUnallocatedPercentage(stateId, unallocatedPool - unallocateTarget);
     // Otherwise, take what you can and move on to taking candidate percentages
     } else {
       // Remove all of the unallocated pool from the leftover target
       let leftoverTarget = unallocateTarget - unallocatedPool;
-      setStateUnallocatedPercentage(stateId, 0);
+      _setStateUnallocatedPercentage(stateId, 0);
 
       // Get candidate with lowest percent and remove from leftover target
       const lowestCandidate = _getStateLosingCandidate(stateId, candidateId);
@@ -300,25 +340,53 @@ export const useUsStatesStore = defineStore('usStates', () => {
     }
   }
 
-  function updateStateDelegates(usState: IState) {
+  function _updateStateDelegates(usState: IState) {
     switch(usState.allocation) {
       case 'winner-take-all':
       case 'winner-take-most':
         // Plurality winner wins all
-        const winningCandidate = _getStateLeadingCandidate(usState.id);
-        for (const candidate of usState.results) {
-          updateCandidateDelegates(candidate.id, usState.id, 0);
-          if (candidate.id == winningCandidate.id) {
-            updateCandidateDelegates(winningCandidate.id, usState.id, usState.totalDelegates);
-          }
-        }
-        break;
+        // const winningCandidate = _getStateLeadingCandidate(usState.id);
+        // for (const candidate of usState.results) {
+        //   updateCandidateDelegates(candidate.id, usState.id, 0);
+        //   if (candidate.id == winningCandidate.id) {
+        //     updateCandidateDelegates(winningCandidate.id, usState.id, usState.totalDelegates);
+        //   }
+        // }
+        // break;
       case 'delegate selection':
       case 'proportional':
       default:
-        // Allocate proportionally to candidates who meet minimum threshold (varies by state). Add to data.
+        // Allocate proportionally to candidates with additional election modifier rules
+        let totalPercentage = 100;
+
+        // If minimum threshold rule is set, percentage should reflect only applicable candidates
+        if (usState.electionRules?.minThreshold) {
+          totalPercentage = 0;
+
+          // Get total percentage points of eligible candidates
+          totalPercentage += usState.results.filter(candidate => candidate.percent >= (usState.electionRules?.minThreshold || 0))
+            .reduce((sum, candidate) => sum + candidate.percent, 0);
+
+          totalPercentage = totalPercentage == 0 ? 100 : Math.min(100, totalPercentage);
+        }
+
         for (const candidate of usState.results) {
-          const delegates = Math.round((candidate.percent / 100) * usState.totalDelegates);
+          // Handle winner-take-all trigger rule
+          if (usState.electionRules?.wtaTrigger && candidate.percent >= usState.electionRules.wtaTrigger) {
+            for (const cd of usState.results) {
+              updateCandidateDelegates(cd.id, usState.id, 0);
+            }
+            updateCandidateDelegates(candidate.id, usState.id, usState.totalDelegates);
+            break;
+          }
+
+          // Handle minimum threshold rule
+          if (usState.electionRules?.minThreshold && candidate.percent < usState.electionRules.minThreshold) {
+            updateCandidateDelegates(candidate.id, usState.id, 0);
+            break;
+          }
+
+          const delegates = Math.round((candidate.percent / totalPercentage) * usState.totalDelegates);
           updateCandidateDelegates(candidate.id, usState.id, delegates);
         }
         break;
@@ -331,7 +399,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId
    * @param delegates 
    */
-  function setStateUnallocatedDelegates(stateId: number, delegates: number) {
+  function _setStateUnallocatedDelegates(stateId: number, delegates: number) {
     getStateById(stateId).unallocatedDelegates = delegates;
   }
 
@@ -341,7 +409,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    * @param percent 
    */
-  function setStateUnallocatedPercentage(stateId: number, percent: number) {
+  function _setStateUnallocatedPercentage(stateId: number, percent: number) {
     getStateById(stateId).unallocatedPercentage = Math.max(0, percent);
   }
 
@@ -349,8 +417,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Reset the results of all states
    */
   function resetAllResults() {
-    for (const usState of this.usStates) {
-      this.usStates[usState.id].results = defaultResults();
+    for (const usState of usStates.value) {
+      getStateById(usState.id).results = _defaultResults();
     };
   };
 
@@ -360,7 +428,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function resetStateResults(stateId: number) {
-    this.usStates[stateId].results = defaultResults();
+    getStateById(stateId).results = _defaultResults();
   }
 
   /**
@@ -371,7 +439,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
       this.usStates = await fetch('/data/gop-states.json').then((response) => response.json());
 
       for (const usState of this.usStates) {
-        this.usStates[usState.id].results = defaultResults();
+        this.usStates[usState.id].results = _defaultResults();
         this.usStates[usState.id].unallocatedDelegates = this.usStates[usState.id].totalDelegates;
         this.usStates[usState.id].unallocatedPercentage = 100;
       };
@@ -387,7 +455,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getCandidateDelegates,
     getCandidatePercentage,
     getCandidateTotalDelegates,
-    getStateAllocatedDelegates,
     getStateByInitial,
     getStateTotalDelegates,
     getStateUnallocatedDelegates,

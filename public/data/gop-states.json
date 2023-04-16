@@ -4,6 +4,10 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 13,
+      "wtaTrigger": 60
+    },
     "electionType": "closed caucus",
     "initials": "AK",
     "name": "alaska",

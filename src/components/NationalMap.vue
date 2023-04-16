@@ -7,9 +7,11 @@
 	import * as d3 from 'd3';
 	import * as topojson  from 'topojson-client';
 
+	import { useCandidatesStore } from '../stores/candidates';
 	import { useStore } from '../stores/store';
 	import { useUsStatesStore, IState } from '../stores/usStates';
 
+	const candidatesStore = useCandidatesStore();
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
 
@@ -19,6 +21,10 @@
 
 	const selectedCandidateId: Ref<number> = computed(() => {
 		return mainStore.getSelectedCandidateId.value;
+	});
+
+	const getCandidateName: Ref<string> = computed(() => {
+		return candidatesStore.getCandidateName(selectedCandidateId.value);
 	});
 
 	watchEffect(() => {
@@ -87,7 +93,9 @@
 
 	function onStateClick(stateId: number) {
 		setSelectedState(stateId);
-		updateStateResult(stateId);
+		if (getCandidateName.value) {
+			updateStateResult(stateId);
+		}
 	}
 
 	/**
@@ -115,7 +123,6 @@
 	 */
  	function createMap(jsonData: any, geoStateNames: any) {
 		const componentSelector: string = '.' + className;
-		const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 		
 		// Remove SVG elements for resets
 		d3.select(componentSelector + ' svg').remove();
@@ -169,6 +176,12 @@
 		createStateRect(svg, 875, 425, geoStates['10']); // DE
 		createStateRect(svg, 875, 475, geoStates['24']); // MD
 		createStateRect(svg, 875, 525, geoStates['11']); // DC
+
+		// Set color based on current results
+		for (const usState of usStatesStore.usStates) {
+			d3.selectAll(`.state-${usState.id}`)
+				.style('fill', usState.color);
+    }
 	};
 
 	onMounted(async () => {
