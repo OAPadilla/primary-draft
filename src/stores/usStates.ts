@@ -160,22 +160,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
-   * Get number of delegates allocated to a candidate in a state
-   * 
-   * @param stateId 
-   */
-  // function getStateAllocatedDelegates(stateId: number): number {
-  //   let sum = 0;
-  //   const stateResults = getStateById(stateId).results;
-
-  //   for (const candidates of stateResults) {
-  //     sum += candidates.delegates;
-  //   }
-
-  //   return sum;
-  // }
-
-  /**
    * Get leading candidate by percentage of vote in a state
    * 
    * @param stateId 
@@ -248,29 +232,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
     // Update unallocated delegate value to the diff between previous delegate count and new count
     const changeInDelegates = getCandidateDelegates(candidateId, stateId) - delegates;
     const unallocatedDelegates = getStateUnallocatedDelegates(stateId) + changeInDelegates;
-
-    // Handle delegate remainders after unallocated percentage at 0
-    // let unallocatedDelegates = getStateById(stateId).unallocatedDelegates + changeInDelegates;
-    // if (unallocatedDelegates < 0) {
-    //   unallocatedDelegates = 0;
-    //   const lowestCandidate = _getStateLosingCandidate(stateId);
-    //   lowestCandidate.delegates = lowestCandidate.delegates - 1;
-    // }
-    // } else if (unallocatedDelegates == 1 && getStateById(stateId).unallocatedPercentage == 0) {
-    //   const leadingCandidate = _getStateLeadingCandidate(stateId);
-    //   leadingCandidate.delegates = leadingCandidate.delegates + 1;
-    // }
-
-
-    // if (unallocatedDelegates < 0) {
-    //   unallocatedDelegates = 0;
-    //   delegates--;
-    // } else if (unallocatedDelegates == 1 && getStateById(stateId).unallocatedPercentage == 0) {
-    //   unallocatedDelegates = 0;
-    //   const leadingCandidate = _getStateLeadingCandidate(stateId);
-    //   leadingCandidate.delegates = leadingCandidate.delegates + 1;
-    // }
-
 
     _setStateUnallocatedDelegates(stateId, unallocatedDelegates);
 
@@ -345,28 +306,25 @@ export const useUsStatesStore = defineStore('usStates', () => {
       case 'winner-take-all':
       case 'winner-take-most':
         // Plurality winner wins all
-        // const winningCandidate = _getStateLeadingCandidate(usState.id);
-        // for (const candidate of usState.results) {
-        //   updateCandidateDelegates(candidate.id, usState.id, 0);
-        //   if (candidate.id == winningCandidate.id) {
-        //     updateCandidateDelegates(winningCandidate.id, usState.id, usState.totalDelegates);
-        //   }
-        // }
-        // break;
+        const winningCandidate = _getStateLeadingCandidate(usState.id);
+        for (const candidate of usState.results) {
+          updateCandidateDelegates(candidate.id, usState.id, 0);
+          if (candidate.id == winningCandidate.id) {
+            updateCandidateDelegates(winningCandidate.id, usState.id, usState.totalDelegates);
+          }
+        }
+        break;
       case 'delegate selection':
       case 'proportional':
       default:
         // Allocate proportionally to candidates with additional election modifier rules
         let totalPercentage = 100;
 
-        // If minimum threshold rule is set, percentage should reflect only applicable candidates
+        // If minimum threshold rule is set, total percentage should reflect only applicable candidates + unallocated
         if (usState.electionRules?.minThreshold) {
-          totalPercentage = 0;
-
-          // Get total percentage points of eligible candidates
-          totalPercentage += usState.results.filter(candidate => candidate.percent >= (usState.electionRules?.minThreshold || 0))
+          totalPercentage = getStateUnallocatedPercentage(usState.id);
+          totalPercentage += usState.results.filter(candidate => candidate.percent >= (usState.electionRules.minThreshold || 0))
             .reduce((sum, candidate) => sum + candidate.percent, 0);
-
           totalPercentage = totalPercentage == 0 ? 100 : Math.min(100, totalPercentage);
         }
 
@@ -383,7 +341,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
           // Handle minimum threshold rule
           if (usState.electionRules?.minThreshold && candidate.percent < usState.electionRules.minThreshold) {
             updateCandidateDelegates(candidate.id, usState.id, 0);
-            break;
+            continue;
           }
 
           const delegates = Math.round((candidate.percent / totalPercentage) * usState.totalDelegates);

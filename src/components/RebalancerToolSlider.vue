@@ -61,8 +61,6 @@ const maxSliderValue = computed(() => {
 
 function onInput(event: any) {
   if (props.candidateId !== null) {
-    // TODO: have to use allocation type rules
-
     // Limit slider to max what is available to allocate
     if (sliderValue.value > maxSliderValue.value) {
       sliderValue.value = maxSliderValue.value;

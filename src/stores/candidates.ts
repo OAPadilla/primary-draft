@@ -28,11 +28,11 @@ export const useCandidatesStore = defineStore('candidates', () => {
   // Actions (methods)
 
   function getCandidateColor(candidateId: number): string {
-    return candidates.value[candidateId].color;
+    return candidates.value[candidateId]?.color;
   }
 
   function getCandidateName(candidateId: number): string {
-    return candidates.value[candidateId].name;
+    return candidates.value[candidateId]?.name;
   }
 
   return { 
