@@ -21,7 +21,7 @@ fetchStatesData();
 
 <style scoped>
 .content {
-  flex:1;
+  flex: 1;
   max-width: 950px;
   margin: 2rem auto;
   padding: 0 2rem;

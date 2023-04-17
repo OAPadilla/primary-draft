@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { RouterLink } from "vue-router";
-</script>
-
 <template>
 	<footer>
 		<div class="c-footer">
@@ -9,7 +5,7 @@ import { RouterLink } from "vue-router";
 			<div class="c-footer_top">
 				<div class="c-footer_contact">
 					<h4 class="c-footer_contactTitle">Contact</h4>
-					<h4>info@PrimaryDraft.com</h4>
+					<h4 class="c-footer_contactEmail">info@PrimaryDraft.com</h4>
 				</div>
 
 				<!-- Social Share -->
@@ -26,16 +22,17 @@ import { RouterLink } from "vue-router";
 
 <style scoped>
 footer {
-	background-color: #000000;
+	background-color: var(--base-background-color);
+	padding: 0 2rem;
 }
 
 .c-footer {
 	display: flex;
-	color: #FFFFFF;
-	padding: 20px 2rem 30px;
+	padding: 20px 0 30px;
 	flex-direction: column;
 	max-width: 950px;
 	margin: auto;
+	border-top: var(--standard-border);
 }
 
 .c-footer_top {
@@ -50,6 +47,10 @@ footer {
 .c-footer_contactTitle {
 	padding-bottom: 5px;
 	font-weight: bold;
+}
+
+.c-footer_contactEmail {
+	color: grey;
 }
 
 .c-footer_copyright {

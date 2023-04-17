@@ -17,14 +17,14 @@
 					type="text" 
 					v-model="candidate.name" 
 					:placeholder="isEditMode ? '________' : 'Available Slot'" 
-					:style="{'background-color': candidate.color}" :readonly="!isEditMode"
+					:style="{ 'background-color': candidate.color }" :readonly="!isEditMode"
+					maxlength="20"
 				>
 			</div>
 		</div>
 
 		<div class="c-candidatePicker_tools">
 			<div class="c-candidatePicker_edit"></div>
-			<!-- TODO: Make button components -->
 			<!-- "None" choice: To interact with visualizations without candidate selected -->
 			<div
 				class="c-candidatePicker_choiceWrapper"
@@ -90,14 +90,14 @@ function onChoiceClick(candidateId: number) {
 
 .c-candidatePicker_choice {
 	width: 100%;
-	border: 3px solid #FFFFFF;
+	border: 3px solid var(--base-background-color);
 	border-radius: 25px;
 }
 
 .c-candidatePicker_choice.itemNone {
 	padding: 8px 0;
 	text-align: center;
-	color: #FFFFFF;
+	color: var(--base-background-color);
 	background-color: #bfbfbf;
 	font-weight: bold;
 	cursor: pointer;
@@ -124,14 +124,14 @@ function onChoiceClick(candidateId: number) {
 }
 
 .isEditMode .c-candidatePicker_choice.noneBtn {
-	border-color: #FFFFFF;
+	border-color: var(--base-background-color);
 }
 
 input {
 	width: 180px;
 	padding: 10px;
 	color: #000000;
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: var(--standard-font-family);
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;

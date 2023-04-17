@@ -1,29 +1,30 @@
-<script setup lang="ts">
-import { RouterLink } from "vue-router";
-</script>
-
 <template>
 	<header>
 		<div class="c-navBar">
-			<h1>Primary Draft</h1>
+			<h1>primary draft</h1>
 			<nav class="c-navLinks">
-				<RouterLink to="/">Home</RouterLink>
-				<RouterLink to="/about">About</RouterLink>
+				<RouterLink to="/">home</RouterLink>
+				<RouterLink to="/about">about</RouterLink>
 			</nav>
 		</div>
 	</header>
 </template>
 
+<script setup lang="ts">
+import { RouterLink } from "vue-router";
+</script>
+
 <style scoped>
 header {
-	background-color: #000000;
-}
-.c-navBar {
-	color: #FFFFFF;
-	display: flex;
+	background-color: var(--base-background-color);
 	padding: 0 2rem;
+}
+
+.c-navBar {
+	display: flex;
 	max-width: 950px;
 	margin: auto;
+	border-bottom: 1px solid #E9141D;
 }
 
 h1 {
@@ -35,7 +36,6 @@ nav {
 }
 
 a {
-	color: #FFFFFF;
 	padding-left: 1rem;
 }
 </style>

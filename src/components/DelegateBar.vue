@@ -193,10 +193,8 @@ function resetBar() {
 
 onMounted(() => {
 	createBar(Array.from(candidates.value));
-	window.addEventListener('resize', resetBar); // TODO: debounce and destroy
+	window.addEventListener('resize', resetBar);
 });
-
-// Test - on resize, on store data change, mobile
 </script>
   
 <style>
@@ -226,7 +224,7 @@ onMounted(() => {
 	border-radius: 25px;
 	padding: 10px;
 	color: #000000;
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: var(--standard-font-family);
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;

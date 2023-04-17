@@ -90,10 +90,10 @@ function getUnallocatedPercentage() {
 .c-rebalancerTool_header {
  	display: flex;
 	flex-direction: column;
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: var(--standard-font-family);
 	font-size: 16px;
 	font-weight: bold;
-	border-bottom: 1px solid black;
+	border-bottom: var(--standard-border);
 	padding-bottom: 5px;
 }
 
