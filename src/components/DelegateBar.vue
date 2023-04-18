@@ -22,6 +22,7 @@ const { candidates } = storeToRefs(candidatesStore);
 const { totalDelegates } = storeToRefs(mainStore);
 
 const className: string = 'c-delegateBar';
+const barHeight: number = 80;
 
 candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
 	updateBar(Array.from(candidates.value));
@@ -72,7 +73,7 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
 	procData.push({
 		id: procData.length,
 		delegates: leftoverDelegates, 
-		color: '#e8e8e8', 
+		color: '#d3d3d3', 
 		cumulative: cumulativeDelegates,
 		name: 'Unallocated',
 		percent: percent(leftoverDelegates)
@@ -119,7 +120,6 @@ function updateBar(data: ICandidate[]) {
 function createBar(data: ICandidate[]) {
 	const componentSelector: string = '.' + className;
 	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
-	const height: number = 90;
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
 
 	// Remove SVG and tooltip elements
@@ -129,7 +129,7 @@ function createBar(data: ICandidate[]) {
 	// Initialize new SVG area with height
 	d3.select(componentSelector)
 		.append('svg')
-		.attr('height', height);
+		.attr('height', barHeight);
 	
 	// Set up horizontal scale
 	const xScale = d3.scaleLinear()
@@ -176,7 +176,7 @@ function createBar(data: ICandidate[]) {
 	join.append('rect')
 		.attr('class', (d: ICandidateBarChart) => `rect-${d.id}`)
 		.attr('x', (d: ICandidateBarChart) => xScale(d.cumulative))
-		.attr('height', height)
+		.attr('height', barHeight)
 		.attr('width', (d: ICandidateBarChart) => xScale(d.delegates))
 		.style('fill', (d: ICandidateBarChart) => d.color)
 		.on('mouseover', mouseover)
@@ -201,7 +201,7 @@ onMounted(() => {
 .c-delegateBar {
 	display: flex;
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: var(--standard-spacing);
 }
 
 .c-delegateBar svg {

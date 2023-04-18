@@ -84,7 +84,7 @@ function getUnallocatedPercentage() {
   
 <style scoped>
 .c-rebalancerTool {
-	margin-bottom: 20px;
+	margin-bottom: var(--standard-spacing);
 }
 
 .c-rebalancerTool_header {
@@ -100,7 +100,7 @@ function getUnallocatedPercentage() {
 .c-rebalancerTool_stateDelegates, .c-rebalancerTool_stateAllocationType {
 	font-weight: normal;
 	font-size: 12px;
-	color: grey;
+	color: #808080;
 }
 
 .c-rebalancerTool_header div {
