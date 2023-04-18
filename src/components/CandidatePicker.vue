@@ -39,7 +39,7 @@
 				class="c-candidatePicker_edit" 
 				@click="isEditMode = !isEditMode"
 			>
-				<div class="c-candidatePicker_choice itemNone editBtn">Edit</div>
+				<div class="c-candidatePicker_choice itemNone editBtn"><EditIcon /></div>
 			</div>
 		</div>
 	</div>
@@ -48,6 +48,8 @@
 <script setup lang="ts">
 import { computed, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
+
+import EditIcon from '../assets/icons/edit.svg?component';
 
 import { useCandidatesStore } from '../stores/candidates';
 import { useStore } from '../stores/store';
@@ -78,19 +80,27 @@ function onChoiceClick(candidateId: number) {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin-bottom: 20px;
+	margin-bottom: var(--standard-spacing);
 }
 
-.c-candidatePicker_choiceWrapper, .c-candidatePicker_edit {
+.c-candidatePicker_choiceWrapper,
+.c-candidatePicker_edit {
 	width: 200px;
 	height: 40px;
-	margin: 6px;
+	margin: 5px;
 	border-radius: 20px;
+	opacity: 0.8;
+}
+
+.c-candidatePicker_choiceWrapper:hover,
+.c-candidatePicker_edit:hover,
+.isEditMode .c-candidatePicker_edit {
+	opacity: 1;
 }
 
 .c-candidatePicker_choice {
 	width: 100%;
-	border: 3px solid var(--base-background-color);
+	border: 2px solid var(--base-background-color);
 	border-radius: 25px;
 }
 
@@ -104,7 +114,7 @@ function onChoiceClick(candidateId: number) {
 }
 
 .selected .c-candidatePicker_choice {
-	border-color: #000000;
+	border-color: #333333;
 }
 
 .c-candidatePicker_tools {
@@ -113,14 +123,18 @@ function onChoiceClick(candidateId: number) {
 	width: 100%;
 }
 
+.c-candidatePicker_choice.editBtn {
+	height: 24px;
+}
+
 .c-candidatePicker_edit {
-	width: 50px;
+	width: 40px;
 }
 
 .isEditMode .c-candidatePicker_choice.item, 
 .isEditMode .c-candidatePicker_choice.editBtn 
 {
-	border-color: #000000;
+	border-color: #333333;
 }
 
 .isEditMode .c-candidatePicker_choice.noneBtn {

@@ -1,6 +1,6 @@
 <template>
 	<div class="c-homeView">
-		<h2>{{ partyName }} Presidential Primary Map</h2>
+		<h2>{{ partyName }} Presidential Primary</h2>
 		<CandidatePicker />
 		<NationalMap />
 		<DelegateBar />
@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+
 import CandidatePicker from "../components/CandidatePicker.vue";
 import DelegateBar from "../components/DelegateBar.vue";
 import NationalMap from "../components/NationalMap.vue";
@@ -20,6 +21,7 @@ const partyName = ref('Republican Party');
 
 <style>
 h2 {
+	font-weight: normal;
 	text-align: center;
 	margin-top: 0;
 }

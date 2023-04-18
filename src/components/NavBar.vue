@@ -48,4 +48,8 @@ a {
 	align-items: center;
 	padding-left: var(--standard-spacing);
 }
+
+svg:hover {
+	opacity: 0.7;
+}
 </style>
