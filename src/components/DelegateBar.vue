@@ -1,12 +1,17 @@
 <template>
-	<div :class="className"></div>
-	<div class="c-delegateBarTooltip"></div>
+	<div>
+		<FlagIcon class="c-delegateBarFlag" :style="{ fill: flagColor }"/>
+		<div :class="className"></div>
+		<div class="c-delegateBarTooltip"></div>
+	</div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { computed, onMounted, onUnmounted, ref, Ref } from 'vue';
 import * as d3 from 'd3';
 import { storeToRefs } from 'pinia';
+
+import FlagIcon from '../assets/icons/flag.svg?component';
 
 import { useCandidatesStore, ICandidate } from '../stores/candidates';
 import { useStore } from '../stores/store';
@@ -23,9 +28,16 @@ const { totalDelegates } = storeToRefs(mainStore);
 
 const className: string = 'c-delegateBar';
 const barHeight: number = 80;
+const defaultFlagColor: string = 'none';
+const flagColor: Ref<string> = ref(defaultFlagColor)
+const tooltipWidth: number = 200;
 
 candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
 	updateBar(Array.from(candidates.value));
+
+	// Update flag color based on if majority vote reached by candidate
+	const winningCandidate = candidatesStore.getWinnerCandidate;
+	flagColor.value = winningCandidate ? winningCandidate.value.color : defaultFlagColor;
 });
 
 /**
@@ -98,9 +110,11 @@ function updateBar(data: ICandidate[]) {
 		.range([0, currentWidth]);
 
 	const mousemove = function(event: any, d: ICandidateBarChart) {
+		const switchPoint = currentWidth - tooltipWidth - 20;
+		const left = Math.min(d3.pointer(event)[0] + 20, switchPoint);
 		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
-			.style("left", `${d3.pointer(event)[0] + 20}px`)
-			.style("top", `${d3.pointer(event)[1] - 60}px`);
+			.style("left", `${left}px`)
+			.style("top", `${d3.pointer(event)[1] - 80}px`);
 	}
 
 	// Adjust rect sizes and update tooltip based on data
@@ -127,10 +141,12 @@ function createBar(data: ICandidate[]) {
 	d3.select('.c-delegateBarTooltip div').remove();
 
 	// Initialize new SVG area with height
-	d3.select(componentSelector)
+	const svg = d3.select(componentSelector)
 		.append('svg')
-		.attr('height', barHeight);
-	
+		.attr('height', barHeight)
+		.attr('preserveAspectRatio', 'xMidYMid meet')
+		.attr('viewBox', `0 0 950`);
+
 	// Set up horizontal scale
 	const xScale = d3.scaleLinear()
 		.domain([0, totalDelegates.value])
@@ -158,9 +174,11 @@ function createBar(data: ICandidate[]) {
 	}
 
 	const mousemove = function(event: any, d: ICandidateBarChart) {
+		const switchPoint = currentWidth - tooltipWidth - 20;
+		const left = Math.min(d3.pointer(event)[0] + 20, switchPoint);
 		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
-			.style("left", `${d3.pointer(event)[0] + 20}px`)
-			.style("top", `${d3.pointer(event)[1] - 60}px`);
+			.style("left", `${left}px`)
+			.style("top", `${d3.pointer(event)[1] - 80}px`);
 	}
 
 	const mouseleave = function(event: any, d: ICandidateBarChart) {
@@ -182,6 +200,14 @@ function createBar(data: ICandidate[]) {
 		.on('mouseover', mouseover)
     .on('mouseleave', mouseleave)
 		.on('mousemove', mousemove);
+
+	// Create majority marker
+	svg.append('line')
+		.attr('class', `${className}_majorityMarker`)
+		.attr('x1', currentWidth / 2)
+		.attr('y1', 0)
+		.attr('x2', currentWidth / 2)
+		.attr('y2', barHeight)
 }
 
 /**
@@ -195,12 +221,17 @@ onMounted(() => {
 	createBar(Array.from(candidates.value));
 	window.addEventListener('resize', resetBar);
 });
+
+onUnmounted(() => {
+	window.removeEventListener('resize', resetBar);
+})
 </script>
   
 <style>
 .c-delegateBar {
 	display: flex;
 	width: 100%;
+	max-width: 100%;
 	margin-bottom: var(--standard-spacing);
 }
 
@@ -210,6 +241,19 @@ onMounted(() => {
 
 .c-delegateBar rect {
 	transition: all 200ms ease-out;
+}
+
+.c-delegateBar_majorityMarker {
+	stroke: #333333;
+	stroke-width: 1.5;
+	stroke-dasharray: 3;
+}
+
+.c-delegateBarFlag {
+	display: flex;
+	margin: auto;
+	padding-left: 12px;
+	stroke: #333333;
 }
 
 .c-delegateBarTooltip {

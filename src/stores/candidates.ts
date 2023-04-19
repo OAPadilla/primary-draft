@@ -1,5 +1,7 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
+import { computed, ref, ComputedRef, Ref } from 'vue';
+import { defineStore, storeToRefs } from 'pinia';
+
+import { useStore } from '../stores/store';
 
 export interface ICandidate {
   id: number,
@@ -9,6 +11,9 @@ export interface ICandidate {
 }
 
 export const useCandidatesStore = defineStore('candidates', () => {
+  const mainStore = useStore();
+  const { totalDelegates } = storeToRefs(mainStore);
+
   // State (data)
 
   const candidates = ref<ICandidate[]>([
@@ -24,6 +29,19 @@ export const useCandidatesStore = defineStore('candidates', () => {
 
   // Getters (computed values)
 
+  const getLeadingCandidate: Ref<ICandidate> = computed(() => {
+    const leader = candidates.value.reduce((acc, curr) => {
+      return acc.delegates > curr.delegates ? acc : curr;
+    })
+    return leader;
+  })
+
+  const getWinnerCandidate: ComputedRef<Ref<ICandidate> | null> = computed(() => {
+    if (getLeadingCandidate.value.delegates / totalDelegates.value >= 0.5) {
+      return getLeadingCandidate;
+    }
+    return null;
+  })
 
   // Actions (methods)
 
@@ -38,6 +56,8 @@ export const useCandidatesStore = defineStore('candidates', () => {
   return { 
     candidates,
     getCandidateColor,
-    getCandidateName
+    getCandidateName,
+    getLeadingCandidate,
+    getWinnerCandidate
   }
 });
