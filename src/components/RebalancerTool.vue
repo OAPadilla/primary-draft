@@ -8,8 +8,12 @@
 					{{ selectedState.name }}
 				</div>
 
-				<div class="c-rebalancerTool_stateAllocationType">
-					{{ stateTotalDelegates }} delegates, {{ selectedState.allocation }}, {{ selectedState.electionType }}
+				<div class="c-rebalancerTool_stateDetails">
+					{{ selectedState.totalDelegates }} Delegates • {{ selectedState.allocation }} • {{ selectedState.electionType }}
+				</div>
+
+				<div class="c-rebalancerTool_stateDetails" v-if="stateElectionRules">
+					{{ stateElectionRules }}
 				</div>
 		</div>
 
@@ -61,6 +65,25 @@ const selectedState: Ref<IState> = computed(() => {
 	return usStatesStore.getStateById(selectedStateId.value);
 });
 
+const stateElectionRules: Ref<string> = computed(() => {
+	const electionRules: string[] = [];
+
+	function addRule(value: number|null, label: string) {
+		if (value !== null) {
+			electionRules.push(`${label}: ${value.toString()}%`);
+		}
+	}
+
+	addRule(selectedState.value.electionRules?.minThreshold ?? null, 'Minimum Threshold');
+	addRule(selectedState.value.electionRules?.wtaTrigger ?? null, 'Winner-Take-All Trigger');
+	
+	if (electionRules.length > 1) {
+		return electionRules.join(' • ');
+	}
+
+	return '';
+})
+
 const stateTotalDelegates: Ref<number> = computed(() => {
 	return usStatesStore.getStateTotalDelegates(selectedStateId.value);
 });
@@ -97,7 +120,7 @@ function getUnallocatedPercentage() {
 	padding-bottom: 5px;
 }
 
-.c-rebalancerTool_stateDelegates, .c-rebalancerTool_stateAllocationType {
+.c-rebalancerTool_stateDelegates, .c-rebalancerTool_stateDetails {
 	font-weight: normal;
 	font-size: 12px;
 	color: #808080;
