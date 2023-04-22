@@ -1,13 +1,13 @@
 <template>
-	<div>
-		<FlagIcon class="c-delegateBarFlag" :style="{ fill: flagColor }"/>
-		<div :class="className"></div>
-		<div class="c-delegateBarTooltip"></div>
+	<div class="c-delegateBar">
+		<FlagIcon class="c-delegateBar_flag" :style="{ fill: flagColor }"/>
+		<div :class="barClass"></div>
+		<div class="c-delegateBar_tooltip"></div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, Ref } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, Ref } from 'vue';
 import * as d3 from 'd3';
 import { storeToRefs } from 'pinia';
 
@@ -26,8 +26,8 @@ const mainStore = useStore();
 const { candidates } = storeToRefs(candidatesStore);
 const { totalDelegates } = storeToRefs(mainStore);
 
-const className: string = 'c-delegateBar';
-const barHeight: number = 80;
+const barClass: string = 'c-delegateBar_bar';
+const barHeight: number = 60;
 const defaultFlagColor: string = 'none';
 const flagColor: Ref<string> = ref(defaultFlagColor)
 const tooltipWidth: number = 200;
@@ -100,21 +100,21 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
  * @param data
  */
 function updateBar(data: ICandidate[]) {
-	const componentSelector: string = '.' + className;
+	const componentSelector: string = '.' + barClass;
 	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
-	const tooltip = d3.select('.c-delegateBarTooltip .tooltip');
+	const tooltip = d3.select('.c-delegateBar_tooltip .tooltip');
 
 	const xScale = d3.scaleLinear()
 		.domain([0, totalDelegates.value])
-		.range([0, currentWidth]);
+		.range([0, '100%']);
 
 	const mousemove = function(event: any, d: ICandidateBarChart) {
 		const switchPoint = currentWidth - tooltipWidth - 20;
-		const left = Math.min(d3.pointer(event)[0] + 20, switchPoint);
+		const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
 		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
 			.style("left", `${left}px`)
-			.style("top", `${d3.pointer(event)[1] - 80}px`);
+			.style("top", `${d3.pointer(event)[1] - 20}px`);
 	}
 
 	// Adjust rect sizes and update tooltip based on data
@@ -132,25 +132,23 @@ function updateBar(data: ICandidate[]) {
  * @param data 
  */
 function createBar(data: ICandidate[]) {
-	const componentSelector: string = '.' + className;
+	const componentSelector: string = '.' + barClass;
 	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
 
 	// Remove SVG and tooltip elements
 	d3.select(componentSelector + ' svg').remove();
-	d3.select('.c-delegateBarTooltip div').remove();
+	d3.select('.c-delegateBar_tooltip div').remove();
 
 	// Initialize new SVG area with height
 	const svg = d3.select(componentSelector)
 		.append('svg')
-		.attr('height', barHeight)
-		.attr('preserveAspectRatio', 'xMidYMid meet')
-		.attr('viewBox', `0 0 950`);
+		.attr('height', barHeight);
 
 	// Set up horizontal scale
 	const xScale = d3.scaleLinear()
 		.domain([0, totalDelegates.value])
-		.range([0, currentWidth]);
+		.range([0, '100%']);
 
 	// Attach/join an array of data
 	const join = d3.select(componentSelector + ' svg').selectAll('g')
@@ -158,27 +156,27 @@ function createBar(data: ICandidate[]) {
 		.join('g');
 
 	// Create tooltip
-	const tooltip = d3.select('.c-delegateBarTooltip')
+	const tooltip = d3.select('.c-delegateBar_tooltip')
 		.append('div')
 		.style("opacity", 0)
-    .attr("class", "tooltip")
+    .attr("class", "tooltip");
 
 	const mouseover = function(event: any, d: ICandidateBarChart) {
 		// Update tooltip
 		tooltip.style("opacity", 1)
-			.style('background-color', d.color)
+			.style('background-color', d.color);
 	
 		// Update rect
     d3.select(event.target)
-      .style("opacity", 0.8)
+      .style("opacity", 0.8);
 	}
 
 	const mousemove = function(event: any, d: ICandidateBarChart) {
 		const switchPoint = currentWidth - tooltipWidth - 20;
-		const left = Math.min(d3.pointer(event)[0] + 20, switchPoint);
+		const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
 		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
 			.style("left", `${left}px`)
-			.style("top", `${d3.pointer(event)[1] - 80}px`);
+			.style("top", `${d3.pointer(event)[1] - 20}px`);
 	}
 
 	const mouseleave = function(event: any, d: ICandidateBarChart) {
@@ -203,11 +201,11 @@ function createBar(data: ICandidate[]) {
 
 	// Create majority marker
 	svg.append('line')
-		.attr('class', `${className}_majorityMarker`)
-		.attr('x1', currentWidth / 2)
+		.attr('class', `c-delegateBar_majorityMarker`)
+		.attr('x1', '50%')
+		.attr('x2', '50%')
 		.attr('y1', 0)
-		.attr('x2', currentWidth / 2)
-		.attr('y2', barHeight)
+		.attr('y2', barHeight);
 }
 
 /**
@@ -229,17 +227,18 @@ onUnmounted(() => {
   
 <style>
 .c-delegateBar {
-	display: flex;
-	width: 100%;
-	max-width: 100%;
 	margin-bottom: var(--standard-spacing);
 }
 
-.c-delegateBar svg {
+.c-delegateBar_bar {
+	display: flex;
+}
+
+.c-delegateBar_bar svg {
 	width: 100%;
 }
 
-.c-delegateBar rect {
+.c-delegateBar_bar rect {
 	transition: all 200ms ease-out;
 }
 
@@ -249,18 +248,18 @@ onUnmounted(() => {
 	stroke-dasharray: 3;
 }
 
-.c-delegateBarFlag {
+.c-delegateBar_flag {
 	display: flex;
 	margin: auto;
 	padding-left: 12px;
 	stroke: #333333;
 }
 
-.c-delegateBarTooltip {
+.c-delegateBar_tooltip {
 	position: absolute;
 }
 
-.c-delegateBarTooltip .tooltip {
+.c-delegateBar_tooltip .tooltip {
 	z-index: 999;
 	position: absolute;
 	width: 200px;
@@ -275,7 +274,7 @@ onUnmounted(() => {
 }
 
 /* @media (max-width: 1024px) {
-	.c-delegateBarTooltip {
+	.c-delegateBar_tooltip {
 		display: none;
 	}
 } */
