@@ -271,6 +271,7 @@ onUnmounted(() => {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
+	box-shadow: var(--standard-box-shadow);
 }
 
 /* @media (max-width: 1024px) {

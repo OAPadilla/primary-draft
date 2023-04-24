@@ -4,17 +4,17 @@
 			<!-- Contact -->
 			<div class="c-footer_top">
 				<div class="c-footer_contact">
-					<h4 class="c-footer_contactTitle">Contact</h4>
-					<h4 class="c-footer_contactEmail">info@PrimaryDraft.com</h4>
+					<div class="c-footer_contactTitle">Contact</div>
+					<div class="c-footer_contactEmail">info@PrimaryDraft.com</div>
 				</div>
 
 				<!-- Social Share -->
-				<div class="c-footer_share"><h4>Share</h4></div>
+				<!-- <div class="c-footer_share">Share</div> -->
 			</div>
 			
 			<!-- Copyright -->
 			<div class="c-footer_copyright">
-				<h4>© 2023 Oscar Padilla</h4>
+				<div>© 2023 Oscar Padilla</div>
 			</div>
 		</div>
 	</footer>
@@ -33,6 +33,7 @@ footer {
 	max-width: 950px;
 	margin: auto;
 	border-top: var(--standard-border);
+	font-size: 12px;
 }
 
 .c-footer_top {

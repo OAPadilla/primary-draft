@@ -1,5 +1,8 @@
 <template>
-	<div :class="className"></div>
+	<div class="c-nationalMap">
+		<div class="c-nationalMap_tooltip"></div>
+		<div :class="className"></div>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -20,9 +23,10 @@
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
 
-	const className: string = 'c-nationalMap';
+	const className: string = 'c-nationalMap_map';
 	const usMapJSON: string = 'https://d3js.org/us-10m.v1.json';
 	const stateNamesTSV: string = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
+	const tooltipWidth: number = 125;
 	const hiddenInitialsTextIds: number[] = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
 	const initialsTextOffsets: Record<number, Record<string, number>> = {
 		0: { y: -2 }, 				// AK
@@ -130,16 +134,34 @@
 		setSelectedState(stateId);
 
 		// To visually identify state clicked on
-		d3.selectAll(`.c-nationalMap .states path`).classed("selected", false); // Main states
-		d3.selectAll(`.c-nationalMap .states rect`).classed("selected", false); // Avatar states
-		d3.selectAll(`.c-nationalMap .states-names text`).classed("selected", false); // State initials text
+		d3.selectAll(`.${className} .states path`).classed("selected", false); // Main states
+		d3.selectAll(`.${className} .states rect`).classed("selected", false); // Avatar states
+		d3.selectAll(`.${className} .states-names text`).classed("selected", false); // State initials text
 		d3.selectAll(`.state-${stateId}`).classed("selected", true);
 		d3.selectAll(`.state-name-${stateId}`).classed("selected", true);
 
 		if (getCandidateName.value) {
 			updateStateResult(stateId);
 		}
-	}
+	};
+
+	function onStateMousemove(event: any, stateId: any, tooltip: any) {
+		const map = d3.select('.' + className);
+		const currentWidth: number = parseInt(map.style('width'), 10);
+		const stateData: IState = usStatesStore.getStateById(stateId);
+		const switchPoint: number = currentWidth - tooltipWidth;
+	
+		const [x, y]: number[] =  d3.pointer(event, map.node());
+		const left: number = Math.min(x - 20, switchPoint);
+
+		tooltip.html(`
+			<div class="c-nationalMap_tooltip_name">${stateData.name}</div>
+			<div class="c-nationalMap_tooltip_del">${stateData.totalDelegates} del.</div>
+			<div class="c-nationalMap_tooltip_alloc">${stateData.allocation}</div>
+		`)
+		.style("left", `${left}px`)
+		.style("top", `${y + 40}px`);
+	};
 
 	/**
 	 * Create a square svg element representing a state/territory for simpler/alternative interactivity
@@ -165,16 +187,26 @@
 			.attr('height', height)
 			.on('click', () => {
 				onStateClick(stateId);
-			});
+			})
 		
 		// Text element
 		g.append('text')
 			.attr('class', () => `state-name-${stateId}`)
 			.attr('x', x + width/2)
 			.attr('y', y + height/1.5)
-			.text(() => {
+			.text((): string => {
 				return usStatesStore.getStateById(stateId).initials;
 			})
+
+		// Create tooltip
+		const tooltip = d3.select('.c-nationalMap_tooltip')
+			.append('div')
+			.attr("class", "tooltip");
+
+		// Set mouse events
+		g.on('mouseover', () => tooltip.style('visibility', 'visible'))
+			.on('mouseleave', () => tooltip.style('visibility', 'hidden'))
+			.on('mousemove', (event: any, d: any) => onStateMousemove(event, stateId, tooltip));
 	};
 
 	/**
@@ -185,6 +217,7 @@
 		
 		// Remove SVG elements for resets
 		d3.select(componentSelector + ' svg').remove();
+		d3.select(`${componentSelector}_tooltip div`).remove();
 
 		const svg = d3.select(componentSelector)
 			.append('svg')
@@ -198,8 +231,13 @@
 		// Strip required TSV state data with our state id
 		const geoStates: Record<string, IGeoState> = getGeoStateData(geoStateNames);
 
+		// Create tooltip
+		const tooltip = d3.select('.c-nationalMap_tooltip')
+			.append('div')
+			.attr("class", "tooltip");
+
 		// Build paths for US states and add on click event
-		svg.append('g')
+		const g = svg.append('g')
 			.attr('class', 'states')
 			.selectAll('path')
 			.data(stateGeoFeatures)
@@ -207,12 +245,17 @@
 			.append('path')
 			.attr('d', path)
 			.attr('class', (d: any) => `state-${geoStates[d.id].id}`)
-			.on("click", (event, d: any) => {
+			.on("click", (event: any, d: any) => {
 				const stateId: number = geoStates[d.id].id;
 				if (stateId !== null) {
 					onStateClick(stateId);
 				}
 			});
+			
+		// Set mouse events
+		g.on('mouseover', () => tooltip.style('visibility', 'visible'))
+			.on('mouseleave', () => tooltip.style('visibility', 'hidden'))
+			.on('mousemove', (event: any, d: any) => onStateMousemove(event, geoStates[d.id].id, tooltip));
 
 		// State initials 
 		svg.append('g')
@@ -290,22 +333,22 @@
 </script>
 
 <style>
-.c-nationalMap {
+.c-nationalMap_map {
 	display: flex;
 	width: 100%;
 	margin-bottom: var(--standard-spacing);
 }
 
-.c-nationalMap svg {
+.c-nationalMap_map svg {
 	fill: var(--color-light-grey);
 }
 
-.c-nationalMap path:hover,
-.c-nationalMap rect:hover {
+.c-nationalMap_map path:hover,
+.c-nationalMap_map rect:hover {
 	fill-opacity: 0.7;
 }
 
-.c-nationalMap .state-borders {
+.c-nationalMap_map .state-borders {
 	fill: none;
 	stroke: var(--color-white);
 	stroke-width: 0.5px;
@@ -314,14 +357,43 @@
 	pointer-events: none;
 }
 
-.c-nationalMap .states-names text {
+.c-nationalMap_map .states-names text {
 	fill: var(--color-white);
 	text-anchor: middle;
 	pointer-events: none;
 }
 
-.c-nationalMap .states-names text.selected  {
+.c-nationalMap_map .states-names text.selected  {
 	fill: var(--color-black);
 	font-weight: bold;
+}
+
+.c-nationalMap_tooltip {
+	position: absolute;
+	visibility: hidden;
+}
+
+.c-nationalMap_tooltip .tooltip {
+	z-index: 999;
+	position: absolute;
+	background-color: white;
+	width: 125px;
+	margin: 5px;
+	border-radius: 25px;
+	padding: 8px;
+	color: var(--color-black);
+	font-family: var(--standard-font-family);
+	font-size: 14px;
+	text-align: center;
+	text-transform: capitalize;
+	box-shadow: var(--standard-box-shadow);
+}
+
+.c-nationalMap_tooltip_name {
+	font-weight: bold;
+}
+
+.c-nationalMap_tooltip_del {
+	text-transform: none;
 }
 </style>
