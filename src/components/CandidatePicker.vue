@@ -108,7 +108,7 @@ function onChoiceClick(candidateId: number) {
 	padding: 8px 0;
 	text-align: center;
 	color: var(--base-background-color);
-	background-color: #bfbfbf;
+	background-color: var(--color-light-grey);
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -134,7 +134,7 @@ function onChoiceClick(candidateId: number) {
 .isEditMode .c-candidatePicker_choice.item, 
 .isEditMode .c-candidatePicker_choice.editBtn 
 {
-	border-color: #333333;
+	border-color: var(--color-black);
 }
 
 .isEditMode .c-candidatePicker_choice.noneBtn {
@@ -144,7 +144,7 @@ function onChoiceClick(candidateId: number) {
 input {
 	width: 180px;
 	padding: 10px;
-	color: #000000;
+	color: var(--color-black);
 	font-family: var(--standard-font-family);
 	font-size: 16px;
 	font-weight: bold;
@@ -160,6 +160,6 @@ input::placeholder {
 }
 
 .isEditMode input {
-	color: #808080;
+	color: var(--color-dark-grey);
 }
 </style>

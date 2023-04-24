@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, Ref } from 'vue';
+import { onMounted, onUnmounted, ref, Ref } from 'vue';
 import * as d3 from 'd3';
 import { storeToRefs } from 'pinia';
 
@@ -243,7 +243,7 @@ onUnmounted(() => {
 }
 
 .c-delegateBar_majorityMarker {
-	stroke: #333333;
+	stroke: var(--color-black);
 	stroke-width: 1.5;
 	stroke-dasharray: 3;
 }
@@ -252,7 +252,7 @@ onUnmounted(() => {
 	display: flex;
 	margin: auto;
 	padding-left: 12px;
-	stroke: #333333;
+	stroke: var(--color-black);
 }
 
 .c-delegateBar_tooltip {
@@ -266,7 +266,7 @@ onUnmounted(() => {
 	margin: 5px;
 	border-radius: 25px;
 	padding: 10px;
-	color: #000000;
+	color: var(--color-black);
 	font-family: var(--standard-font-family);
 	font-size: 16px;
 	font-weight: bold;

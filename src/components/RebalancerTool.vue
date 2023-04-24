@@ -123,7 +123,7 @@ function getUnallocatedPercentage() {
 .c-rebalancerTool_stateDelegates, .c-rebalancerTool_stateDetails {
 	font-weight: normal;
 	font-size: 12px;
-	color: #808080;
+	color: var(--color-dark-grey);
 }
 
 .c-rebalancerTool_header div {

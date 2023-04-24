@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, onMounted, watchEffect, Ref } from 'vue';
+	import { computed, onMounted, onUnmounted, watchEffect, Ref } from 'vue';
 	import * as d3 from 'd3';
 	import * as topojson  from 'topojson-client';
 
@@ -11,14 +11,19 @@
 	import { useStore } from '../stores/store';
 	import { useUsStatesStore, IState } from '../stores/usStates';
 
+	interface IGeoState { 
+		id: number,
+		initials: string
+	}
+
 	const candidatesStore = useCandidatesStore();
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
 
 	const className: string = 'c-nationalMap';
-	const usMapJSON = 'https://d3js.org/us-10m.v1.json';
-	const stateNamesTSV = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
-	const hiddenInitialsTextIds = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
+	const usMapJSON: string = 'https://d3js.org/us-10m.v1.json';
+	const stateNamesTSV: string = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
+	const hiddenInitialsTextIds: number[] = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
 	const initialsTextOffsets: Record<number, Record<string, number>> = {
 		0: { y: -2 }, 				// AK
 		5: { y: 20 },					// CA
@@ -30,6 +35,8 @@
 		33: { y: 11 },				// NH
 		51: { x: -1, y: 1 }		// VT
 	};
+	let geoStateNames: any = null;
+	let jsonData: any = null;
 
 	const selectedCandidateId: Ref<number> = computed(() => {
 		return mainStore.getSelectedCandidateId.value;
@@ -53,8 +60,13 @@
 	 * 
 	 * @param stateInitial
 	 */
-	function getStateIdFromInitials(stateInitial: string): number|undefined {
+	function getStateIdFromInitials(stateInitial: string): number|null {
 		const usState = usStatesStore.getStateByInitial(stateInitial);
+
+		if (usState?.id == null) {
+			return null;
+		}
+
 		return usState?.id;
 	};
 
@@ -63,8 +75,8 @@
 	 * 
 	 * @param geoStateTSV 
 	 */
-	function getGeoStateData(geoStateTSV: any): Record<string, any> {
-		const geoStates: Record<string, any> = {};
+	function getGeoStateData(geoStateTSV: any): Record<string, IGeoState> {
+		const geoStates: Record<string, IGeoState> = {};
 
 		geoStateTSV.forEach((state: Record<string, string>) => {
 			let key: string = state?.id;
@@ -75,9 +87,12 @@
 				}
 
 				if (state?.code) {
-					geoStates[key] = {
-						id: getStateIdFromInitials(state.code),
-						initials: state.code
+					const stateId = getStateIdFromInitials(state.code);
+					if (stateId !== null) {
+						geoStates[key] = {
+							id: stateId,
+							initials: state.code
+						}
 					}
 				}
 			}
@@ -115,9 +130,8 @@
 		setSelectedState(stateId);
 
 		// To visually identify state clicked on
-		// d3.selectAll(`.c-nationalMap .states path`).classed("selected", false); // Main states
-		// d3.selectAll(`.c-nationalMap .states rect`).classed("selected", false); // Avatar states
-		d3.selectAll(`.state-name-${stateId}`).classed("selected", false); // Main and avatar states
+		d3.selectAll(`.c-nationalMap .states path`).classed("selected", false); // Main states
+		d3.selectAll(`.c-nationalMap .states rect`).classed("selected", false); // Avatar states
 		d3.selectAll(`.c-nationalMap .states-names text`).classed("selected", false); // State initials text
 		d3.selectAll(`.state-${stateId}`).classed("selected", true);
 		d3.selectAll(`.state-name-${stateId}`).classed("selected", true);
@@ -181,8 +195,8 @@
 
 		const stateGeoFeatures: any = topojson.feature(jsonData, jsonData?.objects?.states).features;
 		
-		// Setup state ids to match state data from TSV
-		const geoStates: Record<string, any> = getGeoStateData(geoStateNames);
+		// Strip required TSV state data with our state id
+		const geoStates: Record<string, IGeoState> = getGeoStateData(geoStateNames);
 
 		// Build paths for US states and add on click event
 		svg.append('g')
@@ -200,7 +214,7 @@
 				}
 			});
 
-		// Set state initials text
+		// State initials 
 		svg.append('g')
 			.attr('class', 'states-names')
 			.selectAll('text')
@@ -258,26 +272,32 @@
 	};
 
 	onMounted(async () => {
-		const jsonData = await d3.json(usMapJSON);
-		const geoStateNames: any = await d3.tsv(stateNamesTSV);
+		jsonData = await d3.json(usMapJSON);
+		geoStateNames = await d3.tsv(stateNamesTSV);
 
 		createMap(jsonData, geoStateNames);
 
 		window.addEventListener('resize', () => {
 			createMap(jsonData, geoStateNames);
-		}); // TODO: debounce and destroy
+		});
 	});
+
+	onUnmounted(() => {
+		window.removeEventListener('resize', () => {
+			createMap(jsonData, geoStateNames);
+		});
+	})
 </script>
 
 <style>
 .c-nationalMap {
 	display: flex;
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: var(--standard-spacing);
 }
 
 .c-nationalMap svg {
-	fill: #bfbfbf;
+	fill: var(--color-light-grey);
 }
 
 .c-nationalMap path:hover,
@@ -287,21 +307,21 @@
 
 .c-nationalMap .state-borders {
 	fill: none;
-	stroke: #fff;
+	stroke: var(--color-white);
 	stroke-width: 0.5px;
 	stroke-linejoin: round;
 	stroke-linecap: round;
 	pointer-events: none;
 }
 
-.states-names text {
-	fill: #FFFFFF;
+.c-nationalMap .states-names text {
+	fill: var(--color-white);
 	text-anchor: middle;
 	pointer-events: none;
 }
 
-.states-names text.selected  {
-	fill: #000000;
+.c-nationalMap .states-names text.selected  {
+	fill: var(--color-black);
 	font-weight: bold;
 }
 </style>

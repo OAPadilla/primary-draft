@@ -88,7 +88,7 @@ function onInput(event: any) {
 	-webkit-appearance: none;
   width: 100%;
   height: 5px;
-  background: #d3d3d3;
+  background-color: var(--color-light-grey);
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
@@ -105,7 +105,7 @@ function onInput(event: any) {
   appearance: none;
   width: 5px;
   height: 14px;
-  background: #000000;
+  background-color: var(--color-black);
   cursor: pointer;
 }
 
@@ -113,7 +113,7 @@ function onInput(event: any) {
 .c-rebalancerToolSlider input::-moz-range-thumb { 
   width: 6px;
   height: 16px;
-  background: #000000;
+  background-color: var(--color-black);
   cursor: pointer;
 }
 
