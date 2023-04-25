@@ -158,12 +158,12 @@ function createBar(data: ICandidate[]) {
 	// Create tooltip
 	const tooltip = d3.select('.c-delegateBar_tooltip')
 		.append('div')
-		.style("opacity", 0)
+		.style('visibility', 'hidden')
     .attr("class", "tooltip");
 
 	const mouseover = function(event: any, d: ICandidateBarChart) {
 		// Update tooltip
-		tooltip.style("opacity", 1)
+		tooltip.style('visibility', 'visible')
 			.style('background-color', d.color);
 	
 		// Update rect
@@ -181,7 +181,7 @@ function createBar(data: ICandidate[]) {
 
 	const mouseleave = function(event: any, d: ICandidateBarChart) {
 		// Update tooltip
-		tooltip.style("opacity", 0);
+		tooltip.style('visibility', 'hidden');
 
 		// Update rect
     d3.select(event.target)

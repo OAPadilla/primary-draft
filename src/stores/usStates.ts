@@ -301,6 +301,11 @@ export const useUsStatesStore = defineStore('usStates', () => {
     }
   }
 
+  /**
+   * Allocate delegates to candidates in state based on percentage results and state rules
+   * 
+   * @param usState 
+   */
   function _updateStateDelegates(usState: IState) {
     switch(usState.allocation) {
       case 'winner-take-all':
@@ -386,8 +391,12 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function resetStateResults(stateId: number) {
-    getStateById(stateId).results = _defaultResults();
-  }
+    const usState = getStateById(stateId);
+
+    usState.results = _defaultResults();
+    _setStateUnallocatedPercentage(stateId, 100);
+    _setStateUnallocatedDelegates(stateId, usState.totalDelegates);
+  };
 
   /**
    * Fetch US state data
@@ -417,6 +426,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getStateTotalDelegates,
     getStateUnallocatedDelegates,
     getStateUnallocatedPercentage,
+    resetStateResults,
     updateCandidateDelegates,
     updateCandidatePercentage
   }

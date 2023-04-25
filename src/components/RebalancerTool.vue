@@ -2,7 +2,7 @@
 	<div 
 		class="c-rebalancerTool"
 		v-show="selectedStateId !== null"
-	>
+	>	
 		<div class="c-rebalancerTool_header">
 				<div class="c-rebalancerTool_stateName">
 					{{ selectedState.name }}
@@ -15,6 +15,12 @@
 				<div class="c-rebalancerTool_stateDetails" v-if="stateElectionRules">
 					{{ stateElectionRules }}
 				</div>
+
+				<ResetIcon 
+					class="c-rebalancerTool_resetBtn"
+					:class="{ '-rotate': resetActivated }"
+					@click="onResetClick"
+				/>
 		</div>
 
 		<RebalancerToolItem
@@ -43,9 +49,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
+import ResetIcon from '../assets/icons/reset.svg?component';
 import RebalancerToolItem from "./RebalancerToolItem.vue";
 
 import { useCandidatesStore } from '../stores/candidates';
@@ -56,6 +63,8 @@ const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
 const { candidates } = storeToRefs(candidatesStore);
+
+const resetActivated = ref(false);
 
 const selectedStateId: Ref<number> = computed(() => {
 	return mainStore.getSelectedStateId.value;
@@ -100,8 +109,18 @@ function getCandidatePercentage(candidateId: number): number {
 	return usStatesStore.getCandidatePercentage(candidateId, selectedStateId.value);
 };
 
-function getUnallocatedPercentage() {
+function getUnallocatedPercentage() { // TODO: Make computed function
 	return usStatesStore.getStateUnallocatedPercentage(selectedStateId.value);
+};
+
+function onResetClick() {
+	usStatesStore.resetStateResults(selectedStateId.value);
+
+	// Animate reset icon
+	resetActivated.value = true;
+	setTimeout(() => {
+		resetActivated.value = false;
+	}, 500);
 };
 </script>
   
@@ -111,6 +130,7 @@ function getUnallocatedPercentage() {
 }
 
 .c-rebalancerTool_header {
+	position: relative;
  	display: flex;
 	flex-direction: column;
 	font-family: var(--standard-font-family);
@@ -133,5 +153,24 @@ function getUnallocatedPercentage() {
 
 .c-rebalancerTool_unallocated {
 	font-weight: bold;
+}
+
+.c-rebalancerTool_resetBtn {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	right: 0;
+	bottom: 0;
+	padding: 5px;
+}
+
+.c-rebalancerTool_resetBtn:hover {
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+.c-rebalancerTool_resetBtn.-rotate {
+	transition: transform 0.5s ease;
+	transform: rotate(-360deg);
 }
 </style>
