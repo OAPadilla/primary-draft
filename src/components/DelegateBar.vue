@@ -273,10 +273,4 @@ onUnmounted(() => {
 	text-align: center;
 	box-shadow: var(--standard-box-shadow);
 }
-
-/* @media (max-width: 1024px) {
-	.c-delegateBar_tooltip {
-		display: none;
-	}
-} */
 </style>

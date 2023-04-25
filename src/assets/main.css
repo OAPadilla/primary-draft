@@ -4,7 +4,7 @@
   --color-dark-grey: #808080;
   --color-light-grey: #BFBFBF;
   --color-white: #FFFFFF;
-  --standard-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --standard-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --standard-border: 1px solid var(--color-black);
   --standard-font-family: Futura,Trebuchet MS,Arial,sans-serif;
   --standard-spacing: 1.25rem;
@@ -48,16 +48,3 @@ a {
     text-decoration: underline;
   }
 }
-
-/* @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-} */

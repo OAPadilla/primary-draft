@@ -396,4 +396,10 @@
 .c-nationalMap_tooltip_del {
 	text-transform: none;
 }
+
+@media (max-width: 768px) {
+  .c-nationalMap_tooltip .tooltip  {
+		display: none;
+	}
+}
 </style>
