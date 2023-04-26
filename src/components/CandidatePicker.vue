@@ -114,7 +114,7 @@ function onChoiceClick(candidateId: number) {
 }
 
 .selected .c-candidatePicker_choice {
-	border-color: #333333;
+	border-color: var(--color-black);
 }
 
 .c-candidatePicker_tools {
@@ -134,7 +134,7 @@ function onChoiceClick(candidateId: number) {
 .isEditMode .c-candidatePicker_choice.item, 
 .isEditMode .c-candidatePicker_choice.editBtn 
 {
-	border-color: var(--color-black);
+	border-color: var(--color-dark-grey);
 }
 
 .isEditMode .c-candidatePicker_choice.noneBtn {

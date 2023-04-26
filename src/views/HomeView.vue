@@ -1,6 +1,6 @@
 <template>
 	<div class="c-homeView">
-		<h2>{{ partyName }} Presidential Primary</h2>
+		<h2>{{ partyName }} Party Presidential Primary</h2>
 		<CandidatePicker />
 		<NationalMap />
 		<DelegateBar />
@@ -9,18 +9,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import CandidatePicker from "../components/CandidatePicker.vue";
 import DelegateBar from "../components/DelegateBar.vue";
 import NationalMap from "../components/NationalMap.vue";
 import RebalancerTool from "../components/RebalancerTool.vue";
 
-const partyName = ref('Republican Party');
+const props = defineProps({
+  party: { type: String, default: 'republican' }
+});
+
+const partyName = computed(() => {
+	return props.party;
+})
 </script>
 
 <style>
 h2 {
+	text-transform: capitalize;
 	font-weight: normal;
 	text-align: center;
 	margin-top: 0;

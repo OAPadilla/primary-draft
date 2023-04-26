@@ -20,7 +20,14 @@ const router = createRouter({
     {
       path: "/republican-primary-election",
       name: "gop",
-      component: () => import("../views/HomeView.vue")
+      component: () => import("../views/HomeView.vue"),
+      props: route => ({ ...route.params, party: 'republican'})
+    },
+    {
+      path: "/democratic-primary-election",
+      name: "dem",
+      component: () => import("../views/ComingSoonView.vue"),
+      props: route => ({ ...route.params, party: 'democratic'})
     }
   ],
 });
