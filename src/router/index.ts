@@ -18,13 +18,13 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue")
     },
     {
-      path: "/republican-primary-election",
+      path: "/republican-primary-map",
       name: "gop",
       component: () => import("../views/HomeView.vue"),
       props: route => ({ ...route.params, party: 'republican'})
     },
     {
-      path: "/democratic-primary-election",
+      path: "/democratic-primary-map",
       name: "dem",
       component: () => import("../views/ComingSoonView.vue"),
       props: route => ({ ...route.params, party: 'democratic'})

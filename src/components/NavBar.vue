@@ -1,10 +1,11 @@
 <template>
 	<header>
 		<div class="c-navBar">
+			<RouterLink to="/"><LogoIcon class="c-navLinks_logo"/></RouterLink>
 			<h1>primary draft</h1>
 			<nav class="c-navLinks">
-				<RouterLink to="/republican-primary-election">gop</RouterLink>
-				<RouterLink to="/democratic-primary-election">dem</RouterLink>
+				<RouterLink to="/republican-primary-map">gop</RouterLink>
+				<RouterLink to="/democratic-primary-map">dem</RouterLink>
 				<RouterLink to="/about"><InfoIcon /></RouterLink>
 			</nav>
 		</div>
@@ -13,7 +14,9 @@
 
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
+
 import InfoIcon from '../assets/icons/info.svg?component';
+import LogoIcon from '../assets/logo/logo.svg?component';
 </script>
 
 <style scoped>
@@ -43,13 +46,19 @@ nav {
 	margin: auto 0 auto auto;
 }
 
-a {
+.c-navLinks a {
 	display: flex;
 	align-items: center;
 	padding-left: var(--standard-spacing);
 }
 
-svg:hover {
+.c-navLinks_logo {
+	display: flex;
+	width: 90px;
+	height: 69px;
+}
+
+.c-navLinks svg:hover {
 	opacity: 0.7;
 }
 </style>
