@@ -78,6 +78,14 @@
 		</div>
 	</div>
 </template>
+
+<script setup lang="ts">
+import { useMeta } from 'vue-meta'
+
+useMeta({
+  title: 'About'
+})
+</script>
   
 <style scoped>
 .c-aboutView ul {

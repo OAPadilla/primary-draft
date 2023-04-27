@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, onMounted, ref, Ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
 import { useCandidatesStore } from '../stores/candidates';
 import { useUsStatesStore } from '../stores/usStates';

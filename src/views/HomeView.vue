@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import CandidatePicker from "../components/CandidatePicker.vue";
 import DelegateBar from "../components/DelegateBar.vue";
