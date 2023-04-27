@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="c-navBar">
-			<RouterLink to="/"><LogoIcon class="c-navLinks_logo"/></RouterLink>
+			<RouterLink to="/" class="c-navBar_home"><LogoIcon class="c-navBar_logo"/></RouterLink>
 			<h1>primary draft</h1>
 			<nav class="c-navLinks">
 				<RouterLink to="/republican-primary-map">gop</RouterLink>
@@ -32,6 +32,16 @@ header {
 	border-bottom: var(--standard-border);
 }
 
+.c-navBar_home {
+	margin: auto 0;
+}
+
+.c-navBar_logo {
+	display: flex;
+	width: 90px;
+	height: 69px;
+}
+
 .c-navLinks {
 	display: flex;
 	font-size: 20px;
@@ -50,12 +60,6 @@ nav {
 	display: flex;
 	align-items: center;
 	padding-left: var(--standard-spacing);
-}
-
-.c-navLinks_logo {
-	display: flex;
-	width: 90px;
-	height: 69px;
 }
 
 .c-navLinks svg:hover {

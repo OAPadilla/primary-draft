@@ -145,6 +145,13 @@
 		}
 	};
 
+	/**
+	 * Handle on mouse move event for US state, such as for the tooltip position and content
+	 * 
+	 * @param event 
+	 * @param stateId 
+	 * @param tooltip 
+	 */
 	function onStateMousemove(event: any, stateId: any, tooltip: any) {
 		const map = d3.select('.' + className);
 		const currentWidth: number = parseInt(map.style('width'), 10);
@@ -165,6 +172,7 @@
 
 	/**
 	 * Create a square svg element representing a state/territory for simpler/alternative interactivity
+	 * 
 	 * @param svg 
 	 * @param x x-axis position
 	 * @param y y-axis position
@@ -211,6 +219,9 @@
 
 	/**
 	 * Create map using D3 and TopoJSON
+	 * 
+	 * @param jsonData 
+	 * @param geoStateNames
 	 */
  	function createMap(jsonData: any, geoStateNames: any) {
 		const componentSelector: string = '.' + className;
@@ -400,6 +411,12 @@
 @media (max-width: 768px) {
   .c-nationalMap_tooltip .tooltip  {
 		display: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.c-nationalMap {
+		min-height: 620px;
 	}
 }
 </style>
