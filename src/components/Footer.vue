@@ -21,11 +21,6 @@
 </template>
 
 <style scoped lang="scss">
-footer {
-	background-color: var(--base-background-color);
-	padding: 0 2rem;
-}
-
 .c-footer {
 	display: flex;
 	padding: 20px 0 30px;
@@ -62,5 +57,10 @@ footer {
 	&_copyright {
 		margin: auto;
 	}
+}
+
+footer {
+	background-color: var(--base-background-color);
+	padding: 0 2rem;
 }
 </style>

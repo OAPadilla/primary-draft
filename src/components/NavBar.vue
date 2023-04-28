@@ -20,11 +20,6 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 </script>
 
 <style scoped lang="scss">
-header {
-	background-color: var(--base-background-color);
-	padding: 0 2rem;
-}
-
 .c-navBar {
 	display: flex;
 	max-width: 950px;
@@ -64,5 +59,10 @@ header {
 			opacity: 0.7;
 		}
 	}
+}
+
+header {
+	background-color: var(--base-background-color);
+	padding: 0 2rem;
 }
 </style>

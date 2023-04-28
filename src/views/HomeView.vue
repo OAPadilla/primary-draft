@@ -25,11 +25,13 @@ const partyName = computed(() => {
 });
 </script>
 
-<style>
-h2 {
-	text-transform: capitalize;
-	font-weight: normal;
-	text-align: center;
-	margin-top: 0;
+<style scoped lang="scss">
+.c-homeView {
+	h2 {
+		text-transform: capitalize;
+		font-weight: normal;
+		text-align: center;
+		margin-top: 0;
+	}
 }
 </style>

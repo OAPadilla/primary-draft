@@ -87,26 +87,28 @@ useMeta({
 });
 </script>
   
-<style scoped>
-.c-aboutView ul {
-	padding: 0 20px;
-}
+<style scoped lang="scss">
+.c-aboutView {
+	ul {
+		padding: 0 20px;
+	}
 
-.c-aboutView h2 {
-	text-align: unset;
-	margin-bottom: 0;
-}
+	h2 {
+		text-align: unset;
+		margin-bottom: 0;
+	}
 
-.c-aboutView_section {
-	border-left: 1px solid black;
-	padding-left: 40px;
-	margin-bottom: var(--standard-spacing);
-}
+	a {
+		text-decoration: none;
+		color: #2f83b5;
+		border-bottom: 1px solid #2f83b5;
+	}
 
-.c-aboutView a {
-	text-decoration: none;
-	color: #2f83b5;
-	border-bottom: 1px solid #2f83b5;
+	&_section {
+		border-left: var(--standard-border);
+		padding-left: 40px;
+		margin-bottom: var(--standard-spacing);
+	}
 }
 </style>
   
