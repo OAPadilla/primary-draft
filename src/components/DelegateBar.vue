@@ -224,52 +224,52 @@ onUnmounted(() => {
 })
 </script>
   
-<style>
+<style lang="scss">
 .c-delegateBar {
 	margin-bottom: var(--standard-spacing);
-}
 
-.c-delegateBar_bar {
-	display: flex;
-}
+	&_bar {
+		display: flex;
 
-.c-delegateBar_bar svg {
-	width: 100%;
-}
+		svg {
+			width: 100%;
+		}
 
-.c-delegateBar_bar rect {
-	transition: all 200ms ease-out;
-}
+		rect {
+			transition: all 200ms ease-out;
+		}
+	}
 
-.c-delegateBar_majorityMarker {
-	stroke: var(--color-black);
-	stroke-width: 1.5;
-	stroke-dasharray: 3;
-}
+	&_majorityMarker {
+		stroke: var(--color-black);
+		stroke-width: 1.5;
+		stroke-dasharray: 3;
+	}
 
-.c-delegateBar_flag {
-	display: flex;
-	margin: auto;
-	padding-left: 12px;
-	stroke: var(--color-black);
-}
+	&_flag {
+		display: flex;
+		margin: auto;
+		padding-left: 12px;
+		stroke: var(--color-black);
+	}
 
-.c-delegateBar_tooltip {
-	position: absolute;
-}
+	&_tooltip {
+		position: absolute;
 
-.c-delegateBar_tooltip .tooltip {
-	z-index: 999;
-	position: absolute;
-	width: 200px;
-	margin: 5px;
-	border-radius: 25px;
-	padding: 10px;
-	color: var(--color-black);
-	font-family: var(--standard-font-family);
-	font-size: 16px;
-	font-weight: bold;
-	text-align: center;
-	box-shadow: var(--standard-box-shadow);
+		.tooltip {
+			z-index: 999;
+			position: absolute;
+			width: 200px;
+			margin: 5px;
+			border-radius: 25px;
+			padding: 10px;
+			color: var(--color-black);
+			font-family: var(--standard-font-family);
+			font-size: 16px;
+			font-weight: bold;
+			text-align: center;
+			box-shadow: var(--standard-box-shadow);
+		}
+	}
 }
 </style>

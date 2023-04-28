@@ -345,81 +345,83 @@
 	})
 </script>
 
-<style>
-.c-nationalMap_map {
-	display: flex;
-	width: 100%;
-	margin-bottom: var(--standard-spacing);
-}
+<style lang="scss">
+.c-nationalMap {
+	&_map {
+		display: flex;
+		width: 100%;
+		margin-bottom: var(--standard-spacing);
 
-.c-nationalMap_map svg {
-	fill: var(--color-light-grey);
-}
+		@media (min-width: 1030px) {
+			min-height: 620px;
+		}
 
-.c-nationalMap_map path:hover,
-.c-nationalMap_map rect:hover {
-	fill-opacity: 0.7;
-}
+		svg {
+			fill: var(--color-light-grey);
+		}
 
-.c-nationalMap_map .state-borders {
-	fill: none;
-	stroke: var(--color-white);
-	stroke-width: 0.5px;
-	stroke-linejoin: round;
-	stroke-linecap: round;
-	pointer-events: none;
-}
+		path:hover,
+		rect:hover {
+			fill-opacity: 0.7;
+		}
 
-.c-nationalMap_map .states-names text {
-	fill: var(--color-white);
-	text-anchor: middle;
-	pointer-events: none;
-}
+		.state-borders {
+			fill: none;
+			stroke: var(--color-white);
+			stroke-width: 0.5px;
+			stroke-linejoin: round;
+			stroke-linecap: round;
+			pointer-events: none;
+		}
 
-.c-nationalMap_map .states-names text.selected  {
-	fill: var(--color-black);
-	font-weight: bold;
-}
+		.states-names {
+			text {
+				fill: var(--color-white);
+				text-anchor: middle;
+				pointer-events: none;
 
-.c-nationalMap_tooltip {
-	position: absolute;
-	visibility: hidden;
-}
-
-.c-nationalMap_tooltip .tooltip {
-	z-index: 999;
-	position: absolute;
-	background-color: white;
-	width: 125px;
-	margin: 5px;
-	border-radius: 25px;
-	padding: 8px;
-	color: var(--color-black);
-	font-family: var(--standard-font-family);
-	font-size: 14px;
-	text-align: center;
-	text-transform: capitalize;
-	box-shadow: var(--standard-box-shadow);
-	border: 3px solid red;
-}
-
-.c-nationalMap_tooltip_name {
-	font-weight: bold;
-}
-
-.c-nationalMap_tooltip_del {
-	text-transform: none;
-}
-
-@media (max-width: 768px) {
-  .c-nationalMap_tooltip .tooltip  {
-		display: none;
+				&.selected  {
+					fill: var(--color-black);
+					font-weight: bold;
+				}
+			}
+		}
 	}
-}
 
-@media (min-width: 1030px) {
-	.c-nationalMap {
-		min-height: 620px;
+	&_tooltip {
+		position: absolute;
+		visibility: hidden;
+
+		@media (max-width: 768px) {
+			.tooltip  {
+				display: none;
+			}
+		}
+
+		.tooltip {
+			z-index: 999;
+			position: absolute;
+			background-color: white;
+			width: 125px;
+			margin: 5px;
+			border-radius: 25px;
+			padding: 8px;
+			color: var(--color-black);
+			font-family: var(--standard-font-family);
+			font-size: 14px;
+			text-align: center;
+			text-transform: capitalize;
+			box-shadow: var(--standard-box-shadow);
+			border: 3px solid red;
+		}
+
+		&_name {
+			font-weight: bold;
+		}
+
+		&_del {
+			text-transform: none;
+		}
 	}
 }
 </style>
