@@ -156,6 +156,7 @@
 		const currentWidth: number = parseInt(map.style('width'), 10);
 		const stateData: IState = usStatesStore.getStateById(stateId);
 		const switchPoint: number = currentWidth - tooltipWidth;
+		const border: string = selectedCandidateId.value !== -1 ? `3px solid ${candidatesStore.getCandidateColor(selectedCandidateId.value)}` : 'unset';
 	
 		const [x, y]: number[] =  d3.pointer(event, map.node());
 		const left: number = Math.min(x - 20, switchPoint);
@@ -165,8 +166,9 @@
 			<div class="c-nationalMap_tooltip_del">${stateData.totalDelegates} del.</div>
 			<div class="c-nationalMap_tooltip_alloc">${stateData.allocation}</div>
 		`)
-		.style("left", `${left}px`)
-		.style("top", `${y + 40}px`);
+		.style('left', `${left}px`)
+		.style('top', `${y + 40}px`)
+		.style('border', border);
 	};
 
 	/**
@@ -398,6 +400,7 @@
 	text-align: center;
 	text-transform: capitalize;
 	box-shadow: var(--standard-box-shadow);
+	border: 3px solid red;
 }
 
 .c-nationalMap_tooltip_name {
