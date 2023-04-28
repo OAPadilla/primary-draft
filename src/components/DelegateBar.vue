@@ -36,7 +36,7 @@ candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pin
 	updateBar(Array.from(candidates.value));
 
 	// Update flag color based on if majority vote reached by candidate
-	const winningCandidate = candidatesStore.getWinnerCandidate;
+	const winningCandidate: Ref<ICandidate> | null = candidatesStore.getWinnerCandidate;
 	flagColor.value = winningCandidate ? winningCandidate.value.color : defaultFlagColor;
 });
 
@@ -45,7 +45,7 @@ candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pin
  * 
  * @param d 
  */
-function sortData(d: ICandidate[]) {
+function sortData(d: ICandidate[]): ICandidate[] {
 	d.sort((a: ICandidate, b: ICandidate) => {
 		return b.delegates - a.delegates;
 	});
@@ -60,7 +60,7 @@ function sortData(d: ICandidate[]) {
  * @param totalDelegates 
  */
 function processData(data: ICandidate[], totalDelegates: number): ICandidateBarChart[] {
-	const percent = (delegates: number) => Number((delegates / totalDelegates * 100).toFixed(2));
+	const percent = (delegates: number): number => Number((delegates / totalDelegates * 100).toFixed(2));
 	let cumulativeDelegates: number = 0; // Keeps track of how many delegates assigned as we iterate over data
 
 	sortData(data);
@@ -95,13 +95,29 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
 };
 
 /**
+ * Handle on mouse move event for delegate bar
+ * 
+ * @param event 
+ * @param d 
+ * @param tooltip 
+ */
+function onMousemove(event: any, d: ICandidateBarChart, tooltip: any): void {
+	const currentWidth: number = parseInt(d3.select('.' + barClass).style('width'), 10);
+
+	const switchPoint = currentWidth - tooltipWidth - 20;
+	const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
+	tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
+		.style("left", `${left}px`)
+		.style("top", `${d3.pointer(event)[1] - 20}px`);
+}
+
+/**
  * Update bar chart rect sizes based on new data
  * 
  * @param data
  */
-function updateBar(data: ICandidate[]) {
+function updateBar(data: ICandidate[]): void {
 	const componentSelector: string = '.' + barClass;
-	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
 	const tooltip = d3.select('.c-delegateBar_tooltip .tooltip');
 
@@ -109,20 +125,12 @@ function updateBar(data: ICandidate[]) {
 		.domain([0, totalDelegates.value])
 		.range([0, '100%']);
 
-	const mousemove = function(event: any, d: ICandidateBarChart) {
-		const switchPoint = currentWidth - tooltipWidth - 20;
-		const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
-		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
-			.style("left", `${left}px`)
-			.style("top", `${d3.pointer(event)[1] - 20}px`);
-	}
-
 	// Adjust rect sizes and update tooltip based on data
 	procData.forEach((d: ICandidateBarChart) => {
 		d3.select(componentSelector + ` .rect-${d.id}`)
 			.attr('width', xScale(d.delegates))
 			.attr('x', xScale(d.cumulative))
-			.on('mousemove', (event) => mousemove(event, d));
+			.on('mousemove', (event) => onMousemove(event, d, tooltip));
 	});
 }
 
@@ -131,9 +139,8 @@ function updateBar(data: ICandidate[]) {
  * 
  * @param data 
  */
-function createBar(data: ICandidate[]) {
+function createBar(data: ICandidate[]): void {
 	const componentSelector: string = '.' + barClass;
-	const currentWidth: number = parseInt(d3.select(componentSelector).style('width'), 10);
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
 
 	// Remove SVG and tooltip elements
@@ -161,7 +168,7 @@ function createBar(data: ICandidate[]) {
 		.style('visibility', 'hidden')
     .attr("class", "tooltip");
 
-	const mouseover = function(event: any, d: ICandidateBarChart) {
+	const mouseover = (event: any, d: ICandidateBarChart): void => {
 		// Update tooltip
 		tooltip.style('visibility', 'visible')
 			.style('background-color', d.color);
@@ -171,15 +178,7 @@ function createBar(data: ICandidate[]) {
       .style("opacity", 0.8);
 	}
 
-	const mousemove = function(event: any, d: ICandidateBarChart) {
-		const switchPoint = currentWidth - tooltipWidth - 20;
-		const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
-		tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
-			.style("left", `${left}px`)
-			.style("top", `${d3.pointer(event)[1] - 20}px`);
-	}
-
-	const mouseleave = function(event: any, d: ICandidateBarChart) {
+	const mouseleave = (event: any): void => {
 		// Update tooltip
 		tooltip.style('visibility', 'hidden');
 
@@ -197,7 +196,7 @@ function createBar(data: ICandidate[]) {
 		.style('fill', (d: ICandidateBarChart) => d.color)
 		.on('mouseover', mouseover)
     .on('mouseleave', mouseleave)
-		.on('mousemove', mousemove);
+		.on('mousemove', (event: any, d: any) => onMousemove(event, d, tooltip));
 
 	// Create majority marker
 	svg.append('line')
@@ -211,7 +210,7 @@ function createBar(data: ICandidate[]) {
 /**
  * Re-create bar chart with up-to-date store data
  */
-function resetBar() {
+function resetBar(): void {
 	createBar(Array.from(candidates.value));
 }
 

@@ -38,7 +38,7 @@ footer {
 
 .c-footer_top {
 	display: flex;
-	margin-bottom: 20px;
+	margin-bottom: var(--standard-spacing);
 }
 
 .c-footer_share {

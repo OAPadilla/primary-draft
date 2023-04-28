@@ -27,7 +27,7 @@
 			class="c-rebalancerTool_unallocated"
 			:allocated-delegates="stateUnallocatedDelegates"
 			label="Unallocated"
-			:percent-of-state-del="getUnallocatedPercentage()"
+			:percent-of-state-del="stateUnallocatedPercentage"
 			:is-unallocated-item="true"
 			:state-id="selectedStateId"
 		/>
@@ -64,7 +64,7 @@ const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
 const { candidates } = storeToRefs(candidatesStore);
 
-const resetActivated = ref(false);
+const resetActivated: Ref<boolean> = ref(false);
 
 const selectedStateId: Ref<number> = computed(() => {
 	return mainStore.getSelectedStateId.value;
@@ -77,7 +77,7 @@ const selectedState: Ref<IState> = computed(() => {
 const stateElectionRules: Ref<string> = computed(() => {
 	const electionRules: string[] = [];
 
-	function addRule(value: number|null, label: string) {
+	function addRule(value: number|null, label: string): void {
 		if (value !== null) {
 			electionRules.push(`${label}: ${value.toString()}%`);
 		}
@@ -93,12 +93,12 @@ const stateElectionRules: Ref<string> = computed(() => {
 	return '';
 })
 
-const stateTotalDelegates: Ref<number> = computed(() => {
-	return usStatesStore.getStateTotalDelegates(selectedStateId.value);
-});
-
 const stateUnallocatedDelegates: Ref<number> = computed(() => {
 	return usStatesStore.getStateUnallocatedDelegates(selectedStateId.value);
+});
+
+const stateUnallocatedPercentage: Ref<number> = computed(() => {
+	return usStatesStore.getStateUnallocatedPercentage(selectedStateId.value);
 });
 
 function getCandidateDelegates(candidateId: number): number {
@@ -109,11 +109,7 @@ function getCandidatePercentage(candidateId: number): number {
 	return usStatesStore.getCandidatePercentage(candidateId, selectedStateId.value);
 };
 
-function getUnallocatedPercentage() { // TODO: Make computed function
-	return usStatesStore.getStateUnallocatedPercentage(selectedStateId.value);
-};
-
-function onResetClick() {
+function onResetClick(): void {
 	usStatesStore.resetStateResults(selectedStateId.value);
 
 	// Animate reset icon

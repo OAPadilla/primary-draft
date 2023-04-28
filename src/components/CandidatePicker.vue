@@ -65,12 +65,12 @@ const selectedCandidateId: Ref<number> = computed(() => {
 	return mainStore.getSelectedCandidateId.value;
 });
 
-function setSelectedCandidateId(id: number) {
+function setSelectedCandidateId(id: number): void {
 	mainStore.setSelectedCandidateId(id);
 }
 
-function onChoiceClick(candidateId: number) {
-	const newId = isEditMode.value ? selectedCandidateId.value : candidateId;
+function onChoiceClick(candidateId: number): void {
+	const newId: number = isEditMode.value ? selectedCandidateId.value : candidateId;
 	setSelectedCandidateId(newId);
 }
 </script>

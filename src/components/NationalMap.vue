@@ -64,7 +64,7 @@
 	 * @param stateInitial
 	 */
 	function getStateIdFromInitials(stateInitial: string): number|null {
-		const usState = usStatesStore.getStateByInitial(stateInitial);
+		const usState: IState|null = usStatesStore.getStateByInitial(stateInitial);
 
 		if (usState?.id == null) {
 			return null;
@@ -109,7 +109,7 @@
 	 * 
 	 * @param stateId 
 	 */
-	function setSelectedState(stateId: number) {
+	function setSelectedState(stateId: number): void {
 		mainStore.setSelectedStateId(stateId);
 	};
 
@@ -120,7 +120,7 @@
 	 * @param stateId 
 	 * @param percent
 	 */
-	function updateStateResult(stateId: number, percent: number = 50.1) {
+	function updateStateResult(stateId: number, percent: number = 50.1): void {
 		usStatesStore.updateCandidatePercentage(selectedCandidateId.value, stateId, percent);
 	};
 
@@ -129,7 +129,7 @@
 	 * 
 	 * @param stateId 
 	 */
-	function onStateClick(stateId: number) {
+	function onStateClick(stateId: number): void {
 		setSelectedState(stateId);
 
 		// To visually identify state clicked on
@@ -151,14 +151,14 @@
 	 * @param stateId 
 	 * @param tooltip 
 	 */
-	function onStateMousemove(event: any, stateId: any, tooltip: any) {
+	function onStateMousemove(event: any, stateId: number, tooltip: any): void {
 		const map = d3.select('.' + className);
 		const currentWidth: number = parseInt(map.style('width'), 10);
 		const stateData: IState = usStatesStore.getStateById(stateId);
 		const switchPoint: number = currentWidth - tooltipWidth;
 		const border: string = selectedCandidateId.value !== -1 ? `3px solid ${candidatesStore.getCandidateColor(selectedCandidateId.value)}` : 'unset';
 	
-		const [x, y]: number[] =  d3.pointer(event, map.node());
+		const [x, y]: number[] = d3.pointer(event, map.node());
 		const left: number = Math.min(x - 20, switchPoint);
 
 		tooltip.html(`
@@ -179,13 +179,13 @@
 	 * @param y y-axis position
 	 * @param stateId 
 	 */
-	function createStateAvatar(svg: any, x: number, y: number, stateId: number) {
-		const width = 40;
-		const height = 40;
+	function createStateAvatar(svg: any, x: number, y: number, stateId: number): void {
+		const width: number = 40;
+		const height: number = 40;
 
 		// Container element
 		const g = svg.append('g')
-			.attr('class', `states states-names`)
+			.attr('class', `states states-names`);
 
 		// Rect element
 		g.append('rect')
@@ -196,7 +196,7 @@
 			.attr('height', height)
 			.on('click', () => {
 				onStateClick(stateId);
-			})
+			});
 		
 		// Text element
 		g.append('text')
@@ -205,7 +205,7 @@
 			.attr('y', y + height/1.5)
 			.text((): string => {
 				return usStatesStore.getStateById(stateId).initials;
-			})
+			});
 
 		// Create tooltip
 		const tooltip = d3.select('.c-nationalMap_tooltip')
@@ -215,7 +215,7 @@
 		// Set mouse events
 		g.on('mouseover', () => tooltip.style('visibility', 'visible'))
 			.on('mouseleave', () => tooltip.style('visibility', 'hidden'))
-			.on('mousemove', (event: any, d: any) => onStateMousemove(event, stateId, tooltip));
+			.on('mousemove', (event: any) => onStateMousemove(event, stateId, tooltip));
 	};
 
 	/**
@@ -224,7 +224,7 @@
 	 * @param jsonData 
 	 * @param geoStateNames
 	 */
- 	function createMap(jsonData: any, geoStateNames: any) {
+ 	function createMap(jsonData: any, geoStateNames: any): void {
 		const componentSelector: string = '.' + className;
 		
 		// Remove SVG elements for resets
@@ -417,7 +417,7 @@
 	}
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1030px) {
 	.c-nationalMap {
 		min-height: 620px;
 	}

@@ -7,7 +7,7 @@
       min="0" 
       max="100"
       step="0.1"
-      :style="{ 'background-color': candidateColor }"
+      :style="candidateColor ? { 'background-color': candidateColor } : {}"
       @input="onInput"
     >
     <div class="c-rebalancerToolSlider_percent">
@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect, ComputedRef, Ref } from 'vue';
 
 import { useCandidatesStore } from '../stores/candidates';
 import { useUsStatesStore } from '../stores/usStates';
@@ -32,7 +32,7 @@ const props = defineProps({
   stateId: { type: Number, required: true }
 });
 
-const sliderValue = ref(props.initialValue);
+const sliderValue: Ref<number> = ref(props.initialValue);
 
 watchEffect(() => {
   // Update slider to value based on selected us state reactively
@@ -43,7 +43,7 @@ watchEffect(() => {
   }
 })
 
-const candidateColor = computed(() => {
+const candidateColor:  ComputedRef<string|null> = computed(() => {
   if (props.candidateId == null) {
     return null;
   }
@@ -51,15 +51,15 @@ const candidateColor = computed(() => {
   return candidatesStore.getCandidateColor(props.candidateId);
 });
 
-const formattedPercentage = computed(() => {
+const formattedPercentage: ComputedRef<string> = computed(() => {
   return Number(sliderValue.value).toFixed(1);
 });
 
-const maxSliderValue = computed(() => {
+const maxSliderValue: ComputedRef<number> = computed(() => {
   return props.initialValue + usStatesStore.getStateUnallocatedPercentage(props.stateId);
 });
 
-function onInput(event: any) {
+function onInput(): void {
   if (props.candidateId !== null) {
     // Limit slider to max what is available to allocate
     if (sliderValue.value > maxSliderValue.value) {
