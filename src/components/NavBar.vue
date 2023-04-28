@@ -19,7 +19,7 @@ import InfoIcon from '../assets/icons/info.svg?component';
 import LogoIcon from '../assets/logo/logo.svg?component';
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 header {
 	background-color: var(--base-background-color);
 	padding: 0 2rem;
@@ -30,39 +30,39 @@ header {
 	max-width: 950px;
 	margin: auto;
 	border-bottom: var(--standard-border);
-}
 
-.c-navBar_home {
-	margin: auto 0;
-}
+	h1 {
+		font-weight: normal;
+		margin: 10px 0;
+	}
 
-.c-navBar_logo {
-	display: flex;
-	width: 90px;
-	height: 69px;
-}
+	nav {
+		margin: auto 0 auto auto;
+	}
 
-.c-navLinks {
-	display: flex;
-	font-size: 20px;
-}
+	&_home {
+		margin: auto 0;
+	}
 
-h1 {
-	font-weight: normal;
-	margin: 10px 0;
-}
+	&_logo {
+		display: flex;
+		width: 90px;
+		height: 69px;
+	}
 
-nav {
-	margin: auto 0 auto auto;
-}
+	.c-navLinks {
+		display: flex;
+		font-size: 20px;
 
-.c-navLinks a {
-	display: flex;
-	align-items: center;
-	padding-left: var(--standard-spacing);
-}
+		a {
+			display: flex;
+			align-items: center;
+			padding-left: var(--standard-spacing);
+		}
 
-.c-navLinks svg:hover {
-	opacity: 0.7;
+		svg:hover {
+			opacity: 0.7;
+		}
+	}
 }
 </style>

@@ -20,7 +20,7 @@
 	</footer>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 footer {
 	background-color: var(--base-background-color);
 	padding: 0 2rem;
@@ -34,33 +34,33 @@ footer {
 	margin: auto;
 	border-top: var(--standard-border);
 	font-size: 12px;
-}
 
-.c-footer_top {
-	display: flex;
-	margin-bottom: var(--standard-spacing);
-}
+	h4 {
+		font-size: 12px;
+		font-weight: normal;
+		margin: 0;
+	}
 
-.c-footer_share {
-	margin-left: auto;
-}
+	&_top {
+		display: flex;
+		margin-bottom: var(--standard-spacing);
+	}
 
-.c-footer_contactTitle {
-	padding-bottom: 5px;
-	font-weight: bold;
-}
+	&_share {
+		margin-left: auto;
+	}
 
-.c-footer_contactEmail {
-	color: grey;
-}
+	&_contactTitle {
+		padding-bottom: 5px;
+		font-weight: bold;
+	}
 
-.c-footer_copyright {
-	margin: auto;
-}
+	&_contactEmail {
+		color: grey;
+	}
 
-h4 {
-	font-size: 12px;
-	font-weight: normal;
-	margin: 0;
+	&_copyright {
+		margin: auto;
+	}
 }
 </style>
