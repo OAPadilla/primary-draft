@@ -31,34 +31,32 @@ defineProps({
 });
 </script>
   
-<style scoped>
+<style scoped lang="scss">
 .c-rebalancerToolItem {
   display: flex;
 	padding-top: 10px;
-}
 
-.c-rebalancerToolItem_name {
-	width: 15rem;
-}
+  &_name {
+    width: 15rem;
+  }
 
-.c-rebalancerToolItem_sliderWrap {
-  display: flex;
-  width: 100%;
-}
+  &_sliderWrap {
+    display: flex;
+    width: 100%;
+  }
 
-.c-rebalancerToolItem_delegates {
-	width: 5rem;
-	right: auto;
-	text-align: right;
-}
+  &_delegates {
+    width: 5rem;
+    right: auto;
+    text-align: right;
+  }
 
-@media (max-width: 700px) {
-	.c-rebalancerToolItem {
-		flex-direction: column;
-	}
+  @media (max-width: 700px) {
+    flex-direction: column;
 
-	.c-rebalancerToolItem_name {
-		padding-bottom: 5px;
-	}
+    &_name {
+      padding-bottom: 5px;
+    }
+  }
 }
 </style>

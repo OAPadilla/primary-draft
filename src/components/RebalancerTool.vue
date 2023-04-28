@@ -120,53 +120,54 @@ function onResetClick(): void {
 };
 </script>
   
-<style scoped>
+<style scoped lang="scss">
 .c-rebalancerTool {
 	margin-bottom: var(--standard-spacing);
-}
 
-.c-rebalancerTool_header {
-	position: relative;
- 	display: flex;
-	flex-direction: column;
-	font-family: var(--standard-font-family);
-	font-size: 16px;
-	font-weight: bold;
-	border-bottom: var(--standard-border);
-	padding-bottom: 5px;
-}
+	&_header {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		font-family: var(--standard-font-family);
+		font-size: 16px;
+		font-weight: bold;
+		border-bottom: var(--standard-border);
+		padding-bottom: 5px;
 
-.c-rebalancerTool_stateDelegates, .c-rebalancerTool_stateDetails {
-	font-weight: normal;
-	font-size: 12px;
-	color: var(--color-dark-grey);
-}
+		div {
+			margin: auto;
+			text-transform: capitalize;
+		}
+	}
 
-.c-rebalancerTool_header div {
-	margin: auto;
-	text-transform: capitalize;
-}
+	&_stateDelegates, 
+	&_stateDetails {
+		font-weight: normal;
+		font-size: 12px;
+		color: var(--color-dark-grey);
+	}
 
-.c-rebalancerTool_unallocated {
-	font-weight: bold;
-}
+	&_unallocated {
+		font-weight: bold;
+	}
 
-.c-rebalancerTool_resetBtn {
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	right: 0;
-	bottom: 0;
-	padding: 5px;
-}
+	&_resetBtn {
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		right: 0;
+		bottom: 0;
+		padding: 5px;
 
-.c-rebalancerTool_resetBtn:hover {
-	opacity: 0.7;
-	cursor: pointer;
-}
+		&:hover {
+			opacity: 0.7;
+			cursor: pointer;
+		}
 
-.c-rebalancerTool_resetBtn.-rotate {
-	transition: transform 0.5s ease;
-	transform: rotate(-360deg);
+		&.-rotate {
+			transition: transform 0.5s ease;
+			transform: rotate(-360deg);
+		}
+	}
 }
 </style>

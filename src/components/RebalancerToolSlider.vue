@@ -71,62 +71,63 @@ function onInput(): void {
 };
 </script>
   
-<style scoped>
+<style scoped lang="scss">
 .c-rebalancerToolSlider {
 	display: flex;
 	width: 100%;
 	min-height: 25px;
 	align-items: center;
-}
 
-.c-rebalancerToolSlider_percent {
-	width: 5rem;
-	text-align: right;
-}
+  &_percent {
+    width: 5rem;
+    text-align: right;
+  }
 
-.c-rebalancerToolSlider input {
-	-webkit-appearance: none;
-  width: 100%;
-  height: 5px;
-  background-color: var(--color-light-grey);
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-	padding: 0;
-}
+  input {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    background-color: var(--color-light-grey);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    padding: 0;
 
-.c-rebalancerToolSlider input:hover {
-  opacity: 1;
-}
+    &:hover {
+      opacity: 1;
+    }
 
-.c-rebalancerToolSlider input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 5px;
-  height: 14px;
-  background-color: var(--color-black);
-  cursor: pointer;
-}
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 5px;
+      height: 14px;
+      background-color: var(--color-black);
+      cursor: pointer;
+    }
 
-/* TODO: Test this in ff */
-.c-rebalancerToolSlider input::-moz-range-thumb { 
-  width: 6px;
-  height: 16px;
-  background-color: var(--color-black);
-  cursor: pointer;
-}
+    &::-moz-range-thumb { 
+      width: 6px;
+      height: 16px;
+      background-color: var(--color-black);
+      cursor: pointer;
+    }
+  }
 
-.c-rebalancerToolSlider.is-unallocated input:hover {
-  opacity: initial;
-}
+  &.is-unallocated {
+    pointer-events: none;
 
-.c-rebalancerToolSlider.is-unallocated {
-  pointer-events: none;
-}
+    input {
+      &:hover {
+        opacity: initial;
+      }
 
-.c-rebalancerToolSlider.is-unallocated input::-webkit-slider-thumb {
-  height: 5px;
-  cursor: default
+      &::-webkit-slider-thumb {
+        height: 5px;
+        cursor: default;
+      }
+    }
+  }
 }
 </style>
