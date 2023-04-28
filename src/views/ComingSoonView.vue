@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'vue-meta'
+import { useMeta } from 'vue-meta';
 
 useMeta({ 
 	meta: [

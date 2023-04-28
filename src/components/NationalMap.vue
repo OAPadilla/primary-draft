@@ -25,7 +25,6 @@
 
 	const className: string = 'c-nationalMap_map';
 	const usMapJSON: string = 'https://d3js.org/us-10m.v1.json';
-	const stateNamesTSV: string = 'https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv';
 	const tooltipWidth: number = 125;
 	const hiddenInitialsTextIds: number[] = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
 	const initialsTextOffsets: Record<number, Record<string, number>> = {
@@ -327,7 +326,8 @@
 
 	onMounted(async () => {
 		jsonData = await d3.json(usMapJSON);
-		geoStateNames = await d3.tsv(stateNamesTSV);
+		// Original source: https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv
+		geoStateNames = await d3.tsv('/data/us-state-names.tsv');
 
 		createMap(jsonData, geoStateNames);
 

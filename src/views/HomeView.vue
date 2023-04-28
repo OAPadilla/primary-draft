@@ -22,7 +22,7 @@ const props = defineProps({
 
 const partyName = computed(() => {
 	return props.party;
-})
+});
 </script>
 
 <style>

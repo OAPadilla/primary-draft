@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'vue-meta'
+import { useMeta } from 'vue-meta';
 import { RouterView } from "vue-router";
 
 import NavBar from "./components/NavBar.vue";
@@ -21,11 +21,11 @@ import { useUsStatesStore } from './stores/usStates';
 
 const { fetchStatesData } = useUsStatesStore();
 
-const metaCanonical = 'https://www.primarydraft.com';
-const metaDescription = 'Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!';
-const metaImage = 'https://www.primarydraft.com/primary-draft-image.png';
-const metaSiteName = 'Primary Draft';
-const metaTitle = 'Interactive Primary Election Map';
+const metaCanonical: string = 'https://www.primarydraft.com';
+const metaDescription: string = 'Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!';
+const metaImage: string = 'https://www.primarydraft.com/primary-draft-logo.png';
+const metaSiteName: string = 'Primary Draft';
+const metaTitle: string = 'Interactive Primary Election Map';
 
 fetchStatesData();
 
@@ -37,6 +37,8 @@ useMeta({
     { rel: 'canonical', href: metaCanonical }
   ],
   meta: [
+    // CSP
+    { 'http-equiv': 'Content-Security-Policy', content: "default-src 'none'; script-src 'self' 'unsafe-eval' https://d3js.org; connect-src 'self' https://d3js.org https://gist.githubusercontent.com; img-src 'self'; style-src 'self' 'unsafe-eval' https://d3js.org; base-uri 'self'; form-action 'self'; manifest-src 'self'" },
     // OpenGraph data
     { property: 'og:title', content: metaTitle },
     { property: 'og:site_name', content: metaSiteName },
@@ -55,7 +57,7 @@ useMeta({
     { itemprop: 'description', content: metaDescription },
     { itemprop: 'image', content: metaImage }
   ]
-})
+});
 </script>
 
 <style scoped>
