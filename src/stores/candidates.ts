@@ -29,26 +29,42 @@ export const useCandidatesStore = defineStore('candidates', () => {
 
   // Getters (computed values)
 
+  /**
+   * Get the currently leading candidate based on total delegates allocated
+   */
   const getLeadingCandidate: Ref<ICandidate> = computed(() => {
     const leader = candidates.value.reduce((acc, curr) => {
       return acc.delegates > curr.delegates ? acc : curr;
     })
     return leader;
-  })
+  });
 
+  /**
+   * Get the candidate, if they exist, who has reached the required threshold to win the nomination
+   */
   const getWinnerCandidate: ComputedRef<Ref<ICandidate> | null> = computed(() => {
     if (getLeadingCandidate.value.delegates / totalDelegates.value >= 0.5) {
       return getLeadingCandidate;
     }
     return null;
-  })
+  });
 
   // Actions (methods)
 
+  /**
+   * Get a candidate's identifying color based on their id
+   * 
+   * @param candidateId 
+   */
   function getCandidateColor(candidateId: number): string {
     return candidates.value[candidateId]?.color;
   }
 
+  /**
+   * Get a candidate's name based on their id
+   * 
+   * @param candidateId 
+   */
   function getCandidateName(candidateId: number): string {
     return candidates.value[candidateId]?.name;
   }

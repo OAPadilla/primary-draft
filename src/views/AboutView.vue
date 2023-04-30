@@ -22,8 +22,8 @@
 			<h2>How to use</h2>
 			<ul>
 				<li>
-					<strong>Choose a candidate</strong> to quickly allocate a majority (50.1%) of a state's popular vote with a click. Select "None" otherwise
-					to keep a clean slate.
+					<strong>Choose a candidate</strong> to quickly allocate a majority (50.1%) of a state's popular vote with a click,  
+					<strong>or select "None"</strong> to allocate with total control.
 				</li>
 				<li>
 					<strong>Click on a U.S. state or territory</strong> on the map and experiment with the allocation tool. Delegates are automatically 
@@ -35,7 +35,7 @@
 				</li>
 				<li>
 					<strong>Lead a candidate to victory!</strong> A candidate is the official winner once they've earned a majority of total delegates, 
-					reaching the delegate chart flag under the U.S. map.
+					marked by the delegate count flag <FlagIcon class="c-aboutView_flag" />.
 				</li>
 			</ul>
 		</div>
@@ -81,6 +81,7 @@
 
 <script setup lang="ts">
 import { useMeta } from 'vue-meta';
+import FlagIcon from '../assets/icons/flag.svg?component';
 
 useMeta({
   title: 'About'
@@ -108,6 +109,12 @@ useMeta({
 		border-left: var(--standard-border);
 		padding-left: 40px;
 		margin-bottom: var(--standard-spacing);
+	}
+
+	&_flag {
+		stroke: var(--color-black);
+		width: 16px;
+		height: 16px;
 	}
 }
 </style>

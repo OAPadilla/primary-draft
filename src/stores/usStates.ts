@@ -1,7 +1,7 @@
 import { ref, watchEffect } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
-import { ICandidate, useCandidatesStore } from './candidates';
+import { useCandidatesStore } from './candidates';
 
 type IAllocationType =
   | 'delegate selection'

@@ -29,7 +29,7 @@ const { totalDelegates } = storeToRefs(mainStore);
 const barClass: string = 'c-delegateBar_bar';
 const barHeight: number = 60;
 const defaultFlagColor: string = 'none';
-const flagColor: Ref<string> = ref(defaultFlagColor)
+const flagColor: Ref<string> = ref(defaultFlagColor);
 const tooltipWidth: number = 200;
 
 candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
@@ -77,7 +77,7 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
 			cumulative: cumulativeDelegates - delegates,
 			name: d.name,
 			percent: percent(delegates)
-		}
+		};
 	});
 
 	// Empty/unallocated space

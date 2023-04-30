@@ -11,23 +11,39 @@ export const useStore = defineStore('store', () => {
 
   // Getter (computed values)
 
+  /**
+   * Get the currently selected candidate's id
+   */
   const getSelectedCandidateId: ComputedRef<Ref<number>> = computed(() => {
     return selectedCandidateId;
   });
 
+  /**
+   * Get the currently selected state's id
+   */
   const getSelectedStateId: ComputedRef<Ref<number>> = computed(() => {
     return selectedStateId;
   });
 
   // Actions (methods)
 
+  /**
+   * Update the value used to keep track of the selected candidate
+   * 
+   * @param candidateId 
+   */
   function setSelectedCandidateId(candidateId: number): void {
     selectedCandidateId.value = candidateId;
-  };
+  }
 
+  /**
+   * Update the value used to keep track of the selected state
+   * 
+   * @param stateId 
+   */
   function setSelectedStateId(stateId: number): void {
     selectedStateId.value = stateId;
-  };
+  }
 
   return {
     selectedCandidateId,
