@@ -121,7 +121,7 @@ function updateBar(data: ICandidate[]): void {
 	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
 	const tooltip = d3.select('.c-delegateBar_tooltip .tooltip');
 
-	const xScale = d3.scaleLinear()
+	const xScale = d3.scaleLinear<string|number, number>()
 		.domain([0, totalDelegates.value])
 		.range([0, '100%']);
 
@@ -153,7 +153,7 @@ function createBar(data: ICandidate[]): void {
 		.attr('height', barHeight);
 
 	// Set up horizontal scale
-	const xScale = d3.scaleLinear()
+	const xScale = d3.scaleLinear<string|number, number>()
 		.domain([0, totalDelegates.value])
 		.range([0, '100%']);
 

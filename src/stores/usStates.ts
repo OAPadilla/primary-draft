@@ -403,12 +403,13 @@ export const useUsStatesStore = defineStore('usStates', () => {
    */
   async function fetchStatesData() {
     try {
-      this.usStates = await fetch('/data/gop-states.json').then((response) => response.json());
-
-      for (const usState of this.usStates) {
-        this.usStates[usState.id].results = _defaultResults();
-        this.usStates[usState.id].unallocatedDelegates = this.usStates[usState.id].totalDelegates;
-        this.usStates[usState.id].unallocatedPercentage = 100;
+      const usStatesJSON = await fetch('/data/gop-states.json');
+      usStates.value = await usStatesJSON.json();
+      
+      for (const usState of usStates.value) {
+        usStates.value[usState.id].results = _defaultResults();
+        usStates.value[usState.id].unallocatedDelegates = usStates.value[usState.id].totalDelegates;
+        usStates.value[usState.id].unallocatedPercentage = 100;
       };
     } catch (error) {
       console.log(error);

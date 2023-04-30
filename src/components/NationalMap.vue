@@ -8,7 +8,7 @@
 <script setup lang="ts">
 	import { computed, onMounted, onUnmounted, watchEffect, Ref } from 'vue';
 	import * as d3 from 'd3';
-	import * as topojson  from 'topojson-client';
+	import * as topojson from 'topojson-client';
 
 	import { useCandidatesStore } from '../stores/candidates';
 	import { useStore } from '../stores/store';
@@ -207,10 +207,8 @@
 				return usStatesStore.getStateById(stateId).initials;
 			});
 
-		// Create tooltip
-		const tooltip = d3.select('.c-nationalMap_tooltip')
-			.append('div')
-			.attr("class", "tooltip");
+		// Find tooltip
+		const tooltip = d3.select('.c-nationalMap_tooltip .tooltip');
 
 		// Set mouse events
 		g.on('mouseover', () => tooltip.style('visibility', 'visible'))
@@ -238,6 +236,7 @@
 
 		const path: any = d3.geoPath();
 
+		// @ts-ignore: Property 'features' does not exist on type 'Feature<Point, GeoJsonProperties>'
 		const stateGeoFeatures: any = topojson.feature(jsonData, jsonData?.objects?.states).features;
 		
 		// Strip required TSV state data with our state id
@@ -281,6 +280,7 @@
 				if (!hiddenInitialsTextIds.includes(geoStates[d.id].id)) {
 					return geoStates[d.id].initials;
 				}
+				return null;
 			})
 			.attr('x', (d: any) => {
 				// Call function with mapped value for x
@@ -401,7 +401,7 @@
 		.tooltip {
 			z-index: 999;
 			position: absolute;
-			background-color: white;
+			background-color: var(--base-background-color);
 			width: 125px;
 			margin: 5px;
 			border-radius: 25px;
@@ -412,7 +412,6 @@
 			text-align: center;
 			text-transform: capitalize;
 			box-shadow: var(--standard-box-shadow);
-			border: 3px solid red;
 		}
 
 		&_name {
