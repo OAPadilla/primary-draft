@@ -227,7 +227,7 @@
 		
 		// Remove SVG elements for resets
 		d3.select(componentSelector + ' svg').remove();
-		d3.select(`${componentSelector}_tooltip div`).remove();
+		d3.select('.c-nationalMap_tooltip .tooltip').remove();
 
 		const svg = d3.select(componentSelector)
 			.append('svg')
