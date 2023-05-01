@@ -38,7 +38,7 @@ useMeta({
   ],
   meta: [
     // CSP
-    { 'http-equiv': 'Content-Security-Policy', content: "default-src 'none'; script-src 'self' 'unsafe-eval' https://d3js.org; connect-src 'self' https://d3js.org https://gist.githubusercontent.com; img-src 'self'; style-src 'self' 'unsafe-inline' https://d3js.org; base-uri 'self'; form-action 'self'; manifest-src 'self'" },
+    // { 'http-equiv': 'Content-Security-Policy', content: "default-src 'none'; script-src 'self' 'unsafe-eval' https://d3js.org; connect-src 'self' https://d3js.org https://gist.githubusercontent.com; img-src 'self'; style-src 'self' 'unsafe-inline' https://d3js.org; base-uri 'self'; form-action 'self'; manifest-src 'self'" },
     // OpenGraph data
     { property: 'og:title', content: metaTitle },
     { property: 'og:site_name', content: metaSiteName },
