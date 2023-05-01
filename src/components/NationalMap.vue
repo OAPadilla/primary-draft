@@ -255,9 +255,9 @@
 			.enter()
 			.append('path')
 			.attr('d', path)
-			.attr('class', (d: any) => `state-${geoStates[d.id].id}`)
+			.attr('class', (d: any) => `state-${geoStates[d.id]?.id}`)
 			.on("click", (event: any, d: any) => {
-				const stateId: number = geoStates[d.id].id;
+				const stateId: number = geoStates[d.id]?.id;
 				if (stateId !== null) {
 					onStateClick(stateId);
 				}
@@ -266,7 +266,7 @@
 		// Set mouse events
 		g.on('mouseover', () => tooltip.style('visibility', 'visible'))
 			.on('mouseleave', () => tooltip.style('visibility', 'hidden'))
-			.on('mousemove', (event: any, d: any) => onStateMousemove(event, geoStates[d.id].id, tooltip));
+			.on('mousemove', (event: any, d: any) => onStateMousemove(event, geoStates[d.id]?.id, tooltip));
 
 		// State initials 
 		svg.append('g')
@@ -275,23 +275,23 @@
 			.data(stateGeoFeatures)
 			.enter()
 			.append('svg:text')
-			.attr('class', (d: any) => `state-name-${geoStates[d.id].id}`)
+			.attr('class', (d: any) => `state-name-${geoStates[d.id]?.id}`)
 			.text((d: any) => {
-				if (!hiddenInitialsTextIds.includes(geoStates[d.id].id)) {
-					return geoStates[d.id].initials;
+				if (!hiddenInitialsTextIds.includes(geoStates[d.id]?.id)) {
+					return geoStates[d.id]?.initials;
 				}
 				return null;
 			})
 			.attr('x', (d: any) => {
 				// Call function with mapped value for x
-				if (initialsTextOffsets?.[geoStates[d.id].id]?.x) {
+				if (initialsTextOffsets?.[geoStates[d.id]?.id]?.x) {
 					return path.centroid(d)[0] + initialsTextOffsets[geoStates[d.id].id].x;
 				}
 				return path.centroid(d)[0];
 			})
 			.attr('y', (d: any) => {
 				// Call function with mapped value for y
-				if (initialsTextOffsets?.[geoStates[d.id].id]?.y) {
+				if (initialsTextOffsets?.[geoStates[d.id]?.id]?.y) {
 					return path.centroid(d)[1] + initialsTextOffsets[geoStates[d.id].id].y;
 				}
 				return path.centroid(d)[1] + 5;
