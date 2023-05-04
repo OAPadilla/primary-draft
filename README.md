@@ -1,18 +1,78 @@
-# Vue 3 + TypeScript + Vite
+<div align="center">
+  <a href="https://github.com/OAPadilla/primary-draft">
+    <img src="public/android-chrome-512x512.png" alt="Logo" width="200" height="200">
+  </a>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+  <h1 align="center">Primary Draft</h1>
 
-## Recommended IDE Setup
+  <p align="center">
+    Interactive 2024 Primary Election Map
+    <br />
+    <br />
+    <a href="https://www.primarydraft.com">View Demo at PrimaryDraft.com</a>
+  </p>
+</div>
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-## Type Support For `.vue` Imports in TS
+Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+### Built With
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+* [Vue 3](https://vuejs.org/) - Frontend JavaScript framework
+* [Vite](https://vitejs.dev/) - Frontend build tool
+* [Pinia](https://pinia.vuejs.org/) - Store library for state management
+* [D3](https://d3js.org/) - Visualizations via data-driven DOM manipulation
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+<!-- USAGE EXAMPLES -->
+## Usage
+
+1. <strong>Choose a candidate or select "None":</strong> Selecting a candidate allows you to quickly allocate a majority (50.1%) of a state's popular vote with a click. "None" allows you to allocate with total control.
+2.  <strong>Click on a U.S. state or territory</strong> on the map and observe the allocation tool. Delegates are automatically calculated based on the set popular vote percentages and a state's election rules.
+3. <strong>Experiment with state results.</strong> Watch the "Unallocated" row to help you keep track of yet to be distributed votes. Once 0 is reached, you won't be able to allocate any more to a candidate without taking away from another.
+4. <strong>Lead a candidate to victory!</strong> A candidate is the official winner once they've earned a majority of total delegates, marked by the delegate count flag.
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+* [Node v16+](https://nodejs.org/en)
+
+### Installation
+
+1. Clone the repo
+   ```
+   git clone https://github.com/OAPadilla/primary-draft.git
+   cd primary-draft
+   ```
+2. Install NPM packages
+   ```
+   npm ci
+   ```
+3. Run the application
+   ```
+   npm run dev
+   ```
+4. Navigate to url
+   ```
+   http://localhost:5173
+   ```
+
+<!-- CONTACT -->
+## Contact
+
+Oscar Padilla - [LinkedIn](https://www.linkedin.com/in/oapadilla/) - PadillaOscarA@gmail.com
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* [The Green Papers](https://www.thegreenpapers.com/) - Up-to-date election information
+
+<!-- COPYRIGHT -->
+## Copyright
+
+Copyright © 2023, Oscar Padilla

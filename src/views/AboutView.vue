@@ -26,7 +26,7 @@
 					<strong>or select "None"</strong> to allocate with total control.
 				</li>
 				<li>
-					<strong>Click on a U.S. state or territory</strong> on the map and experiment with the allocation tool. Delegates are automatically 
+					<strong>Click on a U.S. state or territory</strong> on the map and observe the allocation tool. Delegates are automatically 
 					calculated based on the set popular vote percentages and a state's election rules.
 				</li>
 				<li>
