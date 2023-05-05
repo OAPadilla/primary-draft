@@ -88,6 +88,8 @@ const stateElectionRules: Ref<string> = computed(() => {
 	
 	if (electionRules.length > 1) {
 		return electionRules.join(' • ');
+	} else if (electionRules.length == 1) {
+		return electionRules[0];
 	}
 
 	return '';

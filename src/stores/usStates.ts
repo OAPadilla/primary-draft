@@ -312,9 +312,17 @@ export const useUsStatesStore = defineStore('usStates', () => {
       case 'winner-take-most':
         // Plurality winner wins all
         const winningCandidate: ICandidateResult = _getStateLeadingCandidate(usState.id);
+        let hasMetThreshold = true;
+
+        // If minimum threshold rule is set, check leading candidate is above before allocating
+        if (usState.electionRules?.minThreshold && winningCandidate.percent <= usState.electionRules.minThreshold) {
+          hasMetThreshold = false
+        }
+
         for (const candidate of usState.results) {
           updateCandidateDelegates(candidate.id, usState.id, 0);
-          if (candidate.id == winningCandidate.id) {
+
+          if (candidate.id == winningCandidate.id && hasMetThreshold) {
             updateCandidateDelegates(winningCandidate.id, usState.id, usState.totalDelegates);
           }
         }

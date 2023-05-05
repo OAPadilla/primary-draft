@@ -28,7 +28,7 @@ Primary Draft is an interactive single-page web application for simulating U.S. 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-1. <strong>Choose a candidate or select "None".</strong> Selecting a candidate allows you to quickly allocate a majority (50.1%) of a state's popular vote with a click. "None" allows you to allocate with total control.
+1. <strong>Choose a candidate or select "None".</strong> Selecting a candidate allows you to quickly allocate a majority (50.1%) of a state's popular vote with a click. "None" allows you to allocate with total freedom.
 2.  <strong>Click on a U.S. state or territory</strong> on the map and interact with the allocation tool. Delegates are automatically calculated based on the set popular vote percentages and a state's election rules.
 3. <strong>Experiment with state results.</strong> Watch the "Unallocated" row to help you keep track of yet to be distributed votes. Once 0 is reached, you won't be able to allocate any more to a candidate without taking away from another.
 4. <strong>Lead a candidate to victory!</strong> A candidate is the official winner once they've earned a majority of total delegates, marked by the delegate count flag.

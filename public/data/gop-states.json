@@ -5,8 +5,7 @@
     "color": "",
     "electionDate": "2024-03-05",
     "electionRules": {
-      "minThreshold": 13,
-      "wtaTrigger": 60
+      "minThreshold": 13
     },
     "electionType": "closed caucus",
     "initials": "AK",
@@ -19,6 +18,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "open primary",
     "initials": "AL",
     "name": "alabama",
@@ -30,6 +32,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 13
+    },
     "electionType": "open primary",
     "initials": "AR",
     "name": "arkansas",
@@ -85,6 +90,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-04-30",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "closed primary",
     "initials": "CT",
     "name": "connecticut",
@@ -129,6 +137,9 @@
     "allocation": "winner-take-all",
     "color": "",
     "electionDate": "2024-03-26",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "modified primary",
     "initials": "GA",
     "name": "georgia",
@@ -173,6 +184,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-05-21",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "closed primary",
     "initials": "ID",
     "name": "idaho",
@@ -206,6 +220,9 @@
     "allocation": "winner-take-all",
     "color": "",
     "electionDate": "2024-03-09",
+    "electionRules": {
+      "minThreshold": 10
+    },
     "electionType": "closed primary",
     "initials": "KS",
     "name": "kansas",
@@ -217,6 +234,9 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-05-21",
+    "electionRules": {
+      "minThreshold": 5
+    },
     "electionType": "closed primary",
     "initials": "KY",
     "name": "kentucky",
@@ -228,6 +248,9 @@
     "allocation": "winner-take-all",
     "color": "",
     "electionDate": "2024-03-23",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "closed primary",
     "initials": "LA",
     "name": "louisiana",
@@ -261,6 +284,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 5
+    },
     "electionType": "closed primary",
     "initials": "ME",
     "name": "maine",
@@ -272,6 +298,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-02-27",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "MI",
     "name": "michigan",
@@ -283,6 +312,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 10
+    },
     "electionType": "closed primary",
     "initials": "MN",
     "name": "minnesota",
@@ -316,6 +348,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-12",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "MS",
     "name": "mississippi",
@@ -371,6 +406,9 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-02-13",
+    "electionRules": {
+      "minThreshold": 10
+    },
     "electionType": "modified primary",
     "initials": "NH",
     "name": "new hampshire",
@@ -393,6 +431,9 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-06-04",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "NM",
     "name": "new mexico",
@@ -415,6 +456,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-04-30",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "closed primary",
     "initials": "NY",
     "name": "new york",
@@ -437,6 +481,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "OK",
     "name": "oklahoma",
@@ -448,6 +495,9 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-05-21",
+    "electionRules": {
+      "minThreshold": 3.57
+    },
     "electionType": "closed primary",
     "initials": "OR",
     "name": "oregon",
@@ -481,6 +531,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-04-23",
+    "electionRules": {
+      "minThreshold": 10
+    },
     "electionType": "modified primary",
     "initials": "RI",
     "name": "rhode island",
@@ -514,6 +567,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "open primary",
     "initials": "TN",
     "name": "tennessee",
@@ -525,6 +581,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "open primary",
     "initials": "TX",
     "name": "texas",
@@ -536,6 +595,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "UT",
     "name": "utah",
@@ -569,6 +631,9 @@
     "allocation": "winner-take-most",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "open primary",
     "initials": "VT",
     "name": "vermont",
@@ -580,6 +645,9 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-12",
+    "electionRules": {
+      "minThreshold": 20
+    },
     "electionType": "closed primary",
     "initials": "WA",
     "name": "washington",

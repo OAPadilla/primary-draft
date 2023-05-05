@@ -22,8 +22,8 @@
 			<h2>How to use</h2>
 			<ul>
 				<li>
-					<strong>Choose a candidate</strong> to quickly allocate a majority (50.1%) of a state's popular vote with a click, 
-					<strong>or select "None"</strong> to allocate with total control.
+					<strong>Choose a candidate or select "None".</strong> Selecting a candidate allows you to quickly allocate a majority (50.1%) of a 
+					state's popular vote with a click. "None" allows you to allocate with total freedom.
 				</li>
 				<li>
 					<strong>Click on a U.S. state or territory</strong> on the map and interact with the allocation tool. Delegates are 
