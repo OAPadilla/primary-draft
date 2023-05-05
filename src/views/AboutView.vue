@@ -22,12 +22,12 @@
 			<h2>How to use</h2>
 			<ul>
 				<li>
-					<strong>Choose a candidate</strong> to quickly allocate a majority (50.1%) of a state's popular vote with a click,  
+					<strong>Choose a candidate</strong> to quickly allocate a majority (50.1%) of a state's popular vote with a click, 
 					<strong>or select "None"</strong> to allocate with total control.
 				</li>
 				<li>
-					<strong>Click on a U.S. state or territory</strong> on the map and observe the allocation tool. Delegates are automatically 
-					calculated based on the set popular vote percentages and a state's election rules.
+					<strong>Click on a U.S. state or territory</strong> on the map and interact with the allocation tool. Delegates are 
+					automatically calculated based on the set popular vote percentages and a state's election rules.
 				</li>
 				<li>
 					<strong>Experiment with state results.</strong> Watch the "Unallocated" row to help you keep track of yet to be distributed votes. 
