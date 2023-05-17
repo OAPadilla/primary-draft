@@ -40,8 +40,10 @@
 					:allocated-delegates="getCandidateDelegates(candidate.id)"
 					:candidate-id="candidate.id"
 					:label="candidate.name"
+					:min-threshold="stateRuleMinThreshold"
 					:percent-of-state-del="getCandidatePercentage(candidate.id)"
 					:state-id="selectedStateId"
+					:wta-threshold="stateRuleWtaTrigger"
 				/>
 			</template>
 		</div>
@@ -77,14 +79,14 @@ const selectedState: Ref<IState> = computed(() => {
 const stateElectionRules: Ref<string> = computed(() => {
 	const electionRules: string[] = [];
 
-	function addRule(value: number|null, label: string): void {
-		if (value !== null) {
+	function addRule(value: number|undefined, label: string): void {
+		if (value != null) {
 			electionRules.push(`${label}: ${value.toString()}%`);
 		}
 	}
 
-	addRule(selectedState.value.electionRules?.minThreshold ?? null, 'Minimum Threshold');
-	addRule(selectedState.value.electionRules?.wtaTrigger ?? null, 'Winner-Take-All Trigger');
+	addRule(stateRuleMinThreshold.value, 'Minimum Threshold');
+	addRule(stateRuleWtaTrigger.value, 'Winner-Take-All Trigger');
 	
 	if (electionRules.length > 1) {
 		return electionRules.join(' • ');
@@ -94,6 +96,14 @@ const stateElectionRules: Ref<string> = computed(() => {
 
 	return '';
 })
+
+const stateRuleMinThreshold: Ref<number|undefined> = computed(() => {
+	return usStatesStore.getStateMinThreshold(selectedStateId.value);
+});
+
+const stateRuleWtaTrigger: Ref<number|undefined> = computed(() => {
+	return usStatesStore.getStateWtaTrigger(selectedStateId.value);
+});
 
 const stateUnallocatedDelegates: Ref<number> = computed(() => {
 	return usStatesStore.getStateUnallocatedDelegates(selectedStateId.value);

@@ -9,7 +9,9 @@
         :candidate-id="candidateId"
         :initial-value="percentOfStateDel"
         :is-unallocated-item="isUnallocatedItem"
+        :min-threshold="minThreshold"
         :state-id="stateId"
+        :wta-threshold="wtaThreshold"
       />
       <div class="c-rebalancerToolItem_delegates">
         {{ allocatedDelegates }} del.
@@ -26,8 +28,10 @@ defineProps({
   candidateId: { type: Number, default: null },
   isUnallocatedItem: { type: Boolean, default: false },
   label: { type: String, default: '' },
+  minThreshold: { type: Number, default: null },
   percentOfStateDel: { type: Number, default: 0 },
-  stateId: { type: Number, required: true }
+  stateId: { type: Number, required: true },
+  wtaThreshold: { type: Number, default: null }
 });
 </script>
   

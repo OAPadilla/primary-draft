@@ -195,6 +195,15 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
+   * Get state's minimum threshold. A candidate must meet this percent of the vote threshold to earn any delegates.
+   * 
+   * @param stateId 
+   */
+  function getStateMinThreshold(stateId: number): number|undefined {
+    return getStateById(stateId).electionRules?.minThreshold;
+  }
+
+  /**
    * Get a state's total delegates
    * 
    * @param stateId 
@@ -219,6 +228,15 @@ export const useUsStatesStore = defineStore('usStates', () => {
    */
   function getStateUnallocatedPercentage(stateId: number): number {
     return getStateById(stateId).unallocatedPercentage;
+  }
+
+  /**
+   * Get state's winner-take-all trigger threshold. If a candidate reaches this threshold they earn all delegates.
+   * 
+   * @param stateId 
+   */
+  function getStateWtaTrigger(stateId: number): number|undefined {
+    return getStateById(stateId).electionRules?.wtaTrigger;
   }
 
   /**
@@ -432,9 +450,11 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getCandidatePercentage,
     getCandidateTotalDelegates,
     getStateByInitial,
+    getStateMinThreshold,
     getStateTotalDelegates,
     getStateUnallocatedDelegates,
     getStateUnallocatedPercentage,
+    getStateWtaTrigger,
     resetStateResults,
     updateCandidateDelegates,
     updateCandidatePercentage

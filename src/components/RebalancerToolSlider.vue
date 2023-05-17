@@ -1,6 +1,23 @@
 <template>
-	<div class="c-rebalancerToolSlider" :class="{ 'is-unallocated': isUnallocatedItem }">
-		<input 
+	<div
+    class="c-rebalancerToolSlider" 
+    :class="{ 'is-unallocated': isUnallocatedItem }"
+    :style="cssVars"
+  >
+    <div
+      v-if="!isUnallocatedItem"
+      class="c-rebalancerToolSlider_lines"
+    >
+      <div
+        v-if="minThreshold" 
+        class="c-rebalancerToolSlider_minLine"
+      ></div>
+      <div
+        v-if="wtaThreshold"
+        class="c-rebalancerToolSlider_wtaLine"
+      ></div>
+    </div>
+    <input 
       type="range"
       v-model="sliderValue"
       :disabled="isUnallocatedItem || candidateId === null"
@@ -29,7 +46,9 @@ const props = defineProps({
   candidateId: { type: Number, default: null },
   initialValue: { type: Number, default: 0 },
   isUnallocatedItem: { type: Boolean, default: false },
-  stateId: { type: Number, required: true }
+  minThreshold: { type: Number, default: null },
+  stateId: { type: Number, required: true },
+  wtaThreshold: { type: Number, default: null }
 });
 
 const sliderValue: Ref<number> = ref(props.initialValue);
@@ -43,12 +62,19 @@ watchEffect(() => {
   }
 })
 
-const candidateColor:  ComputedRef<string|null> = computed(() => {
+const candidateColor: Ref<string|null> = computed(() => {
   if (props.candidateId == null) {
     return null;
   }
 
   return candidatesStore.getCandidateColor(props.candidateId);
+});
+
+const cssVars = computed(() => {
+  return { 
+    '--min-threshold': props.minThreshold ? props.minThreshold + '%' : '',
+    '--wta-trigger': props.wtaThreshold ? props.wtaThreshold + '%' : ''
+  };
 });
 
 const formattedPercentage: ComputedRef<string> = computed(() => {
@@ -73,13 +99,16 @@ function onInput(): void {
   
 <style scoped lang="scss">
 .c-rebalancerToolSlider {
+  --percent-width: 5rem;
+
+  position: relative;
 	display: flex;
 	width: 100%;
 	min-height: 25px;
 	align-items: center;
 
   &_percent {
-    width: 5rem;
+    width: var(--percent-width);
     text-align: right;
   }
 
@@ -99,7 +128,9 @@ function onInput(): void {
     }
 
     &::-webkit-slider-thumb {
+      z-index: 99;
       -webkit-appearance: none;
+      position: relative;
       appearance: none;
       width: 5px;
       height: 14px;
@@ -128,6 +159,30 @@ function onInput(): void {
         cursor: default;
       }
     }
+  }
+
+  &_lines {
+    z-index: 9;
+    position: absolute;
+    display: flex;
+    width: calc(100% - var(--percent-width));
+    top: 0;
+    margin-left: 5px;
+    pointer-events: none;
+  }
+
+  &_minLine {
+    position: absolute;
+    height: 25px;
+    margin-left: var(--min-threshold);
+    border-left: 2px dashed var(--color-light-grey);
+  }
+
+  &_wtaLine {
+    position: absolute;
+    height: 25px;
+    margin-left: var(--wta-trigger);
+    border-left: 2px dashed var(--color-dark-grey);
   }
 }
 </style>
