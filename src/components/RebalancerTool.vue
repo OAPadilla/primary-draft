@@ -133,17 +133,19 @@ function onResetClick(): void {
 </script>
   
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-rebalancerTool {
-	margin-bottom: var(--standard-spacing);
+	margin-bottom: $standard-spacing;
 
 	&_header {
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		font-family: var(--standard-font-family);
+		font-family: $standard-font-family;
 		font-size: 16px;
 		font-weight: bold;
-		border-bottom: var(--standard-border);
+		border-bottom: $standard-border;
 		padding-bottom: 5px;
 
 		div {
@@ -156,7 +158,7 @@ function onResetClick(): void {
 	&_stateDetails {
 		font-weight: normal;
 		font-size: 12px;
-		color: var(--color-dark-grey);
+		color: $color-dark-grey;
 	}
 
 	&_unallocated {

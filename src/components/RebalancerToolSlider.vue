@@ -1,7 +1,7 @@
 <template>
 	<div
     class="c-rebalancerToolSlider" 
-    :class="{ 'is-unallocated': isUnallocatedItem }"
+    :class="{ 'c-rebalancerToolSlider_unallocated': isUnallocatedItem }"
     :style="cssVars"
   >
     <div
@@ -20,6 +20,7 @@
     <input 
       type="range"
       v-model="sliderValue"
+      :class="{ 'isZero': isUnallocatedItem && sliderValue <= 0 }"
       :disabled="isUnallocatedItem || candidateId === null"
       min="0" 
       max="100"
@@ -98,8 +99,10 @@ function onInput(): void {
 </script>
   
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-rebalancerToolSlider {
-  --percent-width: 5rem;
+  $percent-width: 5rem;
 
   position: relative;
 	display: flex;
@@ -108,7 +111,7 @@ function onInput(): void {
 	align-items: center;
 
   &_percent {
-    width: var(--percent-width);
+    width: $percent-width;
     text-align: right;
   }
 
@@ -116,12 +119,13 @@ function onInput(): void {
     -webkit-appearance: none;
     width: 100%;
     height: 5px;
-    background-color: var(--color-light-grey);
+    background-color: $color-light-grey;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
     padding: 0;
+    transition: opacity 200ms ease-in-out;
 
     &:hover {
       opacity: 1;
@@ -134,19 +138,26 @@ function onInput(): void {
       appearance: none;
       width: 5px;
       height: 14px;
-      background-color: var(--color-black);
+      background-color: $color-black;
       cursor: pointer;
     }
 
     &::-moz-range-thumb { 
       width: 6px;
       height: 16px;
-      background-color: var(--color-black);
+      background-color: $color-black;
       cursor: pointer;
+    }
+
+    &.isZero {
+      @include vertical-shake(1px);
+      animation: verticalShake 200ms ease-in-out;
+      transition: opacity 200ms ease-in-out;
+      opacity: 1;
     }
   }
 
-  &.is-unallocated {
+  &_unallocated {
     pointer-events: none;
 
     input {
@@ -165,7 +176,7 @@ function onInput(): void {
     z-index: 9;
     position: absolute;
     display: flex;
-    width: calc(100% - var(--percent-width));
+    width: calc(100% - $percent-width);
     top: 0;
     margin-left: 5px;
     pointer-events: none;
@@ -175,14 +186,14 @@ function onInput(): void {
     position: absolute;
     height: 25px;
     margin-left: var(--min-threshold);
-    border-left: 2px dashed var(--color-light-grey);
+    border-left: 2px dashed $color-light-grey;
   }
 
   &_wtaLine {
     position: absolute;
     height: 25px;
     margin-left: var(--wta-trigger);
-    border-left: 2px dashed var(--color-dark-grey);
+    border-left: 2px dashed $color-dark-grey;
   }
 }
 </style>

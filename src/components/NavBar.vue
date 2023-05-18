@@ -20,11 +20,13 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 </script>
 
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-navBar {
 	display: flex;
 	max-width: 950px;
 	margin: auto;
-	border-bottom: var(--standard-border);
+	border-bottom: $standard-border;
 
 	h1 {
 		font-weight: normal;
@@ -52,7 +54,7 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 		a {
 			display: flex;
 			align-items: center;
-			padding-left: var(--standard-spacing);
+			padding-left: $standard-spacing;
 		}
 
 		svg:hover {
@@ -62,7 +64,7 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 }
 
 header {
-	background-color: var(--base-background-color);
+	background-color: $base-background-color;
 	padding: 0 2rem;
 }
 </style>

@@ -1,0 +1,43 @@
+@import 'variables';
+@import 'mixins';
+
+:root {
+  font-family: $standard-font-family;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	color: $color-black;
+	background-color: $base-background-color;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+  
+#app {
+  margin: 0 auto;
+  font-weight: normal;
+	min-height: 100vh;
+  min-width: 400px;
+	display: flex;
+	flex-direction: column;
+}
+
+body {
+	margin: 0;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.4s;
+  color: $color-black;
+}
+
+@media (hover: hover) {
+  a:hover {
+    text-decoration: underline;
+  }
+}

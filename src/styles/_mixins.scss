@@ -1,0 +1,15 @@
+// _mixins.scss
+
+@mixin vertical-shake($translateY) {
+  @keyframes verticalShake {
+    0% {
+      transform: translateY(#{$translateY});
+    }
+    50% {
+      transform: translateY(-#{$translateY});
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}

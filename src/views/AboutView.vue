@@ -89,6 +89,8 @@ useMeta({
 </script>
   
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-aboutView {
 	ul {
 		padding: 0 20px;
@@ -106,13 +108,13 @@ useMeta({
 	}
 
 	&_section {
-		border-left: var(--standard-border);
+		border-left: $standard-border;
 		padding-left: 40px;
-		margin-bottom: var(--standard-spacing);
+		margin-bottom: $standard-spacing;
 	}
 
 	&_flag {
-		stroke: var(--color-black);
+		stroke: $color-black;
 		width: 16px;
 		height: 16px;
 	}

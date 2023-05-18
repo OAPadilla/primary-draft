@@ -75,12 +75,14 @@ function onChoiceClick(candidateId: number): void {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-candidatePicker {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin-bottom: var(--standard-spacing);
+	margin-bottom: $standard-spacing;
 }
 
 .c-candidatePicker_choiceWrapper,
@@ -100,21 +102,21 @@ function onChoiceClick(candidateId: number): void {
 
 .c-candidatePicker_choice {
 	width: 100%;
-	border: 2px solid var(--base-background-color);
+	border: 2px solid $base-background-color;
 	border-radius: 25px;
 }
 
 .c-candidatePicker_choice.itemNone {
 	padding: 8px 0;
 	text-align: center;
-	color: var(--base-background-color);
-	background-color: var(--color-light-grey);
+	color: $base-background-color;
+	background-color: $color-light-grey;
 	font-weight: bold;
 	cursor: pointer;
 }
 
 .selected .c-candidatePicker_choice {
-	border-color: var(--color-black);
+	border-color: $color-black;
 }
 
 .c-candidatePicker_tools {
@@ -134,18 +136,18 @@ function onChoiceClick(candidateId: number): void {
 .isEditMode .c-candidatePicker_choice.item, 
 .isEditMode .c-candidatePicker_choice.editBtn 
 {
-	border-color: var(--color-dark-grey);
+	border-color: $color-dark-grey;
 }
 
 .isEditMode .c-candidatePicker_choice.noneBtn {
-	border-color: var(--base-background-color);
+	border-color: $base-background-color;
 }
 
 input {
 	width: 180px;
 	padding: 10px;
-	color: var(--color-black);
-	font-family: var(--standard-font-family);
+	color: $color-black;
+	font-family: $standard-font-family;
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
@@ -160,6 +162,6 @@ input::placeholder {
 }
 
 .isEditMode input {
-	color: var(--color-dark-grey);
+	color: $color-dark-grey;
 }
 </style>

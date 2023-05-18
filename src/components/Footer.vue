@@ -21,13 +21,15 @@
 </template>
 
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-footer {
 	display: flex;
 	padding: 20px 0 30px;
 	flex-direction: column;
 	max-width: 950px;
 	margin: auto;
-	border-top: var(--standard-border);
+	border-top: $standard-border;
 	font-size: 12px;
 
 	h4 {
@@ -38,7 +40,7 @@
 
 	&_top {
 		display: flex;
-		margin-bottom: var(--standard-spacing);
+		margin-bottom: $standard-spacing;
 	}
 
 	&_share {
@@ -60,7 +62,7 @@
 }
 
 footer {
-	background-color: var(--base-background-color);
+	background-color: $base-background-color;
 	padding: 0 2rem;
 }
 </style>

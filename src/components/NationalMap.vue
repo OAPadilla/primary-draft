@@ -346,18 +346,20 @@
 </script>
 
 <style lang="scss">
+@import '@/styles/main.scss';
+
 .c-nationalMap {
 	&_map {
 		display: flex;
 		width: 100%;
-		margin-bottom: var(--standard-spacing);
+		margin-bottom: $standard-spacing;
 
 		@media (min-width: 1030px) {
 			min-height: 620px;
 		}
 
 		svg {
-			fill: var(--color-light-grey);
+			fill: $color-light-grey;
 		}
 
 		path:hover,
@@ -367,7 +369,7 @@
 
 		.state-borders {
 			fill: none;
-			stroke: var(--color-white);
+			stroke: $color-white;
 			stroke-width: 0.5px;
 			stroke-linejoin: round;
 			stroke-linecap: round;
@@ -376,12 +378,12 @@
 
 		.states-names {
 			text {
-				fill: var(--color-white);
+				fill: $color-white;
 				text-anchor: middle;
 				pointer-events: none;
 
 				&.selected  {
-					fill: var(--color-black);
+					fill: $color-black;
 					font-weight: bold;
 				}
 			}
@@ -401,17 +403,17 @@
 		.tooltip {
 			z-index: 999;
 			position: absolute;
-			background-color: var(--base-background-color);
+			background-color: $base-background-color;
 			width: 125px;
 			margin: 5px;
 			border-radius: 25px;
 			padding: 8px;
-			color: var(--color-black);
-			font-family: var(--standard-font-family);
+			color: $color-black;
+			font-family: $standard-font-family;
 			font-size: 14px;
 			text-align: center;
 			text-transform: capitalize;
-			box-shadow: var(--standard-box-shadow);
+			box-shadow: $standard-box-shadow;
 		}
 
 		&_name {

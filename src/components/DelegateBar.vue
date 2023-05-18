@@ -225,8 +225,10 @@ onUnmounted(() => {
 </script>
   
 <style lang="scss">
+@import '@/styles/main.scss';
+
 .c-delegateBar {
-	margin-bottom: var(--standard-spacing);
+	margin-bottom: $standard-spacing;
 
 	&_bar {
 		display: flex;
@@ -241,7 +243,7 @@ onUnmounted(() => {
 	}
 
 	&_majorityMarker {
-		stroke: var(--color-black);
+		stroke: $color-black;
 		stroke-width: 1.5;
 		stroke-dasharray: 3;
 	}
@@ -250,7 +252,7 @@ onUnmounted(() => {
 		display: flex;
 		margin: auto;
 		padding-left: 12px;
-		stroke: var(--color-black);
+		stroke: $color-black;
 	}
 
 	&_tooltip {
@@ -263,12 +265,12 @@ onUnmounted(() => {
 			margin: 5px;
 			border-radius: 25px;
 			padding: 10px;
-			color: var(--color-black);
-			font-family: var(--standard-font-family);
+			color: $color-black;
+			font-family: $standard-font-family;
 			font-size: 16px;
 			font-weight: bold;
 			text-align: center;
-			box-shadow: var(--standard-box-shadow);
+			box-shadow: $standard-box-shadow;
 		}
 	}
 }
