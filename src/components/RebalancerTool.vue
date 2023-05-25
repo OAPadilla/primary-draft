@@ -27,9 +27,11 @@
 			class="c-rebalancerTool_unallocated"
 			:allocated-delegates="stateUnallocatedDelegates"
 			label="Unallocated"
+			:min-threshold="stateRuleMinThreshold"
 			:percent-of-state-del="stateUnallocatedPercentage"
 			:is-unallocated-item="true"
 			:state-id="selectedStateId"
+			:wta-threshold="stateRuleWtaTrigger"
 		/>
 
 		<div class="c-rebalancerTool_list">

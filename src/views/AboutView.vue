@@ -56,12 +56,10 @@
 					<a href="https://ballotpedia.org/Types_of_delegates">Learn more here</a>.
 				</li>
 				<li>
-					The many primary types can be categorized into 2 main groups. <a href="https://www.thegreenpapers.com/Definitions.html#Prim">Learn more here</a>.
+					We condense primary types into 2 main groups. <a href="https://www.thegreenpapers.com/Definitions.html#Prim">Learn more here</a>.
 					<ul>
 						<li><strong>Winner-Take-All and Winner-Take-Most</strong> - The candidate with the most amount of votes collects all of a state's delegates.</li>
-						<li><strong>Proportional and Delegate Selection</strong> - Delegates are proportionally distributed based on popular vote percentiles.
-					If a minimum threshold exists, a candidate must meet it to be eligible for delegates. If a winner-take-all trigger exists,
-					a candidate will collect all of a state's delegates if they reach a defined threshold.</li>
+						<li><strong>Proportional and Delegate Selection</strong> - Delegates are proportionally distributed based on popular vote percentiles.</li>
 					</ul>
 				</li>
 			</ul>

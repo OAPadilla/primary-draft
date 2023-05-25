@@ -4,18 +4,19 @@
     :class="{ 'c-rebalancerToolSlider_unallocated': isUnallocatedItem }"
     :style="cssVars"
   >
-    <div
-      v-if="!isUnallocatedItem"
-      class="c-rebalancerToolSlider_lines"
-    >
+    <div class="c-rebalancerToolSlider_lines">
       <div
         v-if="minThreshold" 
         class="c-rebalancerToolSlider_minLine"
-      ></div>
+      >
+        {{ isUnallocatedItem ? '&le;' : '' }}
+      </div>
       <div
         v-if="wtaThreshold"
         class="c-rebalancerToolSlider_wtaLine"
-      ></div>
+      >
+        <RibbonIcon v-if="isUnallocatedItem" />
+      </div>
     </div>
     <input 
       type="range"
@@ -37,6 +38,7 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect, ComputedRef, Ref } from 'vue';
 
+import RibbonIcon from '../assets/icons/ribbon-star.svg?component';
 import { useCandidatesStore } from '../stores/candidates';
 import { useUsStatesStore } from '../stores/usStates';
 
@@ -169,6 +171,23 @@ function onInput(): void {
         height: 5px;
         cursor: default;
       }
+    }
+  }
+
+  &_unallocated &_minLine {
+    border: none;
+		left: -4px;
+    top: 12px;
+    color: $color-light-grey;
+  }
+
+  &_unallocated &_wtaLine {
+    border: none;
+    left: -8px;
+    top: 16px;
+
+    svg {
+      fill: $color-dark-grey;
     }
   }
 
