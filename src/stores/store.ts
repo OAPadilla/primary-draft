@@ -1,4 +1,4 @@
-import { computed, ref, ComputedRef, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useStore = defineStore('store', () => {
@@ -14,15 +14,15 @@ export const useStore = defineStore('store', () => {
   /**
    * Get the currently selected candidate's id
    */
-  const getSelectedCandidateId: ComputedRef<Ref<number>> = computed(() => {
-    return selectedCandidateId;
+  const getSelectedCandidateId: Ref<number> = computed(() => {
+    return selectedCandidateId.value;
   });
 
   /**
    * Get the currently selected state's id
    */
-  const getSelectedStateId: ComputedRef<Ref<number>> = computed(() => {
-    return selectedStateId;
+  const getSelectedStateId: Ref<number> = computed(() => {
+    return selectedStateId.value;
   });
 
   // Actions (methods)

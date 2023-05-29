@@ -71,7 +71,7 @@ const { candidates } = storeToRefs(candidatesStore);
 const resetActivated: Ref<boolean> = ref(false);
 
 const selectedStateId: Ref<number> = computed(() => {
-	return mainStore.getSelectedStateId.value;
+	return mainStore.getSelectedStateId;
 });
 
 const selectedState: Ref<IState> = computed(() => {

@@ -30,13 +30,13 @@
       @input="onInput"
     >
     <div class="c-rebalancerToolSlider_percent">
-      {{ formattedPercentage }}%
+      {{ formattedPercentage }}
     </div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect, ComputedRef, Ref } from 'vue';
+import { computed, ref, watchEffect, Ref } from 'vue';
 
 import RibbonIcon from '../assets/icons/ribbon-star.svg?component';
 import { useCandidatesStore } from '../stores/candidates';
@@ -80,11 +80,11 @@ const cssVars = computed(() => {
   };
 });
 
-const formattedPercentage: ComputedRef<string> = computed(() => {
-  return Number(sliderValue.value).toFixed(1);
+const formattedPercentage: Ref<string> = computed(() => {
+  return Number(sliderValue.value).toFixed(1) + ' %';
 });
 
-const maxSliderValue: ComputedRef<number> = computed(() => {
+const maxSliderValue: Ref<number> = computed(() => {
   return props.initialValue + usStatesStore.getStateUnallocatedPercentage(props.stateId);
 });
 
@@ -172,6 +172,12 @@ function onInput(): void {
         cursor: default;
       }
     }
+  }
+
+  &_unallocated &_lines {
+    @media (max-width: 700px) {
+			display: none;
+		}
   }
 
   &_unallocated &_minLine {

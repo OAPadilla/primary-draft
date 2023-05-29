@@ -15,9 +15,10 @@
 			<div :class="`c-candidatePicker_choice item ${candidate.id}`">
 				<input
 					type="text" 
-					v-model="candidate.name" 
+					v-model.trim="candidate.name" 
 					:placeholder="isEditMode ? '________' : 'Available Slot'" 
-					:style="{ 'background-color': candidate.color }" :readonly="!isEditMode"
+					:readonly="!isEditMode"
+					:style="{ 'background-color': candidate.color }" 
 					maxlength="20"
 				>
 			</div>
@@ -62,7 +63,7 @@ const isEditMode: Ref<boolean> = ref(false);
 const noneChoiceId: number = -1;
 
 const selectedCandidateId: Ref<number> = computed(() => {
-	return mainStore.getSelectedCandidateId.value;
+	return mainStore.getSelectedCandidateId;
 });
 
 function setSelectedCandidateId(id: number): void {

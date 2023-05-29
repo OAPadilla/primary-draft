@@ -66,13 +66,17 @@ export const useUsStatesStore = defineStore('usStates', () => {
   ]);
 
   watchEffect(() => {
-    // Update candidate total delegate count when a state's results changes
     for (const candidate of candidates.value) {
+      // Watches changes in usStates store state delegates results. 
+      // Update candidates total delegate count when state's allocated delegates changes.
       candidate.delegates = getCandidateTotalDelegates(candidate.id);
     }
+  })
 
-    // Watch state results and update state color based on leading candidate
+  watchEffect(() => {
     for (const usState of usStates.value) {
+      // Watches changes in usStates store state percentage results. 
+      // Update state color based on candidate with greatest percentage when state's allocated percentages changes.
       const leadingCandidate: ICandidateResult = _getStateLeadingCandidate(usState.id);
       usState.color = candidatesStore.getCandidateColor(leadingCandidate.id) || '';
     }

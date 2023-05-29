@@ -1,7 +1,7 @@
 <template>
 	<div class="c-nationalMap">
 		<div class="c-nationalMap_tooltip"></div>
-		<div :class="className"></div>
+		<div :class="mapClass"></div>
 	</div>
 </template>
 
@@ -23,7 +23,7 @@
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
 
-	const className: string = 'c-nationalMap_map';
+	const mapClass: string = 'c-nationalMap_map';
 	const usMapJSON: string = 'https://d3js.org/us-10m.v1.json';
 	const tooltipWidth: number = 125;
 	const hiddenInitialsTextIds: number[] = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
@@ -42,7 +42,7 @@
 	let jsonData: any = null;
 
 	const selectedCandidateId: Ref<number> = computed(() => {
-		return mainStore.getSelectedCandidateId.value;
+		return mainStore.getSelectedCandidateId;
 	});
 
 	const getCandidateName: Ref<string> = computed(() => {
@@ -133,9 +133,9 @@
 		setSelectedState(stateId);
 
 		// To visually identify state clicked on
-		d3.selectAll(`.${className} .states path`).classed("selected", false); // Main states
-		d3.selectAll(`.${className} .states rect`).classed("selected", false); // Avatar states
-		d3.selectAll(`.${className} .states-names text`).classed("selected", false); // State initials text
+		d3.selectAll(`.${mapClass} .states path`).classed("selected", false); // Main states
+		d3.selectAll(`.${mapClass} .states rect`).classed("selected", false); // Avatar states
+		d3.selectAll(`.${mapClass} .states-names text`).classed("selected", false); // State initials text
 		d3.selectAll(`.state-${stateId}`).classed("selected", true);
 		d3.selectAll(`.state-name-${stateId}`).classed("selected", true);
 
@@ -152,7 +152,7 @@
 	 * @param tooltip 
 	 */
 	function onStateMousemove(event: any, stateId: number, tooltip: any): void {
-		const map = d3.select('.' + className);
+		const map = d3.select('.' + mapClass);
 		const currentWidth: number = parseInt(map.style('width'), 10);
 		const stateData: IState = usStatesStore.getStateById(stateId);
 		const switchPoint: number = currentWidth - tooltipWidth;
@@ -223,7 +223,7 @@
 	 * @param geoStateNames
 	 */
  	function createMap(jsonData: any, geoStateNames: any): void {
-		const componentSelector: string = '.' + className;
+		const componentSelector: string = '.' + mapClass;
 		
 		// Remove SVG elements for resets
 		d3.select(componentSelector + ' svg').remove();
