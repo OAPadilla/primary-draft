@@ -1,5 +1,18 @@
 // _mixins.scss
 
+@mixin pop-in($scaleStart) {
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(#{$scaleStart}, #{$scaleStart});
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1, 1);
+    }
+  }
+}
+
 @mixin vertical-shake($translateY) {
   @keyframes verticalShake {
     0% {

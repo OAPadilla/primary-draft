@@ -106,7 +106,7 @@ function onMousemove(event: any, d: ICandidateBarChart, tooltip: any): void {
 
 	const switchPoint = currentWidth - tooltipWidth - 20;
 	const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
-	tooltip.html(`<div>${d.name} <div>${d.percent}% (${d.delegates} delegates)</div></div>`)
+	tooltip.html(`<div>${d.name}</div><div>${d.percent}%</div><div>${d.delegates} delegates</div>`)
 		.style("left", `${left}px`)
 		.style("top", `${d3.pointer(event)[1] - 20}px`);
 }

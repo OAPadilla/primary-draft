@@ -149,7 +149,7 @@ function onChoiceClick(candidateId: number): void {
 		&.selected {
 			.c-candidatePicker_candidateBtn,
 			.c-candidatePicker_noneBtn {
-				border-color: $color-black;
+				border-color: $color-dark-grey;
 			}
 		}
 	}
@@ -201,11 +201,23 @@ function onChoiceClick(candidateId: number): void {
 
 		.c-candidatePicker_editBtn {
 			border-color: $color-dark-grey;
+			color: $color-dark-grey;
 		}
 
 		.c-candidatePicker_noneBtn {
 			border-color: $base-background-color;
+
+			&:hover {
+				cursor: default;
+				opacity: 0.8;
+			}
 		}
+	}
+
+	.c-candidatePickerButton {
+		@include pop-in(0.5);
+		animation: popIn 250ms ease-in-out;
+		transition: width 200ms ease-in-out;
 	}
 }
 </style>
