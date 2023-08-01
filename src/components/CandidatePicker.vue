@@ -7,12 +7,13 @@
 		<!-- Custom candidate choices -->
 		<div
 			v-for="candidate in candidatePickerButtons"
-			class="c-candidatePickerButtonWrapper"
+			class="c-candidatePicker_buttonWrapper"
 			:class="{ selected: selectedCandidateId === candidate.id }"
 			:key="candidate.id" 
 			@click="onChoiceClick(candidate.id)"
 		>
 			<CandidatePickerButton
+				class="c-candidatePicker_candidateBtn"
 				:candidateId="candidate.id"
 				:isEditMode="isEditMode"
 				@delete-candidate="deletePickerButton"
@@ -21,23 +22,24 @@
 
 		<div
 			v-show="!isMaxCandidateButtonsMet && isEditMode"
-			class="c-candidatePickerButtonWrapper"
+			class="c-candidatePicker_buttonWrapper"
 			@click="addPickerButton"
 		>
-			<div class="c-candidatePickerButton itemNone itemAdd">
+			<div class="c-candidatePicker_addBtn c-candidatePickerButton">
 				+
 			</div>
 		</div>
 
 		<div class="c-candidatePicker_tools">
 			<div class="c-candidatePicker_edit"></div>
+
 			<!-- "None" choice: To interact with visualizations without candidate selected -->
 			<div
-				class="c-candidatePickerButtonWrapper"
+				class="c-candidatePicker_buttonWrapper"
 				:class="{ selected: selectedCandidateId === noneChoiceId }"
 				@click="onChoiceClick(noneChoiceId)"
 			>
-				<div class="c-candidatePickerButton itemNone noneBtn">None</div>
+				<div class="c-candidatePicker_noneBtn c-candidatePickerButton">None</div>
 			</div>
 
 			<!-- Edit button: To change candidate names -->
@@ -45,7 +47,7 @@
 				class="c-candidatePicker_edit" 
 				@click="isEditMode = !isEditMode"
 			>
-				<div class="c-candidatePickerButton itemNone editBtn"><EditIcon /></div>
+				<div class="c-candidatePicker_editBtn c-candidatePickerButton"><EditIcon /></div>
 			</div>
 		</div>
 	</div>
@@ -125,78 +127,85 @@ function onChoiceClick(candidateId: number): void {
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-bottom: $standard-spacing;
-}
 
-.c-candidatePickerButtonWrapper,
-.c-candidatePicker_edit {
-	width: 200px;
-	height: 40px;
-	margin: 5px;
-	border-radius: 20px;
-	opacity: 0.8;
-}
-
-.c-candidatePickerButtonWrapper:hover,
-.c-candidatePicker_edit:hover,
-.isEditMode .c-candidatePicker_edit {
-	opacity: 1;
-}
-
-.c-candidatePickerButton {
-	width: 100%;
-	border: 2px solid $base-background-color;
-	border-radius: 25px;
-}
-
-.c-candidatePickerButton.itemNone,
-.c-candidatePickerButton.itemAdd {
-	padding: 8px 0;
-	text-align: center;
-	color: $base-background-color;
-	background-color: $color-light-grey;
-	font-weight: bold;
-	cursor: pointer;
-}
-
-.c-candidatePickerButton.itemAdd {
-	color: $color-light-grey;
-	background-color: $base-background-color;
-	border: 2px dashed $color-light-grey;
-
-	&:hover {
-		background-color: #f5f5f5;
+	&_tools {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
 	}
-}
 
-.selected .c-candidatePickerButton {
-	border-color: $color-black;
-}
+	&_buttonWrapper,
+	&_edit {
+		width: 200px;
+		height: 40px;
+		margin: 5px;
+		border-radius: 20px;
+		opacity: 0.8;
 
-.c-candidatePicker_tools {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-}
+		&:hover {
+			opacity: 1;
+		}
 
-.c-candidatePickerButton.editBtn {
-	height: 24px;
-}
+		&.selected {
+			.c-candidatePicker_candidateBtn,
+			.c-candidatePicker_noneBtn {
+				border-color: $color-black;
+			}
+		}
+	}
 
-.c-candidatePicker_edit {
-	width: 40px;
-}
+	&_edit {
+		width: 40px;
+	}
 
-.isEditMode .c-candidatePickerButton.item, 
-.isEditMode .c-candidatePickerButton.editBtn 
-{
-	border-color: $color-dark-grey;
-}
+	&_addBtn,
+	&_noneBtn,
+	&_editBtn {
+		cursor: pointer;
+		padding: 8px 0;
+		text-align: center;
+		color: $base-background-color;
+		background-color: $color-light-grey;
+		font-weight: bold;
+		width: 100%;
+		border-radius: 25px;
+	}
 
-.isEditMode .c-candidatePickerButton.noneBtn {
-	border-color: $base-background-color;
-}
+	&_addBtn {
+		color: $color-light-grey;
+		background-color: $base-background-color;
+		border: 2px dashed $color-light-grey;
 
-.isEditMode input {
-	color: $color-dark-grey;
+		&:hover {
+			background-color: #f5f5f5;
+		}
+	}
+
+	&_noneBtn,
+	&_editBtn {
+		border: 2px solid $base-background-color;
+	}
+
+	&_editBtn {
+		height: 24px;
+	}
+
+	&.isEditMode {
+		.c-candidatePicker_candidateBtn {
+			border-color: $color-light-grey;
+		}
+
+		.c-candidatePicker_edit {
+			opacity: 1;
+		}
+
+		.c-candidatePicker_editBtn {
+			border-color: $color-dark-grey;
+		}
+
+		.c-candidatePicker_noneBtn {
+			border-color: $base-background-color;
+		}
+	}
 }
 </style>

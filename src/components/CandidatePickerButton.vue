@@ -1,6 +1,9 @@
 
 <template>
-	<div :class="`c-candidatePickerButton item ${candidateId}`">
+	<div
+        class="c-candidatePickerButton"
+        :class="{ isEditMode }"
+    >
         <input
             type="text" 
             v-model.trim="candidates[candidateId].name" 
@@ -15,16 +18,16 @@
             class="c-candidatePickerButton_delete"
             @click="deleteCandidate"
         >
-            <TrashIcon />
+            <XCircleIcon />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, Ref } from 'vue';
+import { computed, Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import TrashIcon from '../assets/icons/x-circle.svg?component';
+import XCircleIcon from '../assets/icons/x-circle.svg?component';
 
 import { useCandidatesStore } from '../stores/candidates';
 
@@ -72,66 +75,27 @@ function deleteCandidate(): void {
             fill: $base-background-color;
         }
     }
+
+    input {
+        cursor: pointer;
+        width: 180px;
+        padding: 10px;
+        color: $color-black;
+        font-family: $standard-font-family;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border: 0;
+        border-radius: 20px;
+        outline: none;
+    }
+
+    input::placeholder {
+        font-weight: lighter;
+    }
+
+    &.isEditMode input {
+        color: $color-dark-grey;
+    }
 }
-
-.c-candidatePickerButton.itemNone {
-	padding: 8px 0;
-	text-align: center;
-	color: $base-background-color;
-	background-color: $color-light-grey;
-	font-weight: bold;
-	cursor: pointer;
-}
-
-.selected .c-candidatePickerButton {
-	border-color: $color-black;
-}
-
-.c-candidatePicker_tools {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-}
-
-.c-candidatePickerButton.editBtn {
-	height: 24px;
-}
-
-.c-candidatePicker_edit {
-	width: 40px;
-}
-
-.isEditMode .c-candidatePickerButton.item, 
-.isEditMode .c-candidatePickerButton.editBtn 
-{
-	border-color: $color-dark-grey;
-}
-
-.isEditMode .c-candidatePickerButton.noneBtn {
-	border-color: $base-background-color;
-}
-
-input {
-	width: 180px;
-	padding: 10px;
-	color: $color-black;
-	font-family: $standard-font-family;
-	font-size: 16px;
-	font-weight: bold;
-	text-align: center;
-	border: 0;
-	border-radius: 20px;
-	outline: none;
-	cursor: pointer;
-}
-
-input::placeholder {
-	font-weight: lighter;
-}
-
-.isEditMode input {
-	color: $color-dark-grey;
-}
-
-
 </style>
