@@ -356,6 +356,7 @@
 
 		@media (min-width: 1030px) {
 			min-height: 620px;
+			min-width: 940px;
 		}
 
 		svg {

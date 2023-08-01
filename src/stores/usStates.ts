@@ -416,6 +416,17 @@ export const useUsStatesStore = defineStore('usStates', () => {
   }
 
   /**
+   * Reset the results of all states for a candidate
+   * 
+   * @param candidateId
+   */
+  function resetAllResultsForCandidate(candidateId: number): void {
+    for (const usState of usStates.value) {
+      _resetStateResultsForCandidate(usState.id, candidateId);
+    }
+  }
+
+  /**
    * Reset the results of a state
    * 
    * @param stateId 
@@ -426,6 +437,16 @@ export const useUsStatesStore = defineStore('usStates', () => {
     usState.results = _defaultResults();
     _setStateUnallocatedPercentage(stateId, 100);
     _setStateUnallocatedDelegates(stateId, usState.totalDelegates);
+  }
+
+  /**
+   * Reset the results of a state for a candidate
+   * 
+   * @param stateId
+   * @param candidateId
+   */
+  function _resetStateResultsForCandidate(stateId: number, candidateId: number): void {
+    updateCandidatePercentage(candidateId, stateId, 0);
   }
 
   /**
@@ -459,6 +480,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getStateUnallocatedDelegates,
     getStateUnallocatedPercentage,
     getStateWtaTrigger,
+    resetAllResultsForCandidate,
     resetStateResults,
     updateCandidateDelegates,
     updateCandidatePercentage

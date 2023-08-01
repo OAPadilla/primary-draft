@@ -61,11 +61,17 @@ useMeta({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .content {
   flex: 1;
   max-width: 950px;
   margin: 2rem auto;
   padding: 0 2rem;
+
+  @media (max-width: 1030px) {
+    @media (min-width: 600px) {
+      min-width: 90%;
+    }
+  }
 }
 </style>

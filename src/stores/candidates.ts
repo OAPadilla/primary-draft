@@ -69,11 +69,21 @@ export const useCandidatesStore = defineStore('candidates', () => {
     return candidates.value[candidateId]?.name;
   }
 
+  /**
+   * Set a candidate's name based on their id
+   * 
+   * @param candidateId 
+   */
+  function setCandidateName(candidateId: number, name: string): void {
+    candidates.value[candidateId].name = name;
+  }
+
   return { 
     candidates,
     getCandidateColor,
     getCandidateName,
     getLeadingCandidate,
-    getWinnerCandidate
+    getWinnerCandidate,
+    setCandidateName
   }
 });
