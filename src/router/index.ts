@@ -6,25 +6,26 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView
+      name: "Home",
+      component: HomeView,
+      props: { partyId: 1 }
     },
     {
       path: "/about",
-      name: "about",
+      name: "About",
       component: () => import("../views/AboutView.vue")
     },
     {
-      path: "/republican-primary-map",
-      name: "gop",
+      path: "/democratic-primary-map",
+      name: "Dem",
       component: () => import("../views/HomeView.vue"),
-      props: route => ({ ...route.params, party: 'republican'})
+      props: { partyId: 0 }
     },
     {
-      path: "/democratic-primary-map",
-      name: "dem",
-      component: () => import("../views/ComingSoonView.vue"),
-      props: route => ({ ...route.params, party: 'democratic'})
+      path: "/republican-primary-map",
+      name: "Rep",
+      component: () => import("../views/HomeView.vue"),
+      props: { partyId: 1 }
     }
   ],
 });

@@ -55,7 +55,6 @@
 
 <script setup lang="ts">
 import { computed, ref, Ref } from 'vue';
-import { storeToRefs } from 'pinia';
 
 import EditIcon from '../assets/icons/edit.svg?component';
 import CandidatePickerButton from './CandidatePickerButton.vue';
@@ -67,15 +66,28 @@ import { useUsStatesStore } from '../stores/usStates';
 const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
-const { candidates } = storeToRefs(candidatesStore);
 
 const candidatePickerButtons: Ref<ICandidate[]> = ref([
-	{ ...candidates.value[0] },
-	{ ...candidates.value[1] },
-	{ ...candidates.value[2] }
+	{ ...candidatesStore.getCandidateById(0) },
+	{ ...candidatesStore.getCandidateById(1) },
+	{ ...candidatesStore.getCandidateById(2) }
 ]);
 const isEditMode: Ref<boolean> = ref(false);
 const noneChoiceId: number = -1;
+
+const candidates: Ref<ICandidate[]> = computed(() => {
+	return candidatesStore.getCandidates;
+});
+
+// const candidatePickerButtons: Ref<ICandidate[]> = computed(() => {
+// 	const numOfCandidates = candidates.value.filter(d => d.name).length;
+// 	console.log(numOfCandidates)
+// 	const buttonComponents = [];
+// 	for (let i = 0; i < numOfCandidates; i++) {
+// 		buttonComponents.push(candidatesStore.getCandidateById(i));
+// 	}
+// 	return buttonComponents;
+// });
 
 const isMaxCandidateButtonsMet: Ref<boolean> = computed(() => {
 	return candidatePickerButtons.value.length === candidates.value.length;

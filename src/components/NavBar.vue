@@ -1,12 +1,12 @@
 <template>
 	<header>
 		<div class="c-navBar">
-			<RouterLink to="/" class="c-navBar_home"><LogoIcon class="c-navBar_logo"/></RouterLink>
+			<RouterLink :to="{ name: 'Home' }" class="c-navBar_home"><LogoIcon class="c-navBar_logo"/></RouterLink>
 			<h1>primary draft</h1>
 			<nav class="c-navLinks">
-				<RouterLink to="/republican-primary-map">gop</RouterLink>
-				<RouterLink to="/democratic-primary-map">dem</RouterLink>
-				<RouterLink to="/about"><InfoIcon /></RouterLink>
+				<RouterLink :to="{ name: 'Rep' }">gop</RouterLink>
+				<RouterLink :to="{ name: 'Dem' }">dem</RouterLink>
+				<RouterLink :to="{ name: 'About' }"><InfoIcon /></RouterLink>
 			</nav>
 		</div>
 	</header>

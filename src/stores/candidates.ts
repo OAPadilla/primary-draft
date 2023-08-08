@@ -1,7 +1,7 @@
 import { computed, ref, ComputedRef, Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
-import { useStore } from '../stores/store';
+import { useStore } from './store';
 
 export interface ICandidate {
   id: number,
@@ -12,28 +12,54 @@ export interface ICandidate {
 
 export const useCandidatesStore = defineStore('candidates', () => {
   const mainStore = useStore();
-  const { totalDelegates } = storeToRefs(mainStore);
+
+  const { selectedPartyId } = storeToRefs(mainStore);
 
   // State (data)
 
-  const candidates = ref<ICandidate[]>([
-    { id: 0, color: '#FFC8B4', delegates: 0, name: 'Donald J. Trump' }, // light peach
-    { id: 1, color: '#B5EAD7', delegates: 0, name: 'Ron DeSantis' },    // pastel teal
-    { id: 2, color: '#E8D6CB', delegates: 0, name: 'Nikki Haley' },     // pale pink
-    { id: 3, color: '#C9E4CA', delegates: 0, name: '' },                // pale green
-    { id: 4, color: '#FFE0C2', delegates: 0, name: '' },                // light orange
-    { id: 5, color: '#C7CEEA', delegates: 0, name: '' },                // pale lavender
-    { id: 6, color: '#D4E6F1', delegates: 0, name: '' },                // light blue
-    { id: 7, color: '#E9D1D1', delegates: 0, name: '' }                 // light rose
-  ]);
+  const candidates: Ref<Map<number, ICandidate[]>> = ref(new Map([
+    [ 
+      0,
+      [
+        { id: 0, color: '#FFC8B4', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[0] ?? '' }, // light peach
+        { id: 1, color: '#B5EAD7', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[1] ?? '' }, // pastel teal
+        { id: 2, color: '#E8D6CB', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[2] ?? '' }, // pale pink
+        { id: 3, color: '#C9E4CA', delegates: 0, name: '' },                        // pale green
+        { id: 4, color: '#FFE0C2', delegates: 0, name: '' },                        // light orange
+        { id: 5, color: '#C7CEEA', delegates: 0, name: '' },                        // pale lavender
+        { id: 6, color: '#D4E6F1', delegates: 0, name: '' },                        // light blue
+        { id: 7, color: '#E9D1D1', delegates: 0, name: '' }                         // light rose
+      ]
+    ],
+    [ 
+      1,
+      [
+        { id: 0, color: '#FFC8B4', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[0] ?? '' }, // light peach
+        { id: 1, color: '#B5EAD7', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[1] ?? '' }, // pastel teal
+        { id: 2, color: '#E8D6CB', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[2] ?? '' }, // pale pink
+        { id: 3, color: '#C9E4CA', delegates: 0, name: '' },                        // pale green
+        { id: 4, color: '#FFE0C2', delegates: 0, name: '' },                        // light orange
+        { id: 5, color: '#C7CEEA', delegates: 0, name: '' },                        // pale lavender
+        { id: 6, color: '#D4E6F1', delegates: 0, name: '' },                        // light blue
+        { id: 7, color: '#E9D1D1', delegates: 0, name: '' }                         // light rose
+      ]
+    ]
+  ]));
 
   // Getters (computed values)
 
   /**
+   * Get candidates for selected party
+   */
+  const getCandidates: Ref<ICandidate[]> = computed(() => {
+    return candidates.value.get(selectedPartyId.value) || [];
+  });
+
+  /**
    * Get the currently leading candidate based on total delegates allocated
    */
-  const getLeadingCandidate: Ref<ICandidate> = computed(() => {
-    const leader = candidates.value.reduce((acc, curr) => {
+  const _getLeadingCandidate: ComputedRef<ICandidate> = computed(() => {
+    const leader = getCandidates.value.reduce((acc, curr) => {
       return acc.delegates > curr.delegates ? acc : curr;
     })
     return leader;
@@ -43,8 +69,8 @@ export const useCandidatesStore = defineStore('candidates', () => {
    * Get the candidate, if they exist, who has reached the required threshold to win the nomination
    */
   const getWinnerCandidate: ComputedRef<Ref<ICandidate> | null> = computed(() => {
-    if (getLeadingCandidate.value.delegates / totalDelegates.value >= 0.5) {
-      return getLeadingCandidate;
+    if (_getLeadingCandidate.value.delegates / mainStore.getPartyTotalDelegates >= 0.5) {
+      return _getLeadingCandidate;
     }
     return null;
   });
@@ -52,12 +78,21 @@ export const useCandidatesStore = defineStore('candidates', () => {
   // Actions (methods)
 
   /**
+   * Get a candidate by their id
+   * 
+   * @param candidateId 
+   */
+  function getCandidateById(candidateId: number) {
+    return getCandidates.value?.[candidateId];
+  }
+
+  /**
    * Get a candidate's identifying color based on their id
    * 
    * @param candidateId 
    */
   function getCandidateColor(candidateId: number): string {
-    return candidates.value[candidateId]?.color;
+    return getCandidateById(candidateId)?.color;
   }
 
   /**
@@ -66,7 +101,7 @@ export const useCandidatesStore = defineStore('candidates', () => {
    * @param candidateId 
    */
   function getCandidateName(candidateId: number): string {
-    return candidates.value[candidateId]?.name;
+    return getCandidateById(candidateId)?.name;
   }
 
   /**
@@ -75,14 +110,14 @@ export const useCandidatesStore = defineStore('candidates', () => {
    * @param candidateId 
    */
   function setCandidateName(candidateId: number, name: string): void {
-    candidates.value[candidateId].name = name;
+    getCandidateById(candidateId).name = name;
   }
 
   return { 
-    candidates,
+    getCandidates,
+    getCandidateById,
     getCandidateColor,
     getCandidateName,
-    getLeadingCandidate,
     getWinnerCandidate,
     setCandidateName
   }

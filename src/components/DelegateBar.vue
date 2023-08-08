@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, Ref } from 'vue';
+import { onMounted, onUnmounted, ref, watch, Ref } from 'vue';
 import * as d3 from 'd3';
 import { storeToRefs } from 'pinia';
 
@@ -23,8 +23,8 @@ interface ICandidateBarChart extends ICandidate {
 
 const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
-const { candidates } = storeToRefs(candidatesStore);
-const { totalDelegates } = storeToRefs(mainStore);
+
+const { selectedPartyId } = storeToRefs(mainStore);
 
 const barClass: string = 'c-delegateBar_bar';
 const barHeight: number = 60;
@@ -32,12 +32,16 @@ const defaultFlagColor: string = 'none';
 const flagColor: Ref<string> = ref(defaultFlagColor);
 const tooltipWidth: number = 200;
 
-candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
-	updateBar(Array.from(candidates.value));
+watch(candidatesStore, () => {
+	updateBar(candidatesStore.getCandidates);
 
 	// Update flag color based on if majority vote reached by candidate
 	const winningCandidate: Ref<ICandidate> | null = candidatesStore.getWinnerCandidate;
 	flagColor.value = winningCandidate ? winningCandidate.value.color : defaultFlagColor;
+});
+
+watch(selectedPartyId, () => {
+	resetBar();
 });
 
 /**
@@ -46,11 +50,9 @@ candidatesStore.$subscribe(() => { // TODO: Consider watch() instead https://pin
  * @param d 
  */
 function sortData(d: ICandidate[]): ICandidate[] {
-	d.sort((a: ICandidate, b: ICandidate) => {
+	return [...d].sort((a: ICandidate, b: ICandidate) => {
 		return b.delegates - a.delegates;
 	});
-
-	return d;
 }
 
 /**
@@ -63,10 +65,8 @@ function processData(data: ICandidate[], totalDelegates: number): ICandidateBarC
 	const percent = (delegates: number): number => Number((delegates / totalDelegates * 100).toFixed(2));
 	let cumulativeDelegates: number = 0; // Keeps track of how many delegates assigned as we iterate over data
 
-	sortData(data);
-
 	// Filter and format data for D3
-	const procData: ICandidateBarChart[] = data.map((d: ICandidate) => {
+	const procData: ICandidateBarChart[] = sortData(data).map((d: ICandidate) => {
 		const delegates = Math.max(d.delegates, 0);
 		cumulativeDelegates += delegates;
 	
@@ -118,11 +118,11 @@ function onMousemove(event: any, d: ICandidateBarChart, tooltip: any): void {
  */
 function updateBar(data: ICandidate[]): void {
 	const componentSelector: string = '.' + barClass;
-	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
+	const procData: ICandidateBarChart[] = processData(data, mainStore.getPartyTotalDelegates);
 	const tooltip = d3.select('.c-delegateBar_tooltip .tooltip');
 
 	const xScale = d3.scaleLinear<string|number, number>()
-		.domain([0, totalDelegates.value])
+		.domain([0, mainStore.getPartyTotalDelegates])
 		.range([0, '100%']);
 
 	// Adjust rect sizes and update tooltip based on data
@@ -141,7 +141,7 @@ function updateBar(data: ICandidate[]): void {
  */
 function createBar(data: ICandidate[]): void {
 	const componentSelector: string = '.' + barClass;
-	const procData: ICandidateBarChart[] = processData(data, totalDelegates.value);
+	const procData: ICandidateBarChart[] = processData(data, mainStore.getPartyTotalDelegates);
 
 	// Remove SVG and tooltip elements
 	d3.select(componentSelector + ' svg').remove();
@@ -154,7 +154,7 @@ function createBar(data: ICandidate[]): void {
 
 	// Set up horizontal scale
 	const xScale = d3.scaleLinear<string|number, number>()
-		.domain([0, totalDelegates.value])
+		.domain([0, mainStore.getPartyTotalDelegates])
 		.range([0, '100%']);
 
 	// Attach/join an array of data
@@ -211,11 +211,11 @@ function createBar(data: ICandidate[]): void {
  * Re-create bar chart with up-to-date store data
  */
 function resetBar(): void {
-	createBar(Array.from(candidates.value));
+	createBar(candidatesStore.getCandidates);
 }
 
 onMounted(() => {
-	createBar(Array.from(candidates.value));
+	createBar(candidatesStore.getCandidates);
 	window.addEventListener('resize', resetBar);
 });
 

@@ -1,7 +1,8 @@
-import { ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect, Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
 import { useCandidatesStore } from './candidates';
+import { useStore } from './store';
 
 type IAllocationType =
   | 'delegate selection'
@@ -44,29 +45,66 @@ export interface IState {
 
 export const useUsStatesStore = defineStore('usStates', () => {
   const candidatesStore = useCandidatesStore();
-  const { candidates } = storeToRefs(candidatesStore);
+  const mainStore = useStore();
+
+  const { selectedPartyId } = storeToRefs(mainStore);
 
   // State (data)
 
-  let usStates = ref<IState[]>([
-    {
-      id: 0,
-      allocation: 'proportional',
-      color: '',
-      electionDate: '',
-      electionRules: {},
-      electionType: 'open primary',
-      initials: '',
-      name: '',
-      results: [],
-      totalDelegates: 1,
-      unallocatedDelegates: 0,
-      unallocatedPercentage: 0
-    }
-  ]);
+  let usStates: Ref<Map<number, IState[]>> = ref(new Map([
+    [
+      0,
+      [
+        {
+          id: 0,
+          allocation: 'proportional',
+          color: '',
+          electionDate: '',
+          electionRules: {},
+          electionType: 'open primary',
+          initials: '',
+          name: '',
+          results: [],
+          totalDelegates: 1,
+          unallocatedDelegates: 0,
+          unallocatedPercentage: 0
+        } as IState
+      ]
+    ],
+    [
+      1,
+      [
+        {
+          id: 0,
+          allocation: 'proportional',
+          color: '',
+          electionDate: '',
+          electionRules: {},
+          electionType: 'open primary',
+          initials: '',
+          name: '',
+          results: [],
+          totalDelegates: 1,
+          unallocatedDelegates: 0,
+          unallocatedPercentage: 0
+        } as IState
+      ]
+    ]
+  ]));
+
+  // Getters (computed values)
+
+  /**
+   * Get US states data for the selected party
+   */
+  const getUsStates: Ref<IState[]> = computed(() => {
+    return usStates.value.get(selectedPartyId.value) || [];
+  });
+
+  // Watchers
 
   watchEffect(() => {
-    for (const candidate of candidates.value) {
+    for (const candidate of candidatesStore.getCandidates) {
       // Watches changes in usStates store state delegates results. 
       // Update candidates total delegate count when state's allocated delegates changes.
       candidate.delegates = getCandidateTotalDelegates(candidate.id);
@@ -74,16 +112,13 @@ export const useUsStatesStore = defineStore('usStates', () => {
   })
 
   watchEffect(() => {
-    for (const usState of usStates.value) {
+    for (const usState of getUsStates.value) {
       // Watches changes in usStates store state percentage results. 
       // Update state color based on candidate with greatest percentage when state's allocated percentages changes.
       const leadingCandidate: ICandidateResult = _getStateLeadingCandidate(usState.id);
       usState.color = candidatesStore.getCandidateColor(leadingCandidate.id) || '';
     }
   })
-
-  // Getters (computed values)
-
 
   // Actions (methods)
 
@@ -93,7 +128,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
   function _defaultResults(): ICandidateResult[] {
     let defaultResults: ICandidateResult[] = [];
   
-    for (let i = 0; i <= candidates.value.length; i++) {
+    for (let i = 0; i <= candidatesStore.getCandidates.length; i++) {
       defaultResults.push({
         id: i,
         delegates: 0,
@@ -132,7 +167,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
   function getCandidateTotalDelegates(candidateId: number): number {
     let totalDelegates: number = 0;
   
-    for (const state of usStates.value) {
+    for (const state of getUsStates.value) {
       totalDelegates += getCandidateDelegates(candidateId, state.id);
     }
   
@@ -145,7 +180,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateId 
    */
   function getStateById(stateId: number): IState {
-    return usStates.value[stateId];
+    return getUsStates.value[stateId];
   }
 
   /**
@@ -154,7 +189,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateInitial 
    */
   function getStateByInitial(stateInitial: string): IState|null {
-    for (const usState of usStates.value) {
+    for (const usState of getUsStates.value) {
       if (usState.initials === stateInitial) {
         return usState;
       }
@@ -410,7 +445,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Reset the results of all states
    */
   function resetAllResults(): void  {
-    for (const usState of usStates.value) {
+    for (const usState of getUsStates.value) {
       getStateById(usState.id).results = _defaultResults();
     };
   }
@@ -421,7 +456,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param candidateId
    */
   function resetAllResultsForCandidate(candidateId: number): void {
-    for (const usState of usStates.value) {
+    for (const usState of getUsStates.value) {
       _resetStateResultsForCandidate(usState.id, candidateId);
     }
   }
@@ -454,23 +489,33 @@ export const useUsStatesStore = defineStore('usStates', () => {
    */
   async function fetchStatesData() {
     try {
-      const usStatesJSON = await fetch('/data/gop-states.json');
-      usStates.value = await usStatesJSON.json();
+      const usStatesDemJSON = await fetch('/data/dem-states.json');
+      const usStatesGopJSON = await fetch('/data/gop-states.json');
+      const usStatesDem = await usStatesDemJSON.json();
+      const usStatesGop = await usStatesGopJSON.json();
       
-      for (const usState of usStates.value) {
-        usStates.value[usState.id].results = _defaultResults();
-        usStates.value[usState.id].unallocatedDelegates = usStates.value[usState.id].totalDelegates;
-        usStates.value[usState.id].unallocatedPercentage = 100;
+      for (const usState of usStatesDem) {
+        usStatesDem[usState.id].results = _defaultResults();
+        usStatesDem[usState.id].unallocatedDelegates = usStatesDem[usState.id].totalDelegates;
+        usStatesDem[usState.id].unallocatedPercentage = 100;
       };
+
+      for (const usState of usStatesGop) {
+        usStatesGop[usState.id].results = _defaultResults();
+        usStatesGop[usState.id].unallocatedDelegates = usStatesGop[usState.id].totalDelegates;
+        usStatesGop[usState.id].unallocatedPercentage = 100;
+      };
+
+      usStates.value.set(0, usStatesDem);
+      usStates.value.set(1, usStatesGop);
     } catch (error) {
       console.log(error);
     }
   }
 
-  return { 
-    usStates,
-    getStateById,
+  return {
     fetchStatesData,
+    getStateById,
     getCandidateDelegates,
     getCandidatePercentage,
     getCandidateTotalDelegates,
@@ -480,6 +525,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getStateUnallocatedDelegates,
     getStateUnallocatedPercentage,
     getStateWtaTrigger,
+    getUsStates,
     resetAllResultsForCandidate,
     resetStateResults,
     updateCandidateDelegates,

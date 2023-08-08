@@ -25,14 +25,12 @@
 
 <script setup lang="ts">
 import { computed, Ref } from 'vue';
-import { storeToRefs } from 'pinia';
 
 import XCircleIcon from '../assets/icons/x-circle.svg?component';
 
-import { useCandidatesStore } from '../stores/candidates';
+import { useCandidatesStore, ICandidate } from '../stores/candidates';
 
 const candidatesStore = useCandidatesStore();
-const { candidates } = storeToRefs(candidatesStore);
 
 const emit = defineEmits(['delete-candidate'])
 
@@ -41,12 +39,16 @@ const props = defineProps({
     isEditMode: { type: Boolean, default: false }
 });
 
+const candidates: Ref<ICandidate[]> = computed(() => {
+    return candidatesStore.getCandidates;
+});
+
 const candidateColor: Ref<string> = computed(() => {
     return candidatesStore.getCandidateColor(props.candidateId);
 });
 
 const placeholder: Ref<string> = computed(() => {
-    return props.isEditMode ? '_ _ _ _ _' : 'Available Slot';
+    return props.isEditMode ? '_____' : 'Available Slot';
 });
 
 function deleteCandidate(): void {

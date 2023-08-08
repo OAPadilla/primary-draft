@@ -1,31 +1,97 @@
-import { computed, ref, Ref } from 'vue';
+import { computed, ref, ComputedRef, Ref } from 'vue';
 import { defineStore } from 'pinia';
 
-export const useStore = defineStore('store', () => {
+type IPartyNameType =
+| 'democratic'
+| 'republican'
+
+export interface IParties {
+  id: number,
+  defaultCandidates: string[],
+  name: IPartyNameType,
+  totalDelegates: number
+}
+
+export const useStore = defineStore(`store`, () => {
   // State (data)
 
-  let selectedCandidateId: Ref<number> = ref(-1);
-  let selectedStateId: Ref<number> = ref(0);
-  // const totalDelegatesDEM = ref<number>(4518);
-  const totalDelegates: Ref<number> = ref(2467); // GOP
+  const selectedCandidateId: Ref<Map<number, number>> = ref(new Map([
+    [0, -1],
+    [1, -1]
+  ]));
+  const selectedPartyId: Ref<number> = ref(0);
+  const selectedStateId: Ref<Map<number, number>> = ref(new Map([
+    [0, 0],
+    [1, 0]
+  ]));
+  const parties: Map<number, IParties> = new Map([
+    [ 
+      0,
+      {
+        id: 0,
+        name: 'democratic',
+        defaultCandidates: ['Joe Biden', 'Marieanne Williamson', 'Robert F. Kennedy'],
+        totalDelegates: 4518,
+      }
+    ],
+    [ 
+      1,
+      {
+        id: 1,
+        name: 'republican',
+        defaultCandidates: ['Donald J. Trump', 'Ron DeSantis', 'Nikki Haley'],
+        totalDelegates: 2467
+      }
+    ]
+  ]);
 
   // Getter (computed values)
 
   /**
+   * Get the currently selected party id
+   */
+  const getPartyId: Ref<number> = computed(() => {
+    return selectedPartyId.value;
+  });
+
+  /**
+   * Get the currently selected party name
+   */
+  const getPartyName: ComputedRef<IPartyNameType|undefined> = computed(() => {
+    return parties.get(getPartyId.value)?.name;
+  });
+
+  /**
+   * Get the currently selected party's total delegate count
+   */
+  const getPartyTotalDelegates: ComputedRef<number> = computed(() => {
+    return parties.get(getPartyId.value)?.totalDelegates ?? 0;
+  });
+
+  /**
    * Get the currently selected candidate's id
    */
-  const getSelectedCandidateId: Ref<number> = computed(() => {
-    return selectedCandidateId.value;
+  const getSelectedCandidateId: ComputedRef<number> = computed(() => {
+    return selectedCandidateId.value.get(getPartyId.value) ?? -1;
   });
 
   /**
    * Get the currently selected state's id
    */
-  const getSelectedStateId: Ref<number> = computed(() => {
-    return selectedStateId.value;
+  const getSelectedStateId: ComputedRef<number> = computed(() => {
+    return selectedStateId.value.get(getPartyId.value) ?? 0;
   });
 
   // Actions (methods)
+
+  /**
+   * Get the currently selected party's default candidates
+   * 
+   * @param partyId 
+   */
+  function getPartyDefaultCandidates(partyId: number): string[] {
+    return parties.get(partyId)?.defaultCandidates || [];
+  }
 
   /**
    * Update the value used to keep track of the selected candidate
@@ -33,7 +99,16 @@ export const useStore = defineStore('store', () => {
    * @param candidateId 
    */
   function setSelectedCandidateId(candidateId: number): void {
-    selectedCandidateId.value = candidateId;
+    selectedCandidateId.value.set(getPartyId.value, candidateId);
+  }
+
+  /**
+   * Set the selected party by id
+   * 
+   * @param partyId 
+   */
+  function setSelectedParty(partyId: number): void {
+    selectedPartyId.value = partyId;
   }
 
   /**
@@ -42,14 +117,19 @@ export const useStore = defineStore('store', () => {
    * @param stateId 
    */
   function setSelectedStateId(stateId: number): void {
-    selectedStateId.value = stateId;
+    selectedStateId.value.set(getPartyId.value, stateId);
   }
 
   return {
     selectedCandidateId,
+    selectedPartyId,
     selectedStateId,
-    totalDelegates,
+    getPartyDefaultCandidates,
+    getPartyId,
+    getPartyName,
+    getPartyTotalDelegates,
     getSelectedCandidateId,
+    setSelectedParty,
     getSelectedStateId,
     setSelectedCandidateId,
     setSelectedStateId

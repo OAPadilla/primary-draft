@@ -51,7 +51,7 @@
 
 	watchEffect(() => {
 		// Watch US states store for changes in color based on results
-		for (const usState of usStatesStore.usStates) {
+		for (const usState of usStatesStore.getUsStates) {
 			d3.selectAll(`.state-${usState.id}`)
 				.style('fill', usState.color);
     }
@@ -320,7 +320,7 @@
 		createStateAvatar(svg, 875, 525, geoStates['11'].id); // DC
 
 		// Set color based on current results
-		for (const usState of usStatesStore.usStates) {
+		for (const usState of usStatesStore.getUsStates) {
 			d3.selectAll(`.state-${usState.id}`)
 				.style('fill', usState.color);
     }

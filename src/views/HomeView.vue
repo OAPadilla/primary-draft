@@ -1,6 +1,6 @@
 <template>
 	<div class="c-homeView">
-		<h2>{{ partyName }} Party Presidential Primary</h2>
+		<h2>{{ mainStore.getPartyName }} Party Presidential Primary</h2>
 		<CandidatePicker />
 		<NationalMap />
 		<DelegateBar />
@@ -9,19 +9,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { onMounted, onUpdated } from 'vue';
 
 import CandidatePicker from "../components/CandidatePicker.vue";
 import DelegateBar from "../components/DelegateBar.vue";
 import NationalMap from "../components/NationalMap.vue";
 import RebalancerTool from "../components/RebalancerTool.vue";
 
+import { useStore } from '../stores/store';
+
+const mainStore = useStore();
+
 const props = defineProps({
-  party: { type: String, default: 'republican' }
+  	partyId: { type: Number, required: true }
 });
 
-const partyName = computed(() => {
-	return props.party;
+onUpdated(() => {
+	mainStore.setSelectedParty(props.partyId);
+});
+
+onMounted(() => {
+	mainStore.setSelectedParty(props.partyId);
 });
 </script>
 

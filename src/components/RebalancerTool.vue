@@ -35,7 +35,7 @@
 		/>
 
 		<div class="c-rebalancerTool_list">
-			<template v-for="candidate in candidates" :key="candidate.id">
+			<template v-for="candidate in candidatesStore.getCandidates" :key="candidate.id">
 				<RebalancerToolItem
 					v-if="candidate.name"
 					class="c-rebalancerTool_candidate"
@@ -54,7 +54,6 @@
 
 <script setup lang="ts">
 import { computed, ref, Ref } from 'vue';
-import { storeToRefs } from 'pinia';
 
 import ResetIcon from '../assets/icons/reset.svg?component';
 import RebalancerToolItem from "./RebalancerToolItem.vue";
@@ -66,7 +65,6 @@ import { useUsStatesStore, IState } from '../stores/usStates';
 const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
-const { candidates } = storeToRefs(candidatesStore);
 
 const resetActivated: Ref<boolean> = ref(false);
 
