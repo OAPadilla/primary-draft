@@ -54,7 +54,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, Ref } from 'vue';
+import { computed, onBeforeUpdate, ref, Ref } from 'vue';
+import { onBeforeRouteLeave } from "vue-router";
 
 import EditIcon from '../assets/icons/edit.svg?component';
 import CandidatePickerButton from './CandidatePickerButton.vue';
@@ -73,21 +74,23 @@ const candidatePickerButtons: Ref<ICandidate[]> = ref([
 	{ ...candidatesStore.getCandidateById(2) }
 ]);
 const isEditMode: Ref<boolean> = ref(false);
+const isFirstUpdateOnRouteChange: Ref<boolean> = ref(true);
 const noneChoiceId: number = -1;
 
 const candidates: Ref<ICandidate[]> = computed(() => {
 	return candidatesStore.getCandidates;
 });
 
-// const candidatePickerButtons: Ref<ICandidate[]> = computed(() => {
-// 	const numOfCandidates = candidates.value.filter(d => d.name).length;
-// 	console.log(numOfCandidates)
-// 	const buttonComponents = [];
-// 	for (let i = 0; i < numOfCandidates; i++) {
-// 		buttonComponents.push(candidatesStore.getCandidateById(i));
-// 	}
-// 	return buttonComponents;
-// });
+const defaultCandidatePickerButtons: Ref<ICandidate[]> = computed(() => {
+	const buttonComponents: ICandidate[] = [];
+	candidates.value.forEach((candidate) => {
+		if (candidate?.name) {
+			buttonComponents.push(candidate);
+		}
+	});
+
+	return buttonComponents;
+});
 
 const isMaxCandidateButtonsMet: Ref<boolean> = computed(() => {
 	return candidatePickerButtons.value.length === candidates.value.length;
@@ -110,8 +113,6 @@ function addPickerButton(): void {
 }
 
 function deletePickerButton(candidateId: number): void {
-	console.log(candidateId);
-
 	// Unassign candidate id by clearing its results and name 
 	usStatesStore.resetAllResultsForCandidate(candidateId);
 	candidatesStore.setCandidateName(candidateId, '');
@@ -129,6 +130,20 @@ function onChoiceClick(candidateId: number): void {
 	const newId: number = isEditMode.value ? selectedCandidateId.value : candidateId;
 	setSelectedCandidateId(newId);
 }
+
+onBeforeRouteLeave(async (to, from) => {
+	// Reset flag before navigating to new route to track first onUpdate
+	isFirstUpdateOnRouteChange.value = true;
+})
+
+onBeforeUpdate(() => {
+	// Reset candidate buttons to new default if first onUpdate
+	if (isFirstUpdateOnRouteChange.value) {
+		isEditMode.value = false;
+		candidatePickerButtons.value = defaultCandidatePickerButtons.value;
+		isFirstUpdateOnRouteChange.value = false;
+	}
+})
 </script>
 
 <style scoped lang="scss">

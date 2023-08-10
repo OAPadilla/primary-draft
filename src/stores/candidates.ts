@@ -82,7 +82,7 @@ export const useCandidatesStore = defineStore('candidates', () => {
    * 
    * @param candidateId 
    */
-  function getCandidateById(candidateId: number) {
+  function getCandidateById(candidateId: number): ICandidate {
     return getCandidates.value?.[candidateId];
   }
 
