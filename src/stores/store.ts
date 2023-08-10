@@ -7,6 +7,7 @@ type IPartyNameType =
 
 export interface IParties {
   id: number,
+  color: string,
   defaultCandidates: string[],
   name: IPartyNameType,
   totalDelegates: number
@@ -30,7 +31,8 @@ export const useStore = defineStore(`store`, () => {
       {
         id: 0,
         name: 'democratic',
-        defaultCandidates: ['Joe Biden', 'Marieanne Williamson', 'Robert F. Kennedy'],
+        color: '#0a3161',
+        defaultCandidates: ['Joe Biden', 'Marieanne W.', 'Robert F. Kennedy'],
         totalDelegates: 4518,
       }
     ],
@@ -39,6 +41,7 @@ export const useStore = defineStore(`store`, () => {
       {
         id: 1,
         name: 'republican',
+        color: '#b31942',
         defaultCandidates: ['Donald J. Trump', 'Ron DeSantis', 'Nikki Haley'],
         totalDelegates: 2467
       }
@@ -52,6 +55,13 @@ export const useStore = defineStore(`store`, () => {
    */
   const getPartyId: Ref<number> = computed(() => {
     return selectedPartyId.value;
+  });
+
+  /**
+   * Get the currently selected party's color
+   */
+  const getPartyColor: ComputedRef<string|undefined> = computed(() => {
+    return parties.get(getPartyId.value)?.color;
   });
 
   /**
@@ -126,6 +136,7 @@ export const useStore = defineStore(`store`, () => {
     selectedStateId,
     getPartyDefaultCandidates,
     getPartyId,
+    getPartyColor,
     getPartyName,
     getPartyTotalDelegates,
     getSelectedCandidateId,

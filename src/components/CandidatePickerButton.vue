@@ -2,7 +2,7 @@
 <template>
 	<div
         class="c-candidatePickerButton"
-        :class="{ isEditMode }"
+        :class="{ isEditMode, 'selected': isSelected }"
     >
         <input
             type="text" 
@@ -36,7 +36,8 @@ const emit = defineEmits(['delete-candidate'])
 
 const props = defineProps({ 
     candidateId: { type: Number, default: -1 },
-    isEditMode: { type: Boolean, default: false }
+    isEditMode: { type: Boolean, default: false },
+    isSelected: { type: Boolean, default: false }
 });
 
 const candidates: Ref<ICandidate[]> = computed(() => {
@@ -85,11 +86,11 @@ function deleteCandidate(): void {
         color: $color-black;
         font-family: $standard-font-family;
         font-size: 16px;
-        font-weight: bold;
         text-align: center;
         border: 0;
         border-radius: 20px;
         outline: none;
+        text-overflow: ellipsis;
     }
 
     input::placeholder {
@@ -98,6 +99,10 @@ function deleteCandidate(): void {
 
     &.isEditMode input {
         color: $color-dark-grey;
+    }
+
+    &.selected input {
+        font-weight: bold;
     }
 }
 </style>

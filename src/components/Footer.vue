@@ -63,6 +63,6 @@
 
 footer {
 	background-color: $base-background-color;
-	padding: 0 2rem;
+	padding: 0 $large-spacing;
 }
 </style>

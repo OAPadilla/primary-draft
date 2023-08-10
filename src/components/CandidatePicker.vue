@@ -16,6 +16,7 @@
 				class="c-candidatePicker_candidateBtn"
 				:candidateId="candidate.id"
 				:isEditMode="isEditMode"
+				:isSelected="selectedCandidateId === candidate.id"
 				@delete-candidate="deletePickerButton"
 			/>
 		</div>

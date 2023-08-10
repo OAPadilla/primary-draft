@@ -62,11 +62,13 @@ useMeta({
 </script>
 
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .content {
   flex: 1;
   max-width: 950px;
-  margin: 2rem auto;
-  padding: 0 2rem;
+  margin: $large-spacing auto;
+  padding: 0 $large-spacing;
 
   @media (max-width: 1030px) {
     @media (min-width: 600px) {
