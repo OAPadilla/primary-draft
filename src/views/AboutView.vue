@@ -30,11 +30,11 @@
 					automatically calculated based on the set popular vote percentages and a state's election rules.
 				</li>
 				<li>
-					<strong>Experiment with state results.</strong> Watch the "Unallocated" row to help you keep track of yet to be distributed votes. 
+					<strong>Experiment further with state results.</strong> Watch the "Unallocated" row to help you keep track of yet to be distributed votes. 
 					Once 0 is reached, you won't be able to allocate any more to a candidate without taking away from another.
 				</li>
 				<li>
-					<strong>Lead a candidate to victory!</strong> A candidate is the official winner once they've earned a majority of total delegates, 
+					<strong>Lead a candidate to victory!</strong> A candidate is the nomination winner once they've earned a majority of total delegates, 
 					marked by the delegate count flag <FlagIcon class="c-aboutView_flag" />.
 				</li>
 			</ul>
@@ -58,8 +58,8 @@
 				<li>
 					We condense primary types into 2 main groups. <a href="https://www.thegreenpapers.com/Definitions.html#Prim">Learn more here</a>.
 					<ul>
-						<li><strong>Winner-Take-All and Winner-Take-Most</strong> - The candidate with the most amount of votes collects all of a state's delegates.</li>
-						<li><strong>Proportional and Delegate Selection</strong> - Delegates are proportionally distributed based on popular vote percentiles.</li>
+						<li><strong>Winner-Take-All and Winner-Take-Most</strong> - We allocate all of a state's delegates to the candidate with the most amount of votes.</li>
+						<li><strong>Proportional and Delegate Selection</strong> - We distribute delegates proportionally based on the popular vote percentiles.</li>
 					</ul>
 				</li>
 			</ul>
@@ -68,10 +68,10 @@
 		<div class="c-aboutView_section">
 			<h2>Credits & Notes</h2>
 			<p>
-				Up-to-date election information sourced from <a href="https://www.TheGreenPapers.com">TheGreenPapers.com</a>.
+				Up-to-date election information sourced from <a href="https://www.TheGreenPapers.com">The Green Papers</a> and <a href="https://www.frontloadinghq.com/">Front Loading HQ</a>.
 			</p>
 			<p>
-				Expect more updates and improvements, including support for the Democratic Party's primary system.
+				Expect more updates and improvements.
 			</p>
 		</div>
 	</div>

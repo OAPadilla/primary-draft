@@ -104,7 +104,7 @@ function onInput(): void {
 @import '@/styles/main.scss';
 
 .c-rebalancerToolSlider {
-  $percent-width: 5rem;
+  $percent-width: 6.5rem;
 
   position: relative;
 	display: flex;

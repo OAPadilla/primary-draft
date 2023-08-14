@@ -33,7 +33,7 @@ export const useStore = defineStore(`store`, () => {
         name: 'democratic',
         color: '#0a3161',
         defaultCandidates: ['Joe Biden', 'Marieanne W.', 'Robert F. Kennedy'],
-        totalDelegates: 4518,
+        totalDelegates: 3770
       }
     ],
     [ 

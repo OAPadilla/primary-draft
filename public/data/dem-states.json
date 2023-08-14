@@ -3,225 +3,272 @@
     "id": 0,
     "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-05",
+    "electionDate": "2024-04-06",
     "electionRules": {
-      "minThreshold": 13
+      "minThreshold": 15
     },
-    "electionType": "closed caucus",
+    "electionType": "closed primary",
     "initials": "AK",
     "name": "alaska",
     "results": [],
-    "totalDelegates": 28
+    "totalDelegates": 19
   },
   {
     "id": 1,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
     "electionRules": {
-      "minThreshold": 20
+      "minThreshold": 15
     },
     "electionType": "open primary",
     "initials": "AL",
     "name": "alabama",
     "results": [],
-    "totalDelegates": 49
+    "totalDelegates": 59
   },
   {
     "id": 2,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
     "electionRules": {
-      "minThreshold": 13
+      "minThreshold": 15
     },
     "electionType": "open primary",
     "initials": "AR",
     "name": "arkansas",
     "results": [],
-    "totalDelegates": 40
+    "totalDelegates": 37
   },
   {
     "id": 3,
-    "allocation": "delegate selection",
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-20",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open caucus",
     "initials": "AS",
     "name": "american samoa",
     "results": [],
-    "totalDelegates": 9
+    "totalDelegates": 11
   },
   {
     "id": 4,
-    "allocation": "winner-take-all",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-19",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "AZ",
     "name": "arizona",
     "results": [],
-    "totalDelegates": 43
+    "totalDelegates": 85
   },
   {
     "id": 5,
-    "allocation": "winner-take-all",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
-    "electionType": "closed primary",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "modified primary",
     "initials": "CA",
     "name": "california",
     "results": [],
-    "totalDelegates": 169
+    "totalDelegates": 497
   },
   {
     "id": 6,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "modified primary",
     "initials": "CO",
     "name": "colorado",
     "results": [],
-    "totalDelegates": 37
+    "totalDelegates": 86
   },
   {
     "id": 7,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-04-30",
     "electionRules": {
-      "minThreshold": 20
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "CT",
     "name": "connecticut",
     "results": [],
-    "totalDelegates": 28
+    "totalDelegates": 63
   },
   {
     "id": 8,
-    "allocation": "winner-take-all",
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-05-05",
+    "electionType": "open caucus",
+    "initials": "DA",
+    "name": "democrats abroad",
+    "results": [],
+    "totalDelegates": 17
+  },
+  {
+    "id": 9,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-06-04",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "DC",
     "name": "district of columbia",
     "results": [],
-    "totalDelegates": 19
+    "totalDelegates": 51
   },
   {
-    "id": 9,
-    "allocation": "winner-take-all",
+    "id": 10,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-04-23",
+    "electionDate": "2024-04-02",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "DE",
     "name": "delaware",
     "results": [],
-    "totalDelegates": 16
+    "totalDelegates": 33
   },
   {
-    "id": 10,
-    "allocation": "winner-take-all",
+    "id": 11,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-19",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "FL",
     "name": "florida",
     "results": [],
-    "totalDelegates": 125
-  },
-  {
-    "id": 11,
-    "allocation": "winner-take-all",
-    "color": "",
-    "electionDate": "2024-03-26",
-    "electionRules": {
-      "minThreshold": 20
-    },
-    "electionType": "modified primary",
-    "initials": "GA",
-    "name": "georgia",
-    "results": [],
-    "totalDelegates": 59
+    "totalDelegates": 250
   },
   {
     "id": 12,
-    "allocation": "delegate selection",
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-09",
-    "electionType": "closed caucus",
-    "initials": "GU",
-    "name": "guam",
+    "electionDate": "2024-03-12",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "GA",
+    "name": "georgia",
     "results": [],
-    "totalDelegates": 9
+    "totalDelegates": 124
   },
   {
     "id": 13,
     "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-12",
+    "electionDate": "2024-05-00",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed caucus",
-    "initials": "HI",
-    "name": "hawaii",
+    "initials": "GU",
+    "name": "guam",
     "results": [],
-    "totalDelegates": 19
+    "totalDelegates": 12
   },
   {
     "id": 14,
     "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-02-05",
+    "electionDate": "2024-04-06",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "closed primary",
+    "initials": "HI",
+    "name": "hawaii",
+    "results": [],
+    "totalDelegates": 31
+  },
+  {
+    "id": 15,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-00",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed caucus",
     "initials": "IA",
     "name": "iowa",
     "results": [],
-    "totalDelegates": 40
-  },
-  {
-    "id": 15,
-    "allocation": "winner-take-most",
-    "color": "",
-    "electionDate": "2024-05-21",
-    "electionRules": {
-      "minThreshold": 20
-    },
-    "electionType": "closed primary",
-    "initials": "ID",
-    "name": "idaho",
-    "results": [],
-    "totalDelegates": 32
+    "totalDelegates": 46
   },
   {
     "id": 16,
-    "allocation": "winner-take-all",
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-05-25",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "closed caucus",
+    "initials": "ID",
+    "name": "idaho",
+    "results": [],
+    "totalDelegates": 24
+  },
+  {
+    "id": 17,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-19",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "IL",
     "name": "illinois",
     "results": [],
-    "totalDelegates": 64
+    "totalDelegates": 174
   },
   {
-    "id": 17,
-    "allocation": "winner-take-all",
+    "id": 18,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-05-07",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "IN",
     "name": "indiana",
     "results": [],
-    "totalDelegates": 58
+    "totalDelegates": 76
   },
   {
-    "id": 18,
-    "allocation": "winner-take-all",
+    "id": 19,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-09",
+    "electionDate": "2024-03-19",
     "electionRules": {
-      "minThreshold": 10
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "KS",
@@ -230,72 +277,78 @@
     "totalDelegates": 39
   },
   {
-    "id": 19,
+    "id": 20,
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-05-21",
     "electionRules": {
-      "minThreshold": 5
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "KY",
     "name": "kentucky",
     "results": [],
-    "totalDelegates": 46
+    "totalDelegates": 51
   },
   {
-    "id": 20,
-    "allocation": "winner-take-all",
+    "id": 21,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-23",
     "electionRules": {
-      "minThreshold": 20
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "LA",
     "name": "louisiana",
     "results": [],
-    "totalDelegates": 46
+    "totalDelegates": 56
   },
   {
-    "id": 21,
-    "allocation": "winner-take-most",
+    "id": 22,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-19",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "modified primary",
     "initials": "MA",
     "name": "massachusetts",
     "results": [],
-    "totalDelegates": 40
+    "totalDelegates": 116
   },
   {
-    "id": 22,
-    "allocation": "winner-take-all",
+    "id": 23,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-04-23",
+    "electionDate": "2024-05-14",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "MD",
     "name": "maryland",
     "results": [],
-    "totalDelegates": 37
-  },
-  {
-    "id": 23,
-    "allocation": "winner-take-most",
-    "color": "",
-    "electionDate": "2024-03-05",
-    "electionRules": {
-      "minThreshold": 5
-    },
-    "electionType": "closed primary",
-    "initials": "ME",
-    "name": "maine",
-    "results": [],
-    "totalDelegates": 20
+    "totalDelegates": 104
   },
   {
     "id": 24,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "modified primary",
+    "initials": "ME",
+    "name": "maine",
+    "results": [],
+    "totalDelegates": 32
+  },
+  {
+    "id": 25,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-02-27",
     "electionRules": {
@@ -305,47 +358,53 @@
     "initials": "MI",
     "name": "michigan",
     "results": [],
-    "totalDelegates": 55
+    "totalDelegates": 140
   },
   {
-    "id": 25,
-    "allocation": "winner-take-most",
+    "id": 26,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
     "electionRules": {
-      "minThreshold": 10
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "MN",
     "name": "minnesota",
     "results": [],
-    "totalDelegates": 39
-  },
-  {
-    "id": 26,
-    "allocation": "winner-take-most",
-    "color": "",
-    "electionDate": "2024-03-12",
-    "electionType": "modified primary",
-    "initials": "MO",
-    "name": "missouri",
-    "results": [],
-    "totalDelegates": 54
+    "totalDelegates": 92
   },
   {
     "id": 27,
-    "allocation": "winner-take-all",
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-10",
+    "electionDate": "2024-03-00",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "MO",
+    "name": "missouri",
+    "results": [],
+    "totalDelegates": 71
+  },
+  {
+    "id": 28,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed caucus",
     "initials": "MP",
     "name": "northern marianas",
     "results": [],
-    "totalDelegates": 9
+    "totalDelegates": 11
   },
   {
-    "id": 28,
-    "allocation": "winner-take-most",
+    "id": 29,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-12",
     "electionRules": {
@@ -355,79 +414,94 @@
     "initials": "MS",
     "name": "mississippi",
     "results": [],
-    "totalDelegates": 39
-  },
-  {
-    "id": 29,
-    "allocation": "winner-take-all",
-    "color": "",
-    "electionDate": "2024-06-04",
-    "electionType": "open primary",
-    "initials": "MT",
-    "name": "montana",
-    "results": [],
-    "totalDelegates": 31
+    "totalDelegates": 40
   },
   {
     "id": 30,
     "allocation": "proportional",
     "color": "",
+    "electionDate": "2024-06-04",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "MT",
+    "name": "montana",
+    "results": [],
+    "totalDelegates": 22
+  },
+  {
+    "id": 31,
+    "allocation": "proportional",
+    "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "modified primary",
     "initials": "NC",
     "name": "north carolina",
     "results": [],
-    "totalDelegates": 75
-  },
-  {
-    "id": 31,
-    "allocation": "delegate selection",
-    "color": "",
-    "electionDate": "2024-03-31",
-    "electionType": "closed caucus",
-    "initials": "ND",
-    "name": "north dakota",
-    "results": [],
-    "totalDelegates": 29
+    "totalDelegates": 132
   },
   {
     "id": 32,
-    "allocation": "winner-take-all",
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-05-14",
-    "electionType": "closed primary",
-    "initials": "NE",
-    "name": "nebraska",
+    "electionDate": "2024-04-06",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "ND",
+    "name": "north dakota",
     "results": [],
-    "totalDelegates": 36
+    "totalDelegates": 17
   },
   {
     "id": 33,
     "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-02-13",
+    "electionDate": "2024-05-14",
     "electionRules": {
-      "minThreshold": 10
+      "minThreshold": 15
+    },
+    "electionType": "modified primary",
+    "initials": "NE",
+    "name": "nebraska",
+    "results": [],
+    "totalDelegates": 34
+  },
+  {
+    "id": 34,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-02-06",
+    "electionRules": {
+      "minThreshold": 15
     },
     "electionType": "modified primary",
     "initials": "NH",
     "name": "new hampshire",
     "results": [],
-    "totalDelegates": 22
+    "totalDelegates": 33
   },
   {
-    "id": 34,
-    "allocation": "winner-take-all",
+    "id": 35,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-06-04",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "modified primary",
     "initials": "NJ",
     "name": "new jersey",
     "results": [],
-    "totalDelegates": 49
+    "totalDelegates": 127
   },
   {
-    "id": 35,
+    "id": 36,
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-06-04",
@@ -438,47 +512,53 @@
     "initials": "NM",
     "name": "new mexico",
     "results": [],
-    "totalDelegates": 22
-  },
-  {
-    "id": 36,
-    "allocation": "proportional",
-    "color": "",
-    "electionDate": "2024-02-24",
-    "electionType": "closed caucus",
-    "initials": "NV",
-    "name": "nevada",
-    "results": [],
-    "totalDelegates": 26
+    "totalDelegates": 41
   },
   {
     "id": 37,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-04-30",
+    "electionDate": "2024-02-06",
     "electionRules": {
-      "minThreshold": 20
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "NV",
+    "name": "nevada",
+    "results": [],
+    "totalDelegates": 48
+  },
+  {
+    "id": 38,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-04-02",
+    "electionRules": {
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "NY",
     "name": "new york",
     "results": [],
-    "totalDelegates": 91
+    "totalDelegates": 259
   },
   {
-    "id": 38,
-    "allocation": "winner-take-all",
+    "id": 39,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-19",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "modified primary",
     "initials": "OH",
     "name": "ohio",
     "results": [],
-    "totalDelegates": 78
+    "totalDelegates": 143
   },
   {
-    "id": 39,
-    "allocation": "winner-take-most",
+    "id": 40,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
     "electionRules": {
@@ -488,203 +568,230 @@
     "initials": "OK",
     "name": "oklahoma",
     "results": [],
-    "totalDelegates": 43
+    "totalDelegates": 40
   },
   {
-    "id": 40,
+    "id": 41,
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-05-21",
     "electionRules": {
-      "minThreshold": 3.57
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "OR",
     "name": "oregon",
     "results": [],
-    "totalDelegates": 31
+    "totalDelegates": 68
   },
   {
-    "id": 41,
-    "allocation": "winner-take-all",
+    "id": 42,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-04-23",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed primary",
     "initials": "PA",
     "name": "pennsylvania",
     "results": [],
-    "totalDelegates": 67
+    "totalDelegates": 173
   },
   {
-    "id": 42,
-    "allocation": "winner-take-most",
+    "id": 43,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-10",
+    "electionDate": "2024-03-17",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "PR",
     "name": "puerto rico",
     "results": [],
-    "totalDelegates": 23
+    "totalDelegates": 56
   },
   {
-    "id": 43,
-    "allocation": "winner-take-most",
+    "id": 44,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-04-23",
+    "electionDate": "2024-04-02",
     "electionRules": {
-      "minThreshold": 10
+      "minThreshold": 15
     },
     "electionType": "modified primary",
     "initials": "RI",
     "name": "rhode island",
     "results": [],
-    "totalDelegates": 19
+    "totalDelegates": 30
   },
   {
-    "id": 44,
-    "allocation": "winner-take-all",
+    "id": 45,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-02-01",
+    "electionDate": "2024-02-03",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "SC",
     "name": "south carolina",
     "results": [],
-    "totalDelegates": 50
-  },
-  {
-    "id": 45,
-    "allocation": "winner-take-all",
-    "color": "",
-    "electionDate": "2024-06-04",
-    "electionType": "closed primary",
-    "initials": "SD",
-    "name": "south dakota",
-    "results": [],
-    "totalDelegates": 29
+    "totalDelegates": 63
   },
   {
     "id": 46,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-03-05",
+    "electionDate": "2024-06-04",
     "electionRules": {
-      "minThreshold": 20
+      "minThreshold": 15
     },
-    "electionType": "open primary",
-    "initials": "TN",
-    "name": "tennessee",
+    "electionType": "modified primary",
+    "initials": "SD",
+    "name": "south dakota",
     "results": [],
-    "totalDelegates": 58
+    "totalDelegates": 19
   },
   {
     "id": 47,
-    "allocation": "winner-take-most",
-    "color": "",
-    "electionDate": "2024-03-05",
-    "electionRules": {
-      "minThreshold": 20
-    },
-    "electionType": "open primary",
-    "initials": "TX",
-    "name": "texas",
-    "results": [],
-    "totalDelegates": 162
-  },
-  {
-    "id": 48,
-    "allocation": "winner-take-most",
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
     "electionRules": {
       "minThreshold": 15
     },
-    "electionType": "closed primary",
-    "initials": "UT",
-    "name": "utah",
+    "electionType": "open primary",
+    "initials": "TN",
+    "name": "tennessee",
     "results": [],
-    "totalDelegates": 40
+    "totalDelegates": 70
+  },
+  {
+    "id": 48,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "TX",
+    "name": "texas",
+    "results": [],
+    "totalDelegates": 272
   },
   {
     "id": 49,
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "UT",
+    "name": "utah",
+    "results": [],
+    "totalDelegates": 34
+  },
+  {
+    "id": 50,
+    "allocation": "proportional",
+    "color": "",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "VA",
     "name": "virginia",
     "results": [],
-    "totalDelegates": 48
+    "totalDelegates": 118
   },
   {
-    "id": 50,
-    "allocation": "delegate selection",
+    "id": 51,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-05-01",
+    "electionDate": "2024-06-08",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed caucus",
     "initials": "VI",
     "name": "virgin islands",
     "results": [],
-    "totalDelegates": 9
-  },
-  {
-    "id": 51,
-    "allocation": "winner-take-most",
-    "color": "",
-    "electionDate": "2024-03-05",
-    "electionRules": {
-      "minThreshold": 20
-    },
-    "electionType": "open primary",
-    "initials": "VT",
-    "name": "vermont",
-    "results": [],
-    "totalDelegates": 17
+    "totalDelegates": 12
   },
   {
     "id": 52,
     "allocation": "proportional",
     "color": "",
+    "electionDate": "2024-03-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
+    "electionType": "open primary",
+    "initials": "VT",
+    "name": "vermont",
+    "results": [],
+    "totalDelegates": 24
+  },
+  {
+    "id": 53,
+    "allocation": "proportional",
+    "color": "",
     "electionDate": "2024-03-12",
     "electionRules": {
-      "minThreshold": 20
+      "minThreshold": 15
     },
     "electionType": "closed primary",
     "initials": "WA",
     "name": "washington",
     "results": [],
-    "totalDelegates": 43
+    "totalDelegates": 111
   },
   {
-    "id": 53,
-    "allocation": "winner-take-all",
+    "id": 54,
+    "allocation": "proportional",
     "color": "",
     "electionDate": "2024-04-02",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open primary",
     "initials": "WI",
     "name": "wisconsin",
     "results": [],
-    "totalDelegates": 41
+    "totalDelegates": 87
   },
   {
-    "id": 54,
-    "allocation": "winner-take-all",
+    "id": 55,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-05-07",
+    "electionDate": "2024-05-14",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "modified primary",
     "initials": "WV",
     "name": "west virginia",
     "results": [],
-    "totalDelegates": 31
+    "totalDelegates": 25
   },
   {
-    "id": 55,
-    "allocation": "delegate selection",
+    "id": 56,
+    "allocation": "proportional",
     "color": "",
-    "electionDate": "2024-04-20",
+    "electionDate": "2024-04-13",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "closed caucus",
     "initials": "WY",
     "name": "wyoming",
     "results": [],
-    "totalDelegates": 29
+    "totalDelegates": 16
   }
 ]

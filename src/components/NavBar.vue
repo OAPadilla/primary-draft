@@ -51,6 +51,10 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 		display: flex;
 		font-size: 20px;
 
+		.router-link-active {
+			text-decoration: underline;
+		}
+
 		a {
 			display: flex;
 			align-items: center;
@@ -58,7 +62,7 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 		}
 
 		svg:hover {
-			opacity: 0.7;
+			opacity: 0.6;
 		}
 	}
 }
