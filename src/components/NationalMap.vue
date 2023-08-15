@@ -342,6 +342,9 @@
 		// Abroad
 		createStateAvatar(svg, 725, 100, geoStates['79'].id); // Democrats Abroad
 
+		// Hide states that are not in the currently selected party's primary
+		hideExcludedStates();
+
 		// Set color based on current results
 		for (const usState of usStatesStore.getUsStates) {
 			d3.selectAll(`.state-${usState.id}`)
@@ -355,9 +358,6 @@
 		geoStateNames = await d3.tsv('/data/us-state-names.tsv');
 
 		createMap(jsonData, geoStateNames);
-
-		// Hide states that are not in the currently selected party's primary
-		hideExcludedStates();
 
 		window.addEventListener('resize', () => {
 			createMap(jsonData, geoStateNames);
