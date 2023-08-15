@@ -9,6 +9,7 @@ export interface IParties {
   id: number,
   color: string,
   defaultCandidates: string[],
+  excludedStateIds: number[],
   name: IPartyNameType,
   totalDelegates: number
 }
@@ -32,7 +33,8 @@ export const useStore = defineStore(`store`, () => {
         id: 0,
         name: 'democratic',
         color: '#0a3161',
-        defaultCandidates: ['Joe Biden', 'Marieanne W.', 'Robert F. Kennedy'],
+        defaultCandidates: [ 'Joe Biden', 'Marieanne W.', 'Robert F. Kennedy' ],
+        excludedStateIds: [],
         totalDelegates: 3770
       }
     ],
@@ -42,7 +44,8 @@ export const useStore = defineStore(`store`, () => {
         id: 1,
         name: 'republican',
         color: '#b31942',
-        defaultCandidates: ['Donald J. Trump', 'Ron DeSantis', 'Nikki Haley'],
+        defaultCandidates: [ 'Donald J. Trump', 'Ron DeSantis', 'Vivek Ramaswamy', 'Nikki Haley' ],
+        excludedStateIds: [ 56 ],
         totalDelegates: 2467
       }
     ]
@@ -70,6 +73,13 @@ export const useStore = defineStore(`store`, () => {
   const getPartyName: ComputedRef<IPartyNameType|undefined> = computed(() => {
     return parties.get(getPartyId.value)?.name;
   });
+
+  /**
+   * Get the state ids of states excluded from a party's primary
+   */
+  const getPartyExcludedStateIds: ComputedRef<number[]|undefined> = computed(() => {
+    return parties.get(getPartyId.value)?.excludedStateIds; 
+  })
 
   /**
    * Get the currently selected party's total delegate count
@@ -137,6 +147,7 @@ export const useStore = defineStore(`store`, () => {
     getPartyDefaultCandidates,
     getPartyId,
     getPartyColor,
+    getPartyExcludedStateIds,
     getPartyName,
     getPartyTotalDelegates,
     getSelectedCandidateId,

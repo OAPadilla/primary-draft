@@ -6,8 +6,9 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, watchEffect, Ref } from 'vue';
+	import { computed, onMounted, onUnmounted, watch, watchEffect, Ref } from 'vue';
 	import * as d3 from 'd3';
+	import { storeToRefs } from 'pinia';
 	import * as topojson from 'topojson-client';
 
 	import { useCandidatesStore } from '../stores/candidates';
@@ -22,6 +23,8 @@
 	const candidatesStore = useCandidatesStore();
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
+
+	const { selectedPartyId } = storeToRefs(mainStore);
 
 	const mapClass: string = 'c-nationalMap_map';
 	const usMapJSON: string = 'https://d3js.org/us-10m.v1.json';
@@ -57,6 +60,11 @@
     }
 	});
 
+	watch(selectedPartyId, () => {
+		// Hide states that are not in a party's primary
+		hideExcludedStates();
+    });
+
 	/**
 	 * Get the store state id from provided state initials. 
 	 * TSV uses different state IDs, instead we can utilize state initials to help create unison data.
@@ -71,7 +79,7 @@
 		}
 
 		return usState?.id;
-	};
+	}
 
 	/**
 	 * Get and format TSV data tied to topojson geo data to workable state data inline with store
@@ -102,7 +110,18 @@
 		});
 
 		return geoStates;
-	};
+	}
+
+	/**
+	 * Hide states on the map that are not a part of the currently selected partry's primary
+	 */
+	function hideExcludedStates(): void {
+		d3.selectAll('.states').classed('u-hidden', false);
+		mainStore.getPartyExcludedStateIds?.forEach((id: number) => {
+			const stateElement = (d3.selectAll('.state-' + id)?.node() as HTMLElement)?.parentNode as HTMLElement;
+			d3.select(stateElement).classed('u-hidden', true);
+		});
+	}
 
 	/**
 	 * Updated selected state identifier in store
@@ -111,7 +130,7 @@
 	 */
 	function setSelectedState(stateId: number): void {
 		mainStore.setSelectedStateId(stateId);
-	};
+	}
 
 	/**
 	 * Allocate percentage of vote to candidate in state results.
@@ -122,7 +141,7 @@
 	 */
 	function updateStateResult(stateId: number, percent: number = 50.1): void {
 		usStatesStore.updateCandidatePercentage(selectedCandidateId.value, stateId, percent);
-	};
+	}
 
 	/**
 	 * Handle state/territory onclick events
@@ -142,7 +161,7 @@
 		if (getCandidateName.value) {
 			updateStateResult(stateId);
 		}
-	};
+	}
 
 	/**
 	 * Handle on mouse move event for US state, such as for the tooltip position and content
@@ -169,7 +188,7 @@
 		.style('left', `${left}px`)
 		.style('top', `${y + 40}px`)
 		.style('border', border);
-	};
+	}
 
 	/**
 	 * Create a square svg element representing a state/territory for simpler/alternative interactivity
@@ -214,7 +233,7 @@
 		g.on('mouseover', () => tooltip.style('visibility', 'visible'))
 			.on('mouseleave', () => tooltip.style('visibility', 'hidden'))
 			.on('mousemove', (event: any) => onStateMousemove(event, stateId, tooltip));
-	};
+	}
 
 	/**
 	 * Create map using D3 and TopoJSON
@@ -305,10 +324,11 @@
 			})));
 
 		// Territories
-		createStateAvatar(svg, 525, 550, geoStates['60'].id); // American Samoa
-		createStateAvatar(svg, 575, 550, geoStates['66'].id); // Guam
-		createStateAvatar(svg, 625, 550, geoStates['69'].id); // Northern Marianas
-		createStateAvatar(svg, 675, 550, geoStates['78'].id); // Virgin Islands
+		createStateAvatar(svg, 500, 550, geoStates['60'].id); // American Samoa
+		createStateAvatar(svg, 550, 550, geoStates['66'].id); // Guam
+		createStateAvatar(svg, 600, 550, geoStates['69'].id); // Northern Marianas
+		createStateAvatar(svg, 650, 550, geoStates['72'].id); // Puerto Rico
+		createStateAvatar(svg, 700, 550, geoStates['78'].id); // Virgin Islands
 
 		// Small states
 		createStateAvatar(svg, 875, 225, geoStates['25'].id); // MA
@@ -319,12 +339,15 @@
 		createStateAvatar(svg, 875, 475, geoStates['24'].id); // MD
 		createStateAvatar(svg, 875, 525, geoStates['11'].id); // DC
 
+		// Abroad
+		createStateAvatar(svg, 725, 100, geoStates['79'].id); // Democrats Abroad
+
 		// Set color based on current results
 		for (const usState of usStatesStore.getUsStates) {
 			d3.selectAll(`.state-${usState.id}`)
 				.style('fill', usState.color);
-    }
-	};
+    	}
+	}
 
 	onMounted(async () => {
 		jsonData = await d3.json(usMapJSON);
@@ -332,6 +355,9 @@
 		geoStateNames = await d3.tsv('/data/us-state-names.tsv');
 
 		createMap(jsonData, geoStateNames);
+
+		// Hide states that are not in the currently selected party's primary
+		hideExcludedStates();
 
 		window.addEventListener('resize', () => {
 			createMap(jsonData, geoStateNames);
@@ -342,7 +368,7 @@
 		window.removeEventListener('resize', () => {
 			createMap(jsonData, geoStateNames);
 		});
-	})
+	});
 </script>
 
 <style lang="scss">

@@ -788,6 +788,9 @@
     "allocation": "proportional",
     "color": "",
     "electionDate": "2024-05-05",
+    "electionRules": {
+      "minThreshold": 15
+    },
     "electionType": "open caucus",
     "initials": "DA",
     "name": "democrats abroad",
