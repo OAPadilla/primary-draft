@@ -63,7 +63,7 @@
 	watch(selectedPartyId, () => {
 		// Hide states that are not in a party's primary
 		hideExcludedStates();
-    });
+	});
 
 	/**
 	 * Get the store state id from provided state initials. 
@@ -349,7 +349,7 @@
 		for (const usState of usStatesStore.getUsStates) {
 			d3.selectAll(`.state-${usState.id}`)
 				.style('fill', usState.color);
-    	}
+    }
 	}
 
 	onMounted(async () => {
@@ -386,6 +386,7 @@
 		}
 
 		svg {
+      width: 100%;
 			fill: $color-light-grey;
 		}
 

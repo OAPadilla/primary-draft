@@ -221,7 +221,7 @@ onMounted(() => {
 
 onUnmounted(() => {
 	window.removeEventListener('resize', resetBar);
-})
+});
 </script>
   
 <style lang="scss">
@@ -253,6 +253,7 @@ onUnmounted(() => {
 		margin: auto;
 		padding-left: 12px;
 		stroke: $color-black;
+		width: -webkit-fill-available; // For Safari, centers flag
 	}
 
 	&_tooltip {

@@ -144,9 +144,9 @@ function onInput(): void {
       cursor: pointer;
     }
 
-    &::-moz-range-thumb { 
-      width: 6px;
-      height: 16px;
+    &::-moz-range-thumb {
+      width: 5px;
+      height: 14px;
       background-color: $color-black;
       cursor: pointer;
     }
@@ -168,6 +168,11 @@ function onInput(): void {
       }
 
       &::-webkit-slider-thumb {
+        height: 5px;
+        cursor: default;
+      }
+
+      &::-moz-range-thumb {
         height: 5px;
         cursor: default;
       }
