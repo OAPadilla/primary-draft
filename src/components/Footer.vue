@@ -11,7 +11,9 @@
 				<!-- Social Share -->
 				<!-- <div class="c-footer_share">Share</div> -->
 			</div>
-			
+
+			<LogoIcon class="c-footer_logo"/>
+
 			<!-- Copyright -->
 			<div class="c-footer_copyright">
 				<div>© 2023 Oscar Padilla</div>
@@ -19,6 +21,10 @@
 		</div>
 	</footer>
 </template>
+
+<script setup lang="ts">
+import LogoIcon from '../assets/logo/logo.svg?component';
+</script>
 
 <style scoped lang="scss">
 @import '@/styles/main.scss';
@@ -40,7 +46,6 @@
 
 	&_top {
 		display: flex;
-		margin-bottom: $standard-spacing;
 	}
 
 	&_share {
@@ -54,6 +59,12 @@
 
 	&_contactEmail {
 		color: grey;
+	}
+
+	&_logo {
+		margin: auto;
+		width: 90px;
+		height: 69px;
 	}
 
 	&_copyright {
