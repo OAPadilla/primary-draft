@@ -50,7 +50,7 @@ defineProps({
   }
 
   &_delegates {
-    width: 5rem;
+    width: 6rem;
     right: auto;
     text-align: right;
   }

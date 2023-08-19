@@ -1,8 +1,23 @@
 <template>
 	<div class="c-delegateBar">
-		<FlagIcon class="c-delegateBar_flag" :style="{ fill: flagColor }"/>
+		<div class="c-delegateBar_icons">
+			<FlagIcon class="c-delegateBar_flag" :style="{ fill: flagColor }"/>
+			<ResetIcon 
+				class="c-delegateBar_resetBtn"
+				:class="{ '-rotate': resetActivated }"
+				@click="onResetClick"
+			/>
+		</div>
 		<div :class="barClass"></div>
 		<div class="c-delegateBar_tooltip"></div>
+
+		<ConfirmModal
+			acceptText="Reset"
+			message="Are you sure you'd like to reset the map?"
+			:show="showResetModal"
+			@accept="onResetConfirmed"
+			@cancel="showResetModal = false"
+		/>
 	</div>
 </template>
 
@@ -12,9 +27,12 @@ import * as d3 from 'd3';
 import { storeToRefs } from 'pinia';
 
 import FlagIcon from '../assets/icons/flag.svg?component';
+import ResetIcon from '../assets/icons/reset.svg?component';
+import ConfirmModal from '../components/ConfirmModal.vue';
 
 import { useCandidatesStore, ICandidate } from '../stores/candidates';
 import { useStore } from '../stores/store';
+import { useUsStatesStore } from '../stores/usStates';
 
 interface ICandidateBarChart extends ICandidate {
 	cumulative: number,
@@ -23,6 +41,7 @@ interface ICandidateBarChart extends ICandidate {
 
 const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
+const usStatesStore = useUsStatesStore();
 
 const { selectedPartyId } = storeToRefs(mainStore);
 
@@ -30,6 +49,8 @@ const barClass: string = 'c-delegateBar_bar';
 const barHeight: number = 60;
 const defaultFlagColor: string = 'none';
 const flagColor: Ref<string> = ref(defaultFlagColor);
+const resetActivated: Ref<boolean> = ref(false);
+const showResetModal = ref(false);
 const tooltipWidth: number = 200;
 
 watch(candidatesStore, () => {
@@ -109,6 +130,29 @@ function onMousemove(event: any, d: ICandidateBarChart, tooltip: any): void {
 	tooltip.html(`<div>${d.name}</div><div>${d.percent}%</div><div>${d.delegates} delegates</div>`)
 		.style("left", `${left}px`)
 		.style("top", `${d3.pointer(event)[1] - 20}px`);
+}
+
+/**
+ * Actions to take on reset button click incl. showing modal for confirmation
+ */
+function onResetClick(): void {
+	// Show modal
+	showResetModal.value = true;
+
+	// Animate reset icon
+	resetActivated.value = true;
+	setTimeout(() => {
+		resetActivated.value = false;
+	}, 500);
+};
+
+/**
+ * Reset actions once user confirms
+ */
+function onResetConfirmed(): void {
+	// Hide modal
+	showResetModal.value = false;
+	usStatesStore.resetAllResults();
 }
 
 /**
@@ -242,6 +286,10 @@ onUnmounted(() => {
 		}
 	}
 
+	&_icons {
+		display: flex;
+	}
+
 	&_majorityMarker {
 		stroke: $color-black;
 		stroke-width: 1.5;
@@ -251,9 +299,26 @@ onUnmounted(() => {
 	&_flag {
 		display: flex;
 		margin: auto;
-		padding-left: 12px;
+		margin-bottom: 0;
+		padding-left: 43px;
 		stroke: $color-black;
 		width: -webkit-fill-available; // For Safari, centers flag
+	}
+
+	&_resetBtn {
+		width: 21px;
+		height: 20px;
+		padding: 5px;
+
+		&:hover {
+			opacity: 0.7;
+			cursor: pointer;
+		}
+
+		&.-rotate {
+			transition: transform 0.5s ease;
+			transform: rotate(-360deg);
+		}
 	}
 
 	&_tooltip {

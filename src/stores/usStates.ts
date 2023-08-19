@@ -446,7 +446,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    */
   function resetAllResults(): void  {
     for (const usState of getUsStates.value) {
-      getStateById(usState.id).results = _defaultResults();
+      resetStateResults(usState.id);
     };
   }
 
@@ -526,6 +526,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     getStateUnallocatedPercentage,
     getStateWtaTrigger,
     getUsStates,
+    resetAllResults,
     resetAllResultsForCandidate,
     resetStateResults,
     updateCandidateDelegates,
