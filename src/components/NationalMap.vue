@@ -380,7 +380,7 @@
 		width: 100%;
 		margin-bottom: $standard-spacing;
 
-		@media (min-width: 1030px) {
+		@media (min-width: $screen-breakpoint-lg) {
 			min-height: 620px;
 			min-width: 940px;
 		}
@@ -421,12 +421,6 @@
 	&_tooltip {
 		position: absolute;
 		visibility: hidden;
-
-		@media (max-width: 768px) {
-			.tooltip  {
-				display: none;
-			}
-		}
 
 		.tooltip {
 			z-index: 999;

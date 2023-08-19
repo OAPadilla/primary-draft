@@ -75,5 +75,9 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 footer {
 	background-color: $base-background-color;
 	padding: 0 $large-spacing;
+
+	@media (max-width: $screen-breakpoint-sm) {
+		padding: 0 $standard-spacing;
+	}
 }
 </style>

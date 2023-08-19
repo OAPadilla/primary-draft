@@ -180,7 +180,7 @@ function onInput(): void {
   }
 
   &_unallocated &_lines {
-    @media (max-width: 700px) {
+    @media (max-width: $screen-breakpoint-sm) {
 			display: none;
 		}
   }

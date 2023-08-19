@@ -67,6 +67,10 @@ onMounted(() => {
 
 		svg {
 			width: 45px;
+
+			@media (max-width: $screen-breakpoint-sm) {
+				width: 60px;
+			}
 		}
 	}
 }

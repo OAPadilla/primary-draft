@@ -170,6 +170,11 @@ onBeforeUpdate(() => {
 		border-radius: 20px;
 		opacity: 0.8;
 
+		@media (max-width: 460px) {
+			width: 174px;
+			margin: 3px;
+		}
+
 		&:hover {
 			opacity: 1;
 		}

@@ -70,10 +70,14 @@ useMeta({
   margin: $large-spacing auto;
   padding: 0 $large-spacing;
 
-  @media (max-width: 1030px) {
-    @media (min-width: 600px) {
+  @media (max-width: $screen-breakpoint-lg) {
+    @media (min-width: $screen-breakpoint-sm) {
       min-width: 90%;
     }
+  }
+
+  @media (max-width: $screen-breakpoint-sm) {
+    padding: 0 $standard-spacing;
   }
 }
 </style>

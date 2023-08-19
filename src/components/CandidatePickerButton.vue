@@ -91,6 +91,10 @@ function deleteCandidate(): void {
         border-radius: 20px;
         outline: none;
         text-overflow: ellipsis;
+
+        @media (max-width: $screen-breakpoint-xs) {
+            width: 154px;
+        }
     }
 
     input::placeholder {
@@ -102,7 +106,9 @@ function deleteCandidate(): void {
     }
 
     &.selected input {
-        font-weight: bold;
+        @media (min-width: $screen-breakpoint-xs) {
+            font-weight: bold;
+        }
     }
 }
 </style>

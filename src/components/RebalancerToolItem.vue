@@ -36,6 +36,8 @@ defineProps({
 </script>
   
 <style scoped lang="scss">
+@import '@/styles/main.scss';
+
 .c-rebalancerToolItem {
   display: flex;
 	padding-top: 10px;
@@ -55,7 +57,7 @@ defineProps({
     text-align: right;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: $screen-breakpoint-sm) {
     flex-direction: column;
 
     &_name {
