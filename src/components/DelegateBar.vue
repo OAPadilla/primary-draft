@@ -5,7 +5,7 @@
 			<ResetIcon 
 				class="c-delegateBar_resetBtn"
 				:class="{ '-rotate': resetActivated }"
-				@click="onResetClick"
+				@click="showResetModal = true"
 			/>
 		</div>
 		<div :class="barClass"></div>
@@ -133,26 +133,18 @@ function onMousemove(event: any, d: ICandidateBarChart, tooltip: any): void {
 }
 
 /**
- * Actions to take on reset button click incl. showing modal for confirmation
- */
-function onResetClick(): void {
-	// Show modal
-	showResetModal.value = true;
-
-	// Animate reset icon
-	resetActivated.value = true;
-	setTimeout(() => {
-		resetActivated.value = false;
-	}, 500);
-};
-
-/**
  * Reset actions once user confirms
  */
 function onResetConfirmed(): void {
 	// Hide modal
 	showResetModal.value = false;
 	usStatesStore.resetAllResults();
+
+	// Animate reset icon
+	resetActivated.value = true;
+	setTimeout(() => {
+		resetActivated.value = false;
+	}, 500);
 }
 
 /**

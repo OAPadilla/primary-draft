@@ -1,15 +1,31 @@
 <template>
-    <div v-show="showModal" class="c-confirmModalContainer">
-        <div class="c-confirmModal">
-            <div class="c-confirmModal_content">
-                <p class="c-confirmModal_message">{{ message }}</p>
-                <div class="c-confirmModal_buttons">
-                    <button class="c-confirmModal_cancelBtn" @click="emit('cancel')">{{ cancelText }}</button>
-                    <button class="c-confirmModal_acceptBtn" @click="emit('accept')">{{ acceptText }}</button>
+    <Transition>
+        <div
+            v-show="showModal"
+            class="c-confirmModalContainer"
+            @click.self="emit('cancel')"
+        >
+            <div class="c-confirmModal">
+                <div class="c-confirmModal_content">
+                    <p class="c-confirmModal_message">{{ message }}</p>
+                    <div class="c-confirmModal_buttons">
+                        <button
+                            class="c-confirmModal_cancelBtn"
+                            @click="emit('cancel')"
+                        >
+                            {{ cancelText }}
+                        </button>
+                        <button
+                            class="c-confirmModal_acceptBtn"
+                            @click="emit('accept')"
+                        >
+                            {{ acceptText }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </Transition>
 </template>
 
 <script setup lang="ts">
@@ -39,7 +55,7 @@ watchEffect(() => {
 	} else {
         document.body.style.overflow = 'auto';
 	}
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -101,5 +117,15 @@ watchEffect(() => {
         margin-left: $standard-spacing;
         font-weight: bold;
     }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
