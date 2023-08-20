@@ -1,5 +1,5 @@
 <template>
-    <Transition>
+    <Transition name="fade">
         <div
             v-show="showModal"
             class="c-confirmModalContainer"
@@ -60,6 +60,7 @@ watchEffect(() => {
 
 <style scoped lang="scss">
 @import '@/styles/main.scss';
+@include vue-fade(0.2);
 
 .c-confirmModalContainer {
     position: fixed;
@@ -117,15 +118,5 @@ watchEffect(() => {
         margin-left: $standard-spacing;
         font-weight: bold;
     }
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.1s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 </style>

@@ -26,3 +26,43 @@
     }
   }
 }
+
+/**
+ * Utilize Vue's Transition component for fade in-out affect
+ * <Transition name="fade">
+ *
+ * $duration - Transition duration in seconds
+ */
+@mixin vue-fade($duration) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity #{$duration}s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+}
+
+/**
+ * Utilize Vue's Transition component: name="slide"
+ * <Transition name="slide">
+ *
+ * $duration - Transition duration in seconds
+ * $translateX - Amount to reposition an element horizontally in px
+ */
+@mixin vue-slide-x($duration, $translateX) {
+	.slide-enter-active {
+		transition: all #{$duration}s ease;
+	}
+
+	.slide-leave-active {
+		transition: all #{$duration}s ease;
+	}
+
+	.slide-enter-from,
+	.slide-leave-to {
+		transform: translateX(#{$translateX}px);
+	}
+}

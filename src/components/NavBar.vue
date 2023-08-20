@@ -11,20 +11,22 @@
 			</nav>
 
 			<nav class="c-navBar_burger"><MenuIcon @click="showMenu = !showMenu"/></nav>
-			<nav
-				v-show="showMenu"
-				class="c-navBar_burgerLinks"
-			>
-				<RouterLink :to="{ name: 'Rep' }" @click="showMenu = false">
-					<RepIcon class="c-navBar_burgerLinks_icon"/>Republican
-				</RouterLink>
-				<RouterLink :to="{ name: 'Dem' }" @click="showMenu = false">
-					<DemIcon class="c-navBar_burgerLinks_icon"/>Democratic
-				</RouterLink>
-				<RouterLink :to="{ name: 'About' }" @click="showMenu = false">
-					<InfoIcon class="c-navBar_burgerLinks_infoIcon"/>About
-				</RouterLink>
-			</nav>
+			<Transition name="slide">
+				<nav
+					v-show="showMenu"
+					class="c-navBar_burgerLinks"
+				>
+					<RouterLink :to="{ name: 'Rep' }" @click="showMenu = false">
+						<RepIcon class="c-navBar_burgerLinks_icon"/>Republican
+					</RouterLink>
+					<RouterLink :to="{ name: 'Dem' }" @click="showMenu = false">
+						<DemIcon class="c-navBar_burgerLinks_icon"/>Democratic
+					</RouterLink>
+					<RouterLink :to="{ name: 'About' }" @click="showMenu = false">
+						<InfoIcon class="c-navBar_burgerLinks_infoIcon"/>About
+					</RouterLink>
+				</nav>
+			</Transition>
 		</div>
 	</header>
 </template>
@@ -46,6 +48,8 @@ const showMenu: Ref<boolean> = ref(false);
 @import '@/styles/main.scss';
 
 .c-navBar {
+	@include vue-slide-x(0.2, 200);
+
 	display: flex;
 	max-width: 950px;
 	margin: auto;
