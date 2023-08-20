@@ -73,7 +73,7 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 }
 
 footer {
-	background-color: $base-background-color;
+	background-color: $background-color-base;
 	padding: 0 $large-spacing;
 
 	@media (max-width: $screen-breakpoint-sm) {

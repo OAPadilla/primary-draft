@@ -425,7 +425,7 @@
 		.tooltip {
 			z-index: 999;
 			position: absolute;
-			background-color: $base-background-color;
+			background-color: $background-color-base;
 			width: 125px;
 			margin: 5px;
 			border-radius: 25px;

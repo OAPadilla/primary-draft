@@ -63,7 +63,7 @@ function deleteCandidate(): void {
 .c-candidatePickerButton {
     position: relative;
 	width: 100%;
-	border: 2px solid $base-background-color;
+	border: 2px solid $background-color-base;
 	border-radius: 25px;
 
     &_delete {
@@ -75,7 +75,7 @@ function deleteCandidate(): void {
         svg {
             width: 23px;
             height: 23px;
-            fill: $base-background-color;
+            fill: $background-color-base;
         }
     }
 

@@ -170,7 +170,7 @@ onBeforeUpdate(() => {
 		border-radius: 20px;
 		opacity: 0.8;
 
-		@media (max-width: 460px) {
+		@media (max-width: $screen-breakpoint-xs) {
 			width: 174px;
 			margin: 3px;
 		}
@@ -197,7 +197,7 @@ onBeforeUpdate(() => {
 		cursor: pointer;
 		padding: 8px 0;
 		text-align: center;
-		color: $base-background-color;
+		color: $background-color-base;
 		background-color: $color-light-grey;
 		font-weight: bold;
 		width: 100%;
@@ -206,7 +206,7 @@ onBeforeUpdate(() => {
 
 	&_addBtn {
 		color: $color-light-grey;
-		background-color: $base-background-color;
+		background-color: $background-color-base;
 		border: 2px dashed $color-light-grey;
 
 		&:hover {
@@ -216,7 +216,7 @@ onBeforeUpdate(() => {
 
 	&_noneBtn,
 	&_editBtn {
-		border: 2px solid $base-background-color;
+		border: 2px solid $background-color-base;
 	}
 
 	&_editBtn {
@@ -238,7 +238,7 @@ onBeforeUpdate(() => {
 		}
 
 		.c-candidatePicker_noneBtn {
-			border-color: $base-background-color;
+			border-color: $background-color-base;
 
 			&:hover {
 				cursor: default;

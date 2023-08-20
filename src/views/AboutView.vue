@@ -96,7 +96,7 @@ useMeta({
 
 	h2 {
 		text-align: unset;
-		margin-bottom: 0;
+		margin: 0;
 	}
 
 	a {
