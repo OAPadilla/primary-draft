@@ -123,11 +123,12 @@ const showMenu: Ref<boolean> = ref(false);
 		display: flex;
 		flex-direction: column;
 		position: absolute;
-		right: -1px;
+		right: 0;
 		top: 69px;
 		padding: 20px 20px 0;
 		background-color: $background-color-base;
 		border: $standard-border;
+		border-right: none;
 		font-size: 24px;
 
 		a {
