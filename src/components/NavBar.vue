@@ -2,7 +2,7 @@
 	<header>
 		<div class="c-navBar">
 			<RouterLink :to="{ name: 'Home' }" class="c-navBar_home"><LogoIcon class="c-navBar_logo"/></RouterLink>
-			<h1>primary draft</h1>
+			<h1 class="c-navBar_title">{{ $t('siteName') }}</h1>
 
 			<nav class="c-navBar_links">
 				<RouterLink :to="{ name: 'Rep' }">gop</RouterLink>
@@ -55,7 +55,8 @@ const showMenu: Ref<boolean> = ref(false);
 	margin: auto;
 	border-bottom: $standard-border;
 
-	h1 {
+	&_title {
+		text-transform: lowercase;
 		font-weight: normal;
 		margin: 10px 0;
 	}

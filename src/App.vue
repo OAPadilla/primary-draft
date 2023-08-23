@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import { useMeta } from 'vue-meta';
 import { RouterView } from "vue-router";
+import { useI18n } from 'vue-i18n'
 
 import NavBar from "./components/NavBar.vue";
 import Footer from "./components/Footer.vue";
@@ -20,11 +21,12 @@ import Footer from "./components/Footer.vue";
 import { useUsStatesStore } from './stores/usStates';
 
 const { fetchStatesData } = useUsStatesStore();
+const { t } = useI18n()
 
 const metaCanonical: string = 'https://www.primarydraft.com';
 const metaDescription: string = 'Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!';
 const metaImage: string = 'https://www.primarydraft.com/primary-draft-logo.png';
-const metaSiteName: string = 'Primary Draft';
+const metaSiteName: string = t('siteName');
 const metaTitle: string = 'Interactive Primary Election Map';
 
 fetchStatesData();
