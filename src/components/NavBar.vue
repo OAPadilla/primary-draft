@@ -71,6 +71,10 @@ const showMenu: Ref<boolean> = ref(false);
 		display: flex;
 		margin: auto 0;
 		margin-left: -12px; // Adjust for white space in logo SVG
+
+		&:hover {
+			text-decoration: none;
+		}
 	}
 
 	&_logo {
