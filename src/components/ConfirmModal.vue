@@ -80,10 +80,10 @@ watchEffect(() => {
 
     &_content {
         width: fit-content;
-        background-color: white;
+        background-color: $background-color-base;
         padding: 1.5rem;
         border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: $standard-box-shadow;
     }
 
     &_message {
@@ -107,15 +107,15 @@ watchEffect(() => {
     }
 
     &_cancelBtn {
-        color: grey;
-        background-color: white;
-        border: 1px solid lightgrey;
+        color: $color-dark-grey;
+        background-color: $background-color-base;
+        border: 1px solid $color-light-grey;
     }
 
     &_acceptBtn {
-        background-color: red;
-        border: 1px solid red;
         margin-left: $standard-spacing;
+        background-color: $color-red-alert;
+        border: 1px solid $color-red-alert;
         font-weight: bold;
     }
 }

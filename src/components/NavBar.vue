@@ -1,8 +1,10 @@
 <template>
 	<header>
 		<div class="c-navBar">
-			<RouterLink :to="{ name: 'Home' }" class="c-navBar_home"><LogoIcon class="c-navBar_logo"/></RouterLink>
-			<h1 class="c-navBar_title">{{ $t('siteName') }}</h1>
+			<RouterLink :to="{ name: 'Home' }" class="c-navBar_home">
+				<LogoIcon class="c-navBar_logo"/>
+				<h1 class="c-navBar_title">{{ $t('siteName') }}</h1>
+			</RouterLink>
 
 			<nav class="c-navBar_links">
 				<RouterLink :to="{ name: 'Rep' }">{{ $t('partyNames.republican.abbr') }}</RouterLink>
@@ -66,6 +68,7 @@ const showMenu: Ref<boolean> = ref(false);
 	}
 
 	&_home {
+		display: flex;
 		margin: auto 0;
 		margin-left: -12px; // Adjust for white space in logo SVG
 	}
