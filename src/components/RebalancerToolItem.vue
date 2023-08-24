@@ -14,7 +14,7 @@
         :wta-threshold="wtaThreshold"
       />
       <div class="c-rebalancerToolItem_delegates">
-        {{ allocatedDelegates }} del.
+        {{ $t('numDelegatesAbbr', { num: allocatedDelegates }) }}
       </div>
     </div>
 	</div>

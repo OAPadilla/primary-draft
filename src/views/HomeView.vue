@@ -3,7 +3,7 @@
 		<div class="c-homeView_title">
 			<DemIcon v-if="partyId == 0" />
 			<RepIcon v-else-if="partyId == 1" />
-			<h2 :style="cssVars">{{ mainStore.getPartyName }} Party Presidential Primary</h2>
+			<h2 :style="cssVars">{{ $t('mapPage.title', { partyName: mainStore.getPartyName }) }}</h2>
 			<DemIcon v-if="partyId == 0" />
 			<RepIcon v-else-if="partyId == 1" />
 		</div>

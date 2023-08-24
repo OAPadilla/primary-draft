@@ -5,8 +5,8 @@
 			<h1 class="c-navBar_title">{{ $t('siteName') }}</h1>
 
 			<nav class="c-navBar_links">
-				<RouterLink :to="{ name: 'Rep' }">gop</RouterLink>
-				<RouterLink :to="{ name: 'Dem' }">dem</RouterLink>
+				<RouterLink :to="{ name: 'Rep' }">{{ $t('partyNames.republican.abbr') }}</RouterLink>
+				<RouterLink :to="{ name: 'Dem' }">{{ $t('partyNames.democratic.abbr') }}</RouterLink>
 				<RouterLink :to="{ name: 'About' }"><InfoIcon /></RouterLink>
 			</nav>
 
@@ -17,13 +17,13 @@
 					class="c-navBar_burgerLinks"
 				>
 					<RouterLink :to="{ name: 'Rep' }" @click="showMenu = false">
-						<RepIcon class="c-navBar_burgerLinks_icon"/>Republican
+						<RepIcon class="c-navBar_burgerLinks_icon"/>{{ $t('partyNames.republican.full') }}
 					</RouterLink>
 					<RouterLink :to="{ name: 'Dem' }" @click="showMenu = false">
-						<DemIcon class="c-navBar_burgerLinks_icon"/>Democratic
+						<DemIcon class="c-navBar_burgerLinks_icon"/>{{ $t('partyNames.democratic.full') }}
 					</RouterLink>
 					<RouterLink :to="{ name: 'About' }" @click="showMenu = false">
-						<InfoIcon class="c-navBar_burgerLinks_infoIcon"/>About
+						<InfoIcon class="c-navBar_burgerLinks_infoIcon"/>{{ $t('about') }}
 					</RouterLink>
 				</nav>
 			</Transition>

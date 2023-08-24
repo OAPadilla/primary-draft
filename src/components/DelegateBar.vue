@@ -12,8 +12,8 @@
 		<div class="c-delegateBar_tooltip"></div>
 
 		<ConfirmModal
-			acceptText="Reset"
-			message="Are you sure you'd like to reset the map?"
+			:acceptText="$t('reset')"
+			:message="$t('confirmModalMessageReset')"
 			:show="showResetModal"
 			@accept="onResetConfirmed"
 			@cancel="showResetModal = false"

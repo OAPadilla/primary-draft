@@ -7,6 +7,7 @@
 
 <script setup lang="ts">
 	import { computed, onMounted, onUnmounted, watch, watchEffect, Ref } from 'vue';
+	import { useI18n } from 'vue-i18n';
 	import * as d3 from 'd3';
 	import { storeToRefs } from 'pinia';
 	import * as topojson from 'topojson-client';
@@ -20,6 +21,7 @@
 		initials: string
 	}
 
+	const { t } = useI18n()
 	const candidatesStore = useCandidatesStore();
 	const mainStore = useStore();
 	const usStatesStore = useUsStatesStore();
@@ -179,10 +181,11 @@
 	
 		const [x, y]: number[] = d3.pointer(event, map.node());
 		const left: number = Math.min(x - 20, switchPoint);
+		const numOfDelegatesStr = t('numDelegatesAbbr', { num: stateData.totalDelegates });
 
 		tooltip.html(`
 			<div class="c-nationalMap_tooltip_name">${stateData.name}</div>
-			<div class="c-nationalMap_tooltip_del">${stateData.totalDelegates} del.</div>
+			<div class="c-nationalMap_tooltip_del">${numOfDelegatesStr}</div>
 			<div class="c-nationalMap_tooltip_alloc">${stateData.allocation}</div>
 		`)
 		.style('left', `${left}px`)

@@ -1,78 +1,73 @@
 <template>
 	<div class="c-aboutView">
 		<div class="c-aboutView_section">
-			<h2>About Primary Draft</h2>
-			<p>
-				Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state
-				primary election results and allocate delegates among presidential primary candidates on a United States map. Use it 
-				as an educational tool and experience democracy!
-			</p>
+			<h2>{{ $t('aboutPage.aboutSection.title') }}</h2>
+			<p>{{ $t('aboutPage.aboutSection.content') }}</p>
 		</div>
 
 		<div class="c-aboutView_section">
-			<h2>What is a primary election?</h2>
-			<p>
-				A primary election is how a national political party selects a nominee to run for the United States 
-				presidency. While a national party oversees and sets rules for elections, state's can have their own nuanced
-				delegate allocation process.
-			</p>
+			<h2>{{ $t('aboutPage.whatIsAPrimarySection.title') }}</h2>
+			<p>{{ $t('aboutPage.whatIsAPrimarySection.content') }}</p>
 		</div>
 
 		<div class="c-aboutView_section">
-			<h2>How to use</h2>
+			<h2>{{ $t('aboutPage.howToUseSection.title') }}</h2>
 			<ul>
-				<li>
-					<strong>Choose a candidate or select "None".</strong> Selecting a candidate allows you to quickly allocate a majority (50.1%) of a 
-					state's popular vote with a click. "None" allows you to allocate with total freedom.
-				</li>
-				<li>
-					<strong>Click on a U.S. state or territory</strong> on the map and interact with the allocation tool. Delegates are 
-					automatically calculated based on the set popular vote percentages and a state's election rules.
-				</li>
-				<li>
-					<strong>Experiment further with state results.</strong> Watch the "Unallocated" row to help you keep track of yet to be distributed votes. 
-					Once 0 is reached, you won't be able to allocate any more to a candidate without taking away from another.
-				</li>
-				<li>
-					<strong>Lead a candidate to victory!</strong> A candidate is the nomination winner once they've earned a majority of total delegates, 
-					marked by the delegate count flag <FlagIcon class="c-aboutView_flag" />.
-				</li>
+				<template v-for="i in 4">
+					<i18n-t :keypath="`aboutPage.howToUseSection.content.item${i}`" tag="li">
+						<template #lead>
+							<strong>{{ $t(`aboutPage.howToUseSection.content.item${i}Lead`) }}</strong>
+						</template>
+						<template #flagIcon>
+							<FlagIcon class="c-aboutView_flag" />
+						</template>
+					</i18n-t>
+				</template>
 			</ul>
 		</div>
 
 		<div class="c-aboutView_section">
-			<h2>Limitations</h2>
-			<p>
-				There's a balance to be made between streamlining the user experience while retaining the authenticity of simulating an election 
-				process due to the nuance of state election laws. Here are some changes we've made.
-			</p>
+			<h2>{{ $t('aboutPage.limitationsSection.title') }}</h2>
+			<p>{{ $t('aboutPage.limitationsSection.content.p') }}</p>
 			<ul>
 				<li>
-					We allocate delegates in caucuses as if they were primaries. 
-					<a href="https://www.usa.gov/primaries-caucuses">Learn more here</a>.
+					{{ $t(`aboutPage.limitationsSection.content.item1`) }}
+					<a :href="usaGovLink">{{ $t(`learnMoreHere`) }}</a>.
 				</li>
 				<li>
-					We allocate district level and soft delegates as if they were state-wide, at-large, hard delegates. 
-					<a href="https://ballotpedia.org/Types_of_delegates">Learn more here</a>.
+					{{ $t(`aboutPage.limitationsSection.content.item2`) }}
+					<a :href="ballotpediaLink">{{ $t(`learnMoreHere`) }}</a>.
 				</li>
 				<li>
-					We condense primary types into 2 main groups. <a href="https://www.thegreenpapers.com/Definitions.html#Prim">Learn more here</a>.
+					{{ $t(`aboutPage.limitationsSection.content.item3`) }}
+					<a :href="theGreenPapersDefsLink">{{ $t(`learnMoreHere`) }}</a>.
 					<ul>
-						<li><strong>Winner-Take-All and Winner-Take-Most</strong> - We allocate all of a state's delegates to the candidate with the most amount of votes.</li>
-						<li><strong>Proportional and Delegate Selection</strong> - We distribute delegates proportionally based on the popular vote percentiles.</li>
+						<i18n-t keypath="aboutPage.limitationsSection.content.item3a" tag="li">
+							<template #lead>
+								<strong>{{ $t('aboutPage.limitationsSection.content.item3aLead') }}</strong>
+							</template>
+						</i18n-t>
+						<i18n-t keypath="aboutPage.limitationsSection.content.item3b" tag="li">
+							<template #lead>
+								<strong>{{ $t('aboutPage.limitationsSection.content.item3bLead') }}</strong>
+							</template>
+						</i18n-t>
 					</ul>
 				</li>
 			</ul>
 		</div>
 
 		<div class="c-aboutView_section">
-			<h2>Credits & Notes</h2>
-			<p>
-				Up-to-date election information sourced from <a href="https://www.TheGreenPapers.com">The Green Papers</a> and <a href="https://www.frontloadinghq.com/">Front Loading HQ</a>.
-			</p>
-			<p>
-				Expect more updates and improvements.
-			</p>
+			<h2>{{ $t('aboutPage.creditsSection.title') }}</h2>
+			<i18n-t keypath="aboutPage.creditsSection.content.item1" tag="p">
+				<template #sourceA>
+					<a :href="theGreenPapersLink">{{ $t('aboutPage.creditsSection.content.item1sourceA') }}</a>
+				</template>
+				<template #sourceB>
+					<a :href="frontLoadingHQLink">{{ $t('aboutPage.creditsSection.content.item1sourceB') }}</a>
+				</template>
+			</i18n-t>
+			<p>{{ $t('aboutPage.creditsSection.content.item2') }}</p>
 		</div>
 	</div>
 </template>
@@ -84,6 +79,12 @@ import FlagIcon from '../assets/icons/flag.svg?component';
 useMeta({
   title: 'About'
 });
+
+const ballotpediaLink: string = 'https://ballotpedia.org/Types_of_delegates';
+const frontLoadingHQLink: string = 'https://www.frontloadinghq.com';
+const theGreenPapersLink: string = 'https://www.TheGreenPapers.com';
+const theGreenPapersDefsLink: string = 'https://www.thegreenpapers.com/Definitions.html#Prim';
+const usaGovLink: string = 'https://www.usa.gov/primaries-caucuses';
 </script>
   
 <style scoped lang="scss">

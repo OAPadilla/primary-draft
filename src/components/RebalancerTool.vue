@@ -9,7 +9,7 @@
 				</div>
 
 				<div class="c-rebalancerTool_stateDetails">
-					{{ selectedState.totalDelegates }} Delegates • {{ selectedState.allocation }} • {{ selectedState.electionType }}
+					{{ $t('numDelegates', { num: selectedState.totalDelegates }) }} • {{ selectedState.allocation }} • {{ selectedState.electionType }}
 				</div>
 
 				<div class="c-rebalancerTool_stateDetails" v-if="stateElectionRules">
@@ -26,7 +26,7 @@
 		<RebalancerToolItem
 			class="c-rebalancerTool_unallocated"
 			:allocated-delegates="stateUnallocatedDelegates"
-			label="Unallocated"
+			:label="$t('unallocated')"
 			:min-threshold="stateRuleMinThreshold"
 			:percent-of-state-del="stateUnallocatedPercentage"
 			:is-unallocated-item="true"
@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { computed, ref, Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import ResetIcon from '../assets/icons/reset.svg?component';
 import RebalancerToolItem from "./RebalancerToolItem.vue";
@@ -62,6 +63,7 @@ import { useCandidatesStore } from '../stores/candidates';
 import { useStore } from '../stores/store';
 import { useUsStatesStore, IState } from '../stores/usStates';
 
+const { t } = useI18n();
 const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
@@ -85,8 +87,8 @@ const stateElectionRules: Ref<string> = computed(() => {
 		}
 	}
 
-	addRule(stateRuleMinThreshold.value, 'Minimum Threshold');
-	addRule(stateRuleWtaTrigger.value, 'Winner-Take-All Trigger');
+	addRule(stateRuleMinThreshold.value, t('minThreshold'));
+	addRule(stateRuleWtaTrigger.value, t('wtaTrigger'));
 	
 	if (electionRules.length > 1) {
 		return electionRules.join(' • ');

@@ -1,3 +1,85 @@
 {
-  "siteName": "Primary Draft"
+  "about": "About",
+  "aboutPage": {
+    "aboutSection": {
+      "title": "About Primary Draft",
+      "content": "Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!"
+    },
+    "whatIsAPrimarySection": {
+      "title": "What is a primary election?",
+      "content": "A primary election is how a national political party selects a nominee to run for the United States presidency. While a national party oversees and sets rules for elections, state's can have their own nuanced delegate allocation process."
+    },
+    "howToUseSection": {
+      "title": "How to use",
+      "content": {
+        "item1": "{lead} Selecting a candidate allows you to quickly allocate a majority (50.1%) of a state's popular vote with a click. \"None\" allows you to allocate with total freedom.",
+        "item1Lead": "Choose a candidate or select \"None\".",
+        "item2": "{lead} on the map and interact with the allocation tool. Delegates are automatically calculated based on the set popular vote percentages and a state's election rules.",
+        "item2Lead": "Click on a U.S. state or territory",
+        "item3": "{lead} Watch the \"Unallocated\" row to help you keep track of yet to be distributed votes. Once 0 is reached, you won't be able to allocate any more to a candidate without taking away from another.",
+        "item3Lead": "Experiment further with state results.",
+        "item4": "{lead} A candidate is the nomination winner once they've earned a majority of total delegates, marked by the delegate count flag {flagIcon}.",
+        "item4Lead": "Lead a candidate to victory!"
+      }
+    },
+    "limitationsSection": {
+      "title": "Limitations",
+      "content": {
+        "p": "There's a balance to be made between streamlining the user experience while retaining the authenticity of simulating an election process due to the nuance of state election laws. Here are some changes we've made.",
+        "item1": "We allocate delegates in caucuses as if they were primaries.",
+        "item2": "We allocate district level and soft delegates as if they were state-wide, at-large, hard delegates.",
+        "item3": "We condense primary types into 2 main groups.",
+        "item3a": "{lead} - We allocate all of a state's delegates to the candidate with the most amount of votes.",
+        "item3aLead": "Winner-Take-All and Winner-Take-Most",
+        "item3b": "{lead} - We distribute delegates proportionally based on the popular vote percentiles.",
+        "item3bLead": "Proportional and Delegate Selection"
+      }
+    },
+    "creditsSection": {
+      "title": "Credits & Notes",
+      "content": {
+        "item1": "Up-to-date election information sourced from {sourceA} and {sourceB}.",
+        "item1sourceA": "The Green Papers",
+        "item1sourceB": "Front Loading HQ",
+        "item2": "Expect more updates and improvements."
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "canonicalUrl": "https://www.primarydraft.com",
+  "comingSoon": "Coming Soon...",
+  "confirm": "Confirm",
+  "confirmModalMessageReset": "Are you sure you'd like to reset the map?",
+  "learnMoreHere": "Learn more here",
+  "numDelegates": "{num} Delegates",
+  "numDelegatesAbbr": "{num} del.",
+  "footer": {
+    "contact": "Contact",
+    "contactEmail": "info{'@'}PrimaryDraft.com",
+    "copyright": "{'©'} 2023 Oscar Padilla"
+  },
+  "mapPage": {
+    "title": "{partyName} Party Presidential Primary"
+  },
+  "meta": {
+    "description": "Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!",
+    "image": "https://www.primarydraft.com/primary-draft-logo.png",
+    "title": "Interactive Primary Election Map"
+  },
+  "minThreshold": "Minimum Threshold",
+  "none": "None",
+  "partyNames": {
+    "democratic": {
+      "abbr": "dem",
+      "full": "Democratic"
+    },
+    "republican": {
+      "abbr": "gop",
+      "full": "Republican"
+    }
+  },
+  "reset": "Reset",
+  "siteName": "Primary Draft",
+  "unallocated": "Unallocated",
+  "wtaTrigger": "Winner-Take-All Trigger"
 }

@@ -40,7 +40,7 @@
 				:class="{ selected: selectedCandidateId === noneChoiceId }"
 				@click="onChoiceClick(noneChoiceId)"
 			>
-				<div class="c-candidatePicker_noneBtn c-candidatePickerButton">None</div>
+				<div class="c-candidatePicker_noneBtn c-candidatePickerButton">{{ $t('none') }}</div>
 			</div>
 
 			<!-- Edit button: To change candidate names -->

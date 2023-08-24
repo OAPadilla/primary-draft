@@ -1,6 +1,6 @@
 <template>
 	<div class="c-comingSoonView">
-		<h1>Coming Soon...</h1>
+		<h1>{{ $t('comingSoon') }}</h1>
 	</div>
 </template>
 

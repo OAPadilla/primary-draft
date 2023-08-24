@@ -4,8 +4,8 @@
 			<!-- Contact -->
 			<div class="c-footer_top">
 				<div class="c-footer_contact">
-					<div class="c-footer_contactTitle">Contact</div>
-					<div class="c-footer_contactEmail">info@PrimaryDraft.com</div>
+					<div class="c-footer_contactTitle">{{ $t('footer.contact') }}</div>
+					<div class="c-footer_contactEmail">{{ $t('footer.contactEmail') }}</div>
 				</div>
 
 				<!-- Social Share -->
@@ -16,7 +16,7 @@
 
 			<!-- Copyright -->
 			<div class="c-footer_copyright">
-				<div>© 2023 Oscar Padilla</div>
+				<div>{{ $t('footer.copyright') }}</div>
 			</div>
 		</div>
 	</footer>
