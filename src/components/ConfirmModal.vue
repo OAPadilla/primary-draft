@@ -31,7 +31,10 @@
 <script setup lang="ts">
 import { ref, Ref, watchEffect } from 'vue';
 
-const emit = defineEmits(['accept', 'cancel'])
+const emit = defineEmits<{
+  (e: 'accept'): void
+  (e: 'cancel'): void
+}>();
 
 /**
  * acceptText - Accept button text

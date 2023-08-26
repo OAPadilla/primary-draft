@@ -32,7 +32,9 @@ import { useCandidatesStore, ICandidate } from '../stores/candidates';
 
 const candidatesStore = useCandidatesStore();
 
-const emit = defineEmits(['delete-candidate'])
+const emit = defineEmits<{
+  (e: 'deleteCandidate', candidateId: number): void
+}>();
 
 const props = defineProps({ 
     candidateId: { type: Number, default: -1 },
@@ -53,7 +55,7 @@ const placeholder: Ref<string> = computed(() => {
 });
 
 function deleteCandidate(): void {
-    emit('delete-candidate', props.candidateId);
+    emit('deleteCandidate', props.candidateId);
 }
 </script>
 
