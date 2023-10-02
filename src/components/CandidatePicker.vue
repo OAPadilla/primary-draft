@@ -154,7 +154,7 @@ onBeforeUpdate(() => {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin-bottom: $standard-spacing;
+	margin-bottom: $spacing-standard;
 
 	&_tools {
 		display: flex;

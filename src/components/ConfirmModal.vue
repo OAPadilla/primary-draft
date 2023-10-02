@@ -86,11 +86,11 @@ watchEffect(() => {
         background-color: $background-color-base;
         padding: 1.5rem;
         border-radius: 5px;
-        box-shadow: $standard-box-shadow;
+        box-shadow: $box-shadow-standard;
     }
 
     &_message {
-        margin: 0 0 $standard-spacing;
+        margin: 0 0 $spacing-standard;
     }
 
     &_buttons {
@@ -116,7 +116,7 @@ watchEffect(() => {
     }
 
     &_acceptBtn {
-        margin-left: $standard-spacing;
+        margin-left: $spacing-standard;
         background-color: $color-red-alert;
         border: 1px solid $color-red-alert;
         font-weight: bold;

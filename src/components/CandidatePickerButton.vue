@@ -86,7 +86,7 @@ function deleteCandidate(): void {
         width: 180px;
         padding: 10px;
         color: $color-black;
-        font-family: $standard-font-family;
+        font-family: $font-family-standard;
         font-size: 16px;
         text-align: center;
         border: 0;

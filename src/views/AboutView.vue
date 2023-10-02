@@ -92,7 +92,7 @@ const usaGovLink: string = 'https://www.usa.gov/primaries-caucuses';
 
 .c-aboutView {
 	ul {
-		padding: 0 20px;
+		padding: 0 $spacing-standard;
 	}
 
 	h2 {
@@ -107,9 +107,9 @@ const usaGovLink: string = 'https://www.usa.gov/primaries-caucuses';
 	}
 
 	&_section {
-		border-left: $standard-border;
+		border-left: $border-standard;
 		padding-left: 40px;
-		margin-bottom: $standard-spacing;
+		margin-bottom: $spacing-standard;
 	}
 
 	&_flag {

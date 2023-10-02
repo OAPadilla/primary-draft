@@ -53,9 +53,9 @@ const showMenu: Ref<boolean> = ref(false);
 	@include vue-slide-x(0.2, 200);
 
 	display: flex;
-	max-width: 950px;
+	max-width: $page-width-standard;
 	margin: auto;
-	border-bottom: $standard-border;
+	border-bottom: $border-standard;
 
 	&_title {
 		text-transform: lowercase;
@@ -94,7 +94,7 @@ const showMenu: Ref<boolean> = ref(false);
 		a {
 			display: flex;
 			align-items: center;
-			padding-left: $standard-spacing;
+			padding-left: $spacing-standard;
 		}
 
 		svg {
@@ -133,16 +133,16 @@ const showMenu: Ref<boolean> = ref(false);
 		position: absolute;
 		right: 0;
 		top: 69px;
-		padding: 20px 20px 0;
+		padding: $spacing-standard $spacing-standard 0;
 		background-color: $background-color-base;
-		border: $standard-border;
+		border: $border-standard;
 		border-right: none;
 		font-size: 24px;
 
 		a {
 			display: flex;
 			align-items: center;
-			margin-bottom: 20px;
+			margin-bottom: $spacing-standard;
 		}
 
 		&_icon {
@@ -163,10 +163,10 @@ const showMenu: Ref<boolean> = ref(false);
 header {
 	position: relative;
 	background-color: $background-color-base;
-	padding: 0 $large-spacing;
+	padding: 0 $spacing-lg;
 
 	@media (max-width: $screen-breakpoint-sm) {
-		padding: 0 $standard-spacing;
+		padding: 0 $spacing-standard;
 	}
 }
 </style>

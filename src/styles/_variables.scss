@@ -9,7 +9,7 @@ $color-red-alert: #D0342C;
 $color-white: #FFFFFF;
 
 // Fonts
-$standard-font-family: Futura,Trebuchet MS,Arial,sans-serif;
+$font-family-standard: Futura,Trebuchet MS,Arial,sans-serif;
 
 // Screen Width Breakpoints
 $screen-breakpoint-xs: 460px;
@@ -18,12 +18,15 @@ $screen-breakpoint-md: 768px;
 $screen-breakpoint-lg: 1024px;
 $screen-breakpoint-xl: 1280px;
 
+// Page Widths
+$page-width-standard: 950px;
+
 // Spacing
-$standard-spacing: 1.25rem;
-$large-spacing: 2rem;
+$spacing-standard: 1.25rem;
+$spacing-lg: 2rem;
 
 // Border
-$standard-border: 1px solid $color-black;
+$border-standard: 1px solid $color-black;
 
 // Other
-$standard-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+$box-shadow-standard: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

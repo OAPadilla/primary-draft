@@ -381,7 +381,7 @@
 	&_map {
 		display: flex;
 		width: 100%;
-		margin-bottom: $standard-spacing;
+		margin-bottom: $spacing-standard;
 
 		@media (min-width: $screen-breakpoint-lg) {
 			min-height: 620px;
@@ -434,11 +434,11 @@
 			border-radius: 25px;
 			padding: 8px;
 			color: $color-black;
-			font-family: $standard-font-family;
+			font-family: $font-family-standard;
 			font-size: 14px;
 			text-align: center;
 			text-transform: capitalize;
-			box-shadow: $standard-box-shadow;
+			box-shadow: $box-shadow-standard;
 		}
 
 		&_name {

@@ -55,13 +55,13 @@ onMounted(() => {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		margin-bottom: $large-spacing;
+		margin-bottom: $spacing-lg;
 
 		h2 {
 			text-transform: capitalize;
 			font-weight: normal;
 			text-align: center;
-			margin: 0 $standard-spacing;
+			margin: 0 $spacing-standard;
 			color: var(--party-color);
 		}
 

@@ -31,11 +31,11 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 
 .c-footer {
 	display: flex;
-	padding: 20px 0 30px;
+	padding: $spacing-standard 0 30px;
 	flex-direction: column;
-	max-width: 950px;
+	max-width: $page-width-standard;
 	margin: auto;
-	border-top: $standard-border;
+	border-top: $border-standard;
 	font-size: 12px;
 
 	h4 {
@@ -74,10 +74,10 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 
 footer {
 	background-color: $background-color-base;
-	padding: 0 $large-spacing;
+	padding: 0 $spacing-lg;
 
 	@media (max-width: $screen-breakpoint-sm) {
-		padding: 0 $standard-spacing;
+		padding: 0 $spacing-standard;
 	}
 }
 </style>

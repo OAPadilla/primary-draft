@@ -68,9 +68,9 @@ useMeta({
 
 .content {
   flex: 1;
-  max-width: 950px;
-  margin: $large-spacing auto;
-  padding: 0 $large-spacing;
+  max-width: $page-width-standard;
+  margin: $spacing-lg auto;
+  padding: 0 $spacing-lg;
 
   @media (max-width: $screen-breakpoint-lg) {
     @media (min-width: $screen-breakpoint-sm) {
@@ -79,7 +79,7 @@ useMeta({
   }
 
   @media (max-width: $screen-breakpoint-sm) {
-    padding: 0 $standard-spacing;
+    padding: 0 $spacing-standard;
   }
 }
 </style>

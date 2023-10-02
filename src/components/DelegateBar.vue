@@ -264,7 +264,7 @@ onUnmounted(() => {
 @import '@/styles/main.scss';
 
 .c-delegateBar {
-	margin-bottom: $standard-spacing;
+	margin-bottom: $spacing-standard;
 
 	&_bar {
 		display: flex;
@@ -324,11 +324,11 @@ onUnmounted(() => {
 			border-radius: 25px;
 			padding: 10px;
 			color: $color-black;
-			font-family: $standard-font-family;
+			font-family: $font-family-standard;
 			font-size: 16px;
 			font-weight: bold;
 			text-align: center;
-			box-shadow: $standard-box-shadow;
+			box-shadow: $box-shadow-standard;
 		}
 	}
 }

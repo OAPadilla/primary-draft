@@ -4,23 +4,23 @@
 		v-show="selectedStateId !== null"
 	>	
 		<div class="c-rebalancerTool_header">
-				<div class="c-rebalancerTool_stateName">
-					{{ selectedState.name }}
-				</div>
+			<div class="c-rebalancerTool_stateName">
+				{{ selectedState.name }} 
+			</div>
 
-				<div class="c-rebalancerTool_stateDetails">
-					{{ $t('numDelegates', { num: selectedState.totalDelegates }) }} • {{ selectedState.allocation }} • {{ selectedState.electionType }}
-				</div>
+			<div class="c-rebalancerTool_stateDetails">
+				{{ $t('numDelegates', { num: selectedState.totalDelegates }) }} • {{ selectedState.allocation }} • {{ selectedState.electionType }}
+			</div>
 
-				<div class="c-rebalancerTool_stateDetails" v-if="stateElectionRules">
-					{{ stateElectionRules }}
-				</div>
+			<div class="c-rebalancerTool_stateDetails" v-if="stateElectionRules">
+				{{ stateElectionRules }}
+			</div>
 
-				<ResetIcon 
-					class="c-rebalancerTool_resetBtn"
-					:class="{ '-rotate': resetActivated }"
-					@click="onResetClick"
-				/>
+			<ResetIcon 
+				class="c-rebalancerTool_resetBtn"
+				:class="{ '-rotate': resetActivated }"
+				@click="onResetClick"
+			/>
 		</div>
 
 		<RebalancerToolItem
@@ -138,16 +138,16 @@ function onResetClick(): void {
 @import '@/styles/main.scss';
 
 .c-rebalancerTool {
-	margin-bottom: $standard-spacing;
+	margin-bottom: $spacing-standard;
 
 	&_header {
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		font-family: $standard-font-family;
+		font-family: $font-family-standard;
 		font-size: 16px;
 		font-weight: bold;
-		border-bottom: $standard-border;
+		border-bottom: $border-standard;
 		padding-bottom: 5px;
 
 		div {
