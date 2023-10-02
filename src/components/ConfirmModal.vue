@@ -45,7 +45,7 @@ const emit = defineEmits<{
 const props = defineProps({
     acceptText: { type: String, default: 'Confirm' },
     cancelText: { type: String, default: 'Cancel' },
-    message: { type: String, default: 'Are you sur?' },
+    message: { type: String, default: 'Are you sure?' },
     show: { type: Boolean, default: false }
 });
 

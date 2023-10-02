@@ -26,6 +26,11 @@ const router = createRouter({
       name: "Rep",
       component: () => import("../views/HomeView.vue"),
       props: { partyId: 1 }
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: () => import("../views/NotFoundView.vue")
     }
   ],
 });
