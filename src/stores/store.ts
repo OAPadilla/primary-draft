@@ -33,9 +33,9 @@ export const useStore = defineStore(`store`, () => {
         id: 0,
         name: 'democratic',
         color: '#0a3161',
-        defaultCandidates: [ 'Joe Biden', 'Robert F. Kennedy', 'Marieanne W.' ],
+        defaultCandidates: [ 'Joe Biden', 'Marieanne W.', 'Dean Phillips' ],
         excludedStateIds: [],
-        totalDelegates: 3770
+        totalDelegates: 4541
       }
     ],
     [ 
@@ -44,9 +44,9 @@ export const useStore = defineStore(`store`, () => {
         id: 1,
         name: 'republican',
         color: '#b31942',
-        defaultCandidates: [ 'Donald J. Trump', 'Ron DeSantis', 'Vivek Ramaswamy', 'Nikki Haley' ],
+        defaultCandidates: [ 'Donald J. Trump', 'Ron DeSantis', 'Nikki Haley' , 'Vivek Ramaswamy'],
         excludedStateIds: [ 56 ],
-        totalDelegates: 2467
+        totalDelegates: 2470
       }
     ]
   ]);

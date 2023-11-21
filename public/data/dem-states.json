@@ -81,7 +81,7 @@
     "initials": "CA",
     "name": "california",
     "results": [],
-    "totalDelegates": 497
+    "totalDelegates": 496
   },
   {
     "id": 6,
@@ -109,7 +109,7 @@
     "initials": "CT",
     "name": "connecticut",
     "results": [],
-    "totalDelegates": 63
+    "totalDelegates": 74
   },
   {
     "id": 8,
@@ -627,7 +627,7 @@
     "initials": "SC",
     "name": "south carolina",
     "results": [],
-    "totalDelegates": 63
+    "totalDelegates": 65
   },
   {
     "id": 45,
@@ -753,7 +753,7 @@
     "initials": "WI",
     "name": "wisconsin",
     "results": [],
-    "totalDelegates": 87
+    "totalDelegates": 95
   },
   {
     "id": 54,
