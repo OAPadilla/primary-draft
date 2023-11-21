@@ -435,7 +435,7 @@
 			padding: 8px;
 			color: $color-black;
 			font-family: $font-family-standard;
-			font-size: 14px;
+			font-size: $font-size-s;
 			text-align: center;
 			text-transform: capitalize;
 			box-shadow: $box-shadow-standard;

@@ -36,10 +36,10 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 	max-width: $page-width-standard;
 	margin: auto;
 	border-top: $border-standard;
-	font-size: 12px;
+	font-size: $font-size-xs;
 
 	h4 {
-		font-size: 12px;
+		font-size: $font-size-xs;
 		font-weight: normal;
 		margin: 0;
 	}

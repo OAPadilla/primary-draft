@@ -85,7 +85,7 @@ const showMenu: Ref<boolean> = ref(false);
 
 	&_links {
 		display: flex;
-		font-size: 20px;
+		font-size: $font-size-l;
 
 		.router-link-active {
 			text-decoration: underline;
@@ -137,7 +137,7 @@ const showMenu: Ref<boolean> = ref(false);
 		background-color: $background-color-base;
 		border: $border-standard;
 		border-right: none;
-		font-size: 24px;
+		font-size: $font-size-xl;
 
 		a {
 			display: flex;

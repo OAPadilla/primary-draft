@@ -145,7 +145,7 @@ function onResetClick(): void {
 		display: flex;
 		flex-direction: column;
 		font-family: $font-family-standard;
-		font-size: 16px;
+		font-size: $font-size-m;
 		font-weight: bold;
 		border-bottom: $border-standard;
 		padding-bottom: 5px;
@@ -159,7 +159,7 @@ function onResetClick(): void {
 	&_stateDelegates, 
 	&_stateDetails {
 		font-weight: normal;
-		font-size: 12px;
+		font-size: $font-size-xs;
 		color: $color-dark-grey;
 	}
 

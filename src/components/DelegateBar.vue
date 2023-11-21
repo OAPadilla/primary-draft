@@ -325,7 +325,7 @@ onUnmounted(() => {
 			padding: 10px;
 			color: $color-black;
 			font-family: $font-family-standard;
-			font-size: 16px;
+			font-size: $font-size-m;
 			font-weight: bold;
 			text-align: center;
 			box-shadow: $box-shadow-standard;
