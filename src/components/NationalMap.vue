@@ -9,6 +9,7 @@
 	import { computed, onMounted, onUnmounted, watch, watchEffect, Ref } from 'vue';
 	import { useI18n } from 'vue-i18n';
 	import * as d3 from 'd3';
+	import type { DSVRowArray } from 'd3';
 	import { storeToRefs } from 'pinia';
 	import * as topojson from 'topojson-client';
 
@@ -19,6 +20,12 @@
 	interface IGeoState { 
 		id: number,
 		initials: string
+	}
+
+	interface IGeoStateNamesData {
+		code: string,
+		id: string,
+		name: string
 	}
 
 	const { t } = useI18n()
@@ -33,17 +40,17 @@
 	const tooltipWidth: number = 125;
 	const hiddenInitialsTextIds: number[] = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
 	const initialsTextOffsets: Record<number, Record<string, number>> = {
-		0: { y: -2 }, 				// AK
-		5: { y: 20 },					// CA
+		0: { y: -2 }, 			// AK
+		5: { y: 20 },			// CA
 		10: { x: 20, y: 15 },	// FL
 		13: { x: 17, y: 20 },	// HI
-		15: { y: 20 },				// ID
-		20: { x: -10 },				// LA
+		15: { y: 20 },			// ID
+		20: { x: -10 },			// LA
 		24: { x: 15, y: 30 },	// MI
-		33: { y: 11 },				// NH
+		33: { y: 11 },			// NH
 		51: { x: -1, y: 1 }		// VT
 	};
-	let geoStateNames: any = null;
+	let geoStateNames: DSVRowArray<keyof IGeoStateNamesData>|null = null;
 	let jsonData: any = null;
 
 	const selectedCandidateId: Ref<number> = computed(() => {
@@ -360,6 +367,10 @@
 		// Original source: https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv
 		geoStateNames = await d3.tsv('/data/us-state-names.tsv');
 
+		if (!jsonData || !geoStateNames) {
+			return;
+		}
+
 		createMap(jsonData, geoStateNames);
 
 		window.addEventListener('resize', () => {
@@ -389,7 +400,7 @@
 		}
 
 		svg {
-      width: 100%;
+      		width: 100%;
 			fill: $color-light-grey;
 		}
 
