@@ -82,7 +82,6 @@
 	 */
 	function getStateIdFromInitials(stateInitial: string): number|null {
 		const usState: IState|null = usStatesStore.getStateByInitial(stateInitial);
-		console.log(usState + ' ' + stateInitial);
 
 		if (usState?.id == null) {
 			return null;
@@ -369,6 +368,7 @@
 		geoStateNames = await d3.tsv('/data/us-state-names.tsv');
 
 		if (!geoJsonData || !geoStateNames) {
+			console.error('Failed to fetch geo data');
 			return;
 		}
 

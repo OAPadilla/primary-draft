@@ -189,6 +189,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateInitial 
    */
   function getStateByInitial(stateInitial: string): IState|null {
+    console.log('store', getUsStates.value)
     for (const usState of getUsStates.value) {
       if (usState.initials === stateInitial) {
         return usState;
