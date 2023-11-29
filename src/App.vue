@@ -18,18 +18,13 @@ import { useI18n } from 'vue-i18n';
 import NavBar from "./components/NavBar.vue";
 import Footer from "./components/Footer.vue";
 
-import { useUsStatesStore } from './stores/usStates';
-
 const { t } = useI18n();
-const { fetchStatesData } = useUsStatesStore();
 
 const metaCanonical: string = t('canonicalUrl');
 const metaDescription: string = t('meta.description');
 const metaImage: string = t('meta.image');
 const metaSiteName: string = t('siteName');
 const metaTitle: string = t('meta.title');
-
-fetchStatesData();
 
 useMeta({
   description: metaDescription,

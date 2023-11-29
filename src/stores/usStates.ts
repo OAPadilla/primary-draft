@@ -514,8 +514,9 @@ export const useUsStatesStore = defineStore('usStates', () => {
     }
   }
 
+  fetchStatesData();
+
   return {
-    fetchStatesData,
     getStateById,
     getCandidateDelegates,
     getCandidatePercentage,
