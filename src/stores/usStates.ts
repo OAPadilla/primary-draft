@@ -489,6 +489,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Fetch US state data
    */
   async function fetchStatesData() {
+    console.log('fetch')
     try {
       const usStatesDemJSON = await fetch('/data/dem-states.json');
       const usStatesGopJSON = await fetch('/data/gop-states.json');
@@ -514,9 +515,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
     }
   }
 
-  fetchStatesData();
-
   return {
+    fetchStatesData,
     getStateById,
     getCandidateDelegates,
     getCandidatePercentage,
