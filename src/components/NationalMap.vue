@@ -36,7 +36,7 @@
 	const { selectedPartyId } = storeToRefs(mainStore);
 
 	const mapClass: string = 'c-nationalMap_map';
-	const usMapJSON: string = 'https://d3js.org/us-10m.v1.json';
+	const usGeoJSON: string = 'https://d3js.org/us-10m.v1.json';
 	const tooltipWidth: number = 125;
 	const hiddenInitialsTextIds: number[] = [7, 8, 9, 21, 22, 34, 43]; // Remove CT, DC, DE, MA, MD, NJ, RI
 	const initialsTextOffsets: Record<number, Record<string, number>> = {
@@ -51,7 +51,7 @@
 		51: { x: -1, y: 1 }		// VT
 	};
 	let geoStateNames: DSVRowArray<keyof IGeoStateNamesData>|null = null;
-	let jsonData: any = null;
+	let geoJsonData: any = null;
 
 	const selectedCandidateId: Ref<number> = computed(() => {
 		return mainStore.getSelectedCandidateId;
@@ -82,6 +82,7 @@
 	 */
 	function getStateIdFromInitials(stateInitial: string): number|null {
 		const usState: IState|null = usStatesStore.getStateByInitial(stateInitial);
+		console.log(usState + ' ' + stateInitial);
 
 		if (usState?.id == null) {
 			return null;
@@ -95,10 +96,10 @@
 	 * 
 	 * @param geoStateTSV 
 	 */
-	function getGeoStateData(geoStateTSV: any): Record<string, IGeoState> {
+	function getGeoStateData(geoStateTSV: DSVRowArray<keyof IGeoStateNamesData>): Record<string, IGeoState> {
 		const geoStates: Record<string, IGeoState> = {};
 
-		geoStateTSV.forEach((state: Record<string, string>) => {
+		(geoStateTSV as IGeoStateNamesData[]).forEach((state: IGeoStateNamesData) => {
 			let key: string = state?.id;
 
 			if (key) {
@@ -248,10 +249,10 @@
 	/**
 	 * Create map using D3 and TopoJSON
 	 * 
-	 * @param jsonData 
+	 * @param geoJsonData 
 	 * @param geoStateNames
 	 */
- 	function createMap(jsonData: any, geoStateNames: any): void {
+ 	function createMap(geoJsonData: any, geoStateNames: DSVRowArray<keyof IGeoStateNamesData>): void {
 		const componentSelector: string = '.' + mapClass;
 		
 		// Remove SVG elements for resets
@@ -266,7 +267,7 @@
 		const path: any = d3.geoPath();
 
 		// @ts-ignore: Property 'features' does not exist on type 'Feature<Point, GeoJsonProperties>'
-		const stateGeoFeatures: any = topojson.feature(jsonData, jsonData?.objects?.states).features;
+		const stateGeoFeatures: any = topojson.feature(geoJsonData, geoJsonData?.objects?.states).features;
 		
 		// Strip required TSV state data with our state id
 		const geoStates: Record<string, IGeoState> = getGeoStateData(geoStateNames);
@@ -329,7 +330,7 @@
 		// Borders
 		svg.append('path')
 			.attr('class', 'state-borders')
-			.attr('d', path(topojson.mesh(jsonData, jsonData?.objects?.states, (a, b) => {
+			.attr('d', path(topojson.mesh(geoJsonData, geoJsonData?.objects?.states, (a, b) => {
 				return  a !== b;
 			})));
 
@@ -363,24 +364,24 @@
 	}
 
 	onMounted(async () => {
-		jsonData = await d3.json(usMapJSON);
+		geoJsonData = await d3.json(usGeoJSON);
 		// Original source: https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv
 		geoStateNames = await d3.tsv('/data/us-state-names.tsv');
 
-		if (!jsonData || !geoStateNames) {
+		if (!geoJsonData || !geoStateNames) {
 			return;
 		}
 
-		createMap(jsonData, geoStateNames);
+		createMap(geoJsonData, geoStateNames);
 
 		window.addEventListener('resize', () => {
-			createMap(jsonData, geoStateNames);
+			geoJsonData && geoStateNames && createMap(geoJsonData, geoStateNames);
 		});
 	});
 
 	onUnmounted(() => {
 		window.removeEventListener('resize', () => {
-			createMap(jsonData, geoStateNames);
+			geoJsonData && geoStateNames && createMap(geoJsonData, geoStateNames);
 		});
 	});
 </script>
