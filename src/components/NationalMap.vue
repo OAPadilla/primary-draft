@@ -74,6 +74,11 @@
 		hideExcludedStates();
 	});
 
+	watch(usStatesStore.getUsStates, () => {
+		// Re-create map if structure of us states data changes
+		geoJsonData && geoStateNames && createMap(geoJsonData, geoStateNames);
+	});
+
 	/**
 	 * Get the store state id from provided state initials. 
 	 * TSV uses different state IDs, instead we can utilize state initials to help create unison data.
@@ -252,6 +257,7 @@
 	 * @param geoStateNames
 	 */
  	function createMap(geoJsonData: any, geoStateNames: DSVRowArray<keyof IGeoStateNamesData>): void {
+		console.log('create map')
 		const componentSelector: string = '.' + mapClass;
 		
 		// Remove SVG elements for resets

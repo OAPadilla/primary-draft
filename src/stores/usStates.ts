@@ -98,6 +98,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Get US states data for the selected party
    */
   const getUsStates: Ref<IState[]> = computed(() => {
+    console.log('usStates updated')
     return usStates.value.get(selectedPartyId.value) || [];
   });
 
@@ -189,7 +190,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * @param stateInitial 
    */
   function getStateByInitial(stateInitial: string): IState|null {
-    console.log('store', getUsStates.value)
     for (const usState of getUsStates.value) {
       if (usState.initials === stateInitial) {
         return usState;
