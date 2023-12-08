@@ -51,6 +51,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
   // State (data)
 
+  const usStatesLoaded: Ref<boolean> = ref(false);
+
   let usStates: Ref<Map<number, IState[]>> = ref(new Map([
     [
       0,
@@ -98,7 +100,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Get US states data for the selected party
    */
   const getUsStates: Ref<IState[]> = computed(() => {
-    console.log('usStates updated')
+    console.log('usStates updated', usStates.value.get(selectedPartyId.value))
     return usStates.value.get(selectedPartyId.value) || [];
   });
 
@@ -489,7 +491,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Fetch US state data
    */
   async function fetchStatesData() {
-    console.log('fetch')
+    console.log('fetch', usStatesLoaded.value)
     try {
       const usStatesDemJSON = await fetch('/data/dem-states.json');
       const usStatesGopJSON = await fetch('/data/gop-states.json');
@@ -517,6 +519,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
       usStates.value.set(1, usStatesGop);
 
       console.log('usStates', usStates.value);
+      usStatesLoaded.value = true;
     } catch (error) {
       console.log(error);
     }
@@ -539,6 +542,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
     resetAllResultsForCandidate,
     resetStateResults,
     updateCandidateDelegates,
-    updateCandidatePercentage
+    updateCandidatePercentage,
+    usStatesLoaded
   }
 });

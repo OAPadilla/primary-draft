@@ -34,6 +34,7 @@
 	const usStatesStore = useUsStatesStore();
 
 	const { selectedPartyId } = storeToRefs(mainStore);
+	const { usStatesLoaded } = storeToRefs(usStatesStore);
 
 	const mapClass: string = 'c-nationalMap_map';
 	const usGeoJSON: string = 'https://d3js.org/us-10m.v1.json';
@@ -74,9 +75,9 @@
 		hideExcludedStates();
 	});
 
-	watch(usStatesStore.getUsStates, () => {
-		// Re-create map if structure of us states data changes
-		geoJsonData && geoStateNames && createMap(geoJsonData, geoStateNames);
+	watch(usStatesLoaded, () => {
+		console.log('usStatesLoaded', geoJsonData)
+		createMap(geoJsonData, geoStateNames);
 	});
 
 	/**
@@ -256,8 +257,12 @@
 	 * @param geoJsonData 
 	 * @param geoStateNames
 	 */
- 	function createMap(geoJsonData: any, geoStateNames: DSVRowArray<keyof IGeoStateNamesData>): void {
+ 	function createMap(geoJsonData: any, geoStateNames: DSVRowArray<keyof IGeoStateNamesData>|null): void {
 		console.log('create map')
+		if (!geoJsonData || !geoStateNames) {
+			return;
+		}
+	
 		const componentSelector: string = '.' + mapClass;
 		
 		// Remove SVG elements for resets
@@ -365,8 +370,8 @@
 		for (const usState of usStatesStore.getUsStates) {
 			d3.selectAll(`.state-${usState.id}`)
 				.style('fill', usState.color);
+		}
     }
-	}
 
 	onMounted(async () => {
 		geoJsonData = await d3.json(usGeoJSON);
@@ -381,13 +386,13 @@
 		createMap(geoJsonData, geoStateNames);
 
 		window.addEventListener('resize', () => {
-			geoJsonData && geoStateNames && createMap(geoJsonData, geoStateNames);
+			createMap(geoJsonData, geoStateNames);
 		});
 	});
 
 	onUnmounted(() => {
 		window.removeEventListener('resize', () => {
-			geoJsonData && geoStateNames && createMap(geoJsonData, geoStateNames);
+			createMap(geoJsonData, geoStateNames);
 		});
 	});
 </script>
