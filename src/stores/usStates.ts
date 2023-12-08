@@ -493,8 +493,13 @@ export const useUsStatesStore = defineStore('usStates', () => {
     try {
       const usStatesDemJSON = await fetch('/data/dem-states.json');
       const usStatesGopJSON = await fetch('/data/gop-states.json');
+
+      console.log('usStatesGopJSON', usStatesGopJSON);
+    
       const usStatesDem = await usStatesDemJSON.json();
       const usStatesGop = await usStatesGopJSON.json();
+
+      console.log('usStatesGop', usStatesGop);
       
       for (const usState of usStatesDem) {
         usStatesDem[usState.id].results = _defaultResults();
@@ -510,6 +515,8 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
       usStates.value.set(0, usStatesDem);
       usStates.value.set(1, usStatesGop);
+
+      console.log('usStates', usStates.value);
     } catch (error) {
       console.log(error);
     }
