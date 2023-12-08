@@ -51,9 +51,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
 
   // State (data)
 
-  const usStatesLoaded: Ref<boolean> = ref(false);
-
-  let usStates: Ref<Map<number, IState[]>> = ref(new Map([
+  const usStates: Ref<Map<number, IState[]>> = ref(new Map([
     [
       0,
       [
@@ -93,6 +91,7 @@ export const useUsStatesStore = defineStore('usStates', () => {
       ]
     ]
   ]));
+  const usStatesLoaded: Ref<boolean> = ref(false);
 
   // Getters (computed values)
 
@@ -100,7 +99,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Get US states data for the selected party
    */
   const getUsStates: Ref<IState[]> = computed(() => {
-    console.log('usStates updated', usStates.value.get(selectedPartyId.value))
     return usStates.value.get(selectedPartyId.value) || [];
   });
 
@@ -491,17 +489,12 @@ export const useUsStatesStore = defineStore('usStates', () => {
    * Fetch US state data
    */
   async function fetchStatesData() {
-    console.log('fetch', usStatesLoaded.value)
     try {
       const usStatesDemJSON = await fetch('/data/dem-states.json');
       const usStatesGopJSON = await fetch('/data/gop-states.json');
-
-      console.log('usStatesGopJSON', usStatesGopJSON);
     
       const usStatesDem = await usStatesDemJSON.json();
       const usStatesGop = await usStatesGopJSON.json();
-
-      console.log('usStatesGop', usStatesGop);
       
       for (const usState of usStatesDem) {
         usStatesDem[usState.id].results = _defaultResults();
@@ -518,7 +511,6 @@ export const useUsStatesStore = defineStore('usStates', () => {
       usStates.value.set(0, usStatesDem);
       usStates.value.set(1, usStatesGop);
 
-      console.log('usStates', usStates.value);
       usStatesLoaded.value = true;
     } catch (error) {
       console.log(error);

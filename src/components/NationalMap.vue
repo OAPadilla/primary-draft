@@ -76,7 +76,7 @@
 	});
 
 	watch(usStatesLoaded, () => {
-		console.log('usStatesLoaded', geoJsonData)
+		// Create map when new data loaded
 		createMap(geoJsonData, geoStateNames);
 	});
 
@@ -258,7 +258,6 @@
 	 * @param geoStateNames
 	 */
  	function createMap(geoJsonData: any, geoStateNames: DSVRowArray<keyof IGeoStateNamesData>|null): void {
-		console.log('create map')
 		if (!geoJsonData || !geoStateNames) {
 			return;
 		}
