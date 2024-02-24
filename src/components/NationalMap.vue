@@ -448,19 +448,7 @@
 		visibility: hidden;
 
 		.tooltip {
-			z-index: 999;
-			position: absolute;
-			background-color: $background-color-base;
-			width: 125px;
-			margin: 5px;
-			border-radius: 25px;
-			padding: 8px;
-			color: $color-black;
-			font-family: $font-family-standard;
-			font-size: $font-size-s;
-			text-align: center;
-			text-transform: capitalize;
-			box-shadow: $box-shadow-standard;
+			@include tooltip(125px);
 		}
 
 		&_name {

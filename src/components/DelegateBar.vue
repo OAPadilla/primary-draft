@@ -127,9 +127,15 @@ function onMousemove(event: any, d: ICandidateBarChart, tooltip: any): void {
 
 	const switchPoint = currentWidth - tooltipWidth - 20;
 	const left = Math.min(d3.pointer(event)[0] - 20, switchPoint);
-	tooltip.html(`<div>${d.name}</div><div>${d.percent}%</div><div>${d.delegates} delegates</div>`)
-		.style("left", `${left}px`)
-		.style("top", `${d3.pointer(event)[1] - 20}px`);
+
+	tooltip.html(`
+		<div class="c-delegateBar_tooltip_name">${d.name}</div>
+		<div class="c-delegateBar_tooltip_percent">${d.percent}%</div>
+		<div class="c-delegateBar_tooltip_del">${d.delegates} total delegates</div>
+	`)
+	.style("left", `${left}px`)
+	.style("top", `${d3.pointer(event)[1] - 20}px`)
+	.style('border', `3px solid ${d.color}`);
 }
 
 /**
@@ -201,17 +207,15 @@ function createBar(data: ICandidate[]): void {
 	// Create tooltip
 	const tooltip = d3.select('.c-delegateBar_tooltip')
 		.append('div')
-		.style('visibility', 'hidden')
-    .attr("class", "tooltip");
+    	.attr("class", "tooltip");
 
 	const mouseover = (event: any, d: ICandidateBarChart): void => {
 		// Update tooltip
-		tooltip.style('visibility', 'visible')
-			.style('background-color', d.color);
+		tooltip.style('visibility', 'visible');
 	
 		// Update rect
-    d3.select(event.target)
-      .style("opacity", 0.8);
+		d3.select(event.target)
+			.style("opacity", 0.8);
 	}
 
 	const mouseleave = (event: any): void => {
@@ -219,8 +223,8 @@ function createBar(data: ICandidate[]): void {
 		tooltip.style('visibility', 'hidden');
 
 		// Update rect
-    d3.select(event.target)
-      .style("opacity", 1);
+		d3.select(event.target)
+			.style("opacity", 1);
 	}
 
 	// Add rects
@@ -231,7 +235,7 @@ function createBar(data: ICandidate[]): void {
 		.attr('width', (d: ICandidateBarChart) => xScale(d.delegates))
 		.style('fill', (d: ICandidateBarChart) => d.color)
 		.on('mouseover', mouseover)
-    .on('mouseleave', mouseleave)
+    	.on('mouseleave', mouseleave)
 		.on('mousemove', (event: any, d: any) => onMousemove(event, d, tooltip));
 
 	// Create majority marker
@@ -314,21 +318,21 @@ onUnmounted(() => {
 	}
 
 	&_tooltip {
+		--tooltip-width: 160px;
+
 		position: absolute;
+		visibility: hidden;
 
 		.tooltip {
-			z-index: 999;
-			position: absolute;
-			width: 200px;
-			margin: 5px;
-			border-radius: 25px;
-			padding: 10px;
-			color: $color-black;
-			font-family: $font-family-standard;
-			font-size: $font-size-m;
+			@include tooltip(var(--tooltip-width));
+		}
+
+		&_name {
 			font-weight: bold;
-			text-align: center;
-			box-shadow: $box-shadow-standard;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: var(--tooltip-width);
 		}
 	}
 }

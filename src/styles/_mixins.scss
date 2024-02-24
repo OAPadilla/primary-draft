@@ -1,5 +1,21 @@
 // _mixins.scss
 
+@mixin tooltip($width) {
+  z-index: 999;
+  position: absolute;
+  background-color: $background-color-base;
+  width: $width;
+  margin: 5px;
+  border-radius: 25px;
+  padding: 8px;
+  color: $color-black;
+  font-family: $font-family-standard;
+  font-size: $font-size-s;
+  text-align: center;
+  text-transform: capitalize;
+  box-shadow: $box-shadow-standard;
+}
+
 @mixin pop-in($scaleStart) {
   @keyframes popIn {
     0% {
