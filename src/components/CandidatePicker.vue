@@ -38,6 +38,7 @@
 			<div
 				class="c-candidatePicker_buttonWrapper"
 				:class="{ selected: selectedCandidateId === noneChoiceId }"
+				aria-label="None"
 				@click="onChoiceClick(noneChoiceId)"
 			>
 				<div class="c-candidatePicker_noneBtn c-candidatePickerButton">{{ $t('none') }}</div>
@@ -45,7 +46,8 @@
 
 			<!-- Edit button: To change candidate names -->
 			<div 
-				class="c-candidatePicker_edit" 
+				class="c-candidatePicker_edit"
+				aria-label="Edit candidates"
 				@click="isEditMode = !isEditMode"
 			>
 				<div class="c-candidatePicker_editBtn c-candidatePickerButton"><EditIcon /></div>
@@ -183,6 +185,10 @@ onBeforeUpdate(() => {
 			.c-candidatePicker_candidateBtn,
 			.c-candidatePicker_noneBtn {
 				border-color: $color-dark-grey;
+
+				@media (min-width: $screen-breakpoint-xs) {
+					font-weight: bold;
+				}
 			}
 		}
 	}
@@ -197,9 +203,8 @@ onBeforeUpdate(() => {
 		cursor: pointer;
 		padding: 8px 0;
 		text-align: center;
-		color: $background-color-base;
-		background-color: $color-light-grey;
-		font-weight: bold;
+		color: $color-black;
+		background-color: $color-very-light-grey;
 		width: 100%;
 		border-radius: 25px;
 	}

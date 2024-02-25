@@ -45,6 +45,10 @@
       }
     }
   },
+  "ariaLabel": {
+    "rebalancerAllocated": "Slider to set allocated delegates for a candidate in the selected state",
+    "rebalancerUnallocated": "Slider displaying unallocated delegates for the selected state"
+  },
   "cancel": "Cancel",
   "canonicalUrl": "https://www.primarydraft.com",
   "comingSoon": "Coming Soon...",

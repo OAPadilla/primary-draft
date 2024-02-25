@@ -57,10 +57,6 @@ import LogoIcon from '../assets/logo/logo.svg?component';
 		font-weight: bold;
 	}
 
-	&_contactEmail {
-		color: grey;
-	}
-
 	&_logo {
 		margin: auto;
 		width: 90px;

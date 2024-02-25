@@ -160,7 +160,6 @@ function onResetClick(): void {
 	&_stateDetails {
 		font-weight: normal;
 		font-size: $font-size-xs;
-		color: $color-dark-grey;
 	}
 
 	&_unallocated {

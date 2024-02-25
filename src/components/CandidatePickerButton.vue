@@ -5,8 +5,9 @@
         :class="{ isEditMode, 'selected': isSelected }"
     >
         <input
-            type="text" 
-            v-model.trim="candidates[candidateId].name" 
+            type="text"
+            v-model.trim="candidates[candidateId].name"
+            aria-label="Candidate"
             :placeholder="placeholder"
             :readonly="!isEditMode"
             :style="{ 'background-color': candidateColor }" 
@@ -17,6 +18,7 @@
             v-show="isEditMode"
             class="c-candidatePickerButton_delete"
             :class="{ 'c-candidatePickerButton_delete-hover': isHover }"
+            aria-label="Delete candidate"
             @click="deleteCandidate"
             @mouseover="isHover = true"
             @mouseleave="isHover = false"

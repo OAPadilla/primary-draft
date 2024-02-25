@@ -7,9 +7,24 @@
 			</RouterLink>
 
 			<nav class="c-navBar_links">
-				<RouterLink :to="{ name: 'Rep' }">{{ $t('partyNames.republican.abbr') }}</RouterLink>
-				<RouterLink :to="{ name: 'Dem' }">{{ $t('partyNames.democratic.abbr') }}</RouterLink>
-				<RouterLink :to="{ name: 'About' }"><InfoIcon /></RouterLink>
+				<RouterLink
+					:to="{ name: 'Rep' }"
+					:aria-label="$t('partyNames.republican.full')"
+				>
+					{{ $t('partyNames.republican.abbr') }}
+				</RouterLink>
+				<RouterLink
+					:to="{ name: 'Dem' }"
+					:aria-label="$t('partyNames.democratic.full')"
+				>
+					{{ $t('partyNames.democratic.abbr') }}
+				</RouterLink>
+				<RouterLink
+					:to="{ name: 'About' }"
+					:aria-label="$t('about')"
+				>
+					<InfoIcon />
+				</RouterLink>
 			</nav>
 
 			<nav class="c-navBar_burger"><MenuIcon @click="showMenu = !showMenu"/></nav>
@@ -18,13 +33,25 @@
 					v-show="showMenu"
 					class="c-navBar_burgerLinks"
 				>
-					<RouterLink :to="{ name: 'Rep' }" @click="showMenu = false">
+					<RouterLink
+						:to="{ name: 'Rep' }"
+						:aria-label="$t('partyNames.republican.full')"
+						@click="showMenu = false"
+					>
 						<RepIcon class="c-navBar_burgerLinks_icon"/>{{ $t('partyNames.republican.full') }}
 					</RouterLink>
-					<RouterLink :to="{ name: 'Dem' }" @click="showMenu = false">
+					<RouterLink
+						:to="{ name: 'Dem' }"
+						:aria-label="$t('partyNames.democratic.full')"
+						@click="showMenu = false"
+					>
 						<DemIcon class="c-navBar_burgerLinks_icon"/>{{ $t('partyNames.democratic.full') }}
 					</RouterLink>
-					<RouterLink :to="{ name: 'About' }" @click="showMenu = false">
+					<RouterLink
+						:to="{ name: 'About' }"
+						:aria-label="$t('aboutPageTitle')"
+						@click="showMenu = false"
+					>
 						<InfoIcon class="c-navBar_burgerLinks_infoIcon"/>{{ $t('about') }}
 					</RouterLink>
 				</nav>

@@ -4,9 +4,9 @@
   </metainfo>
 
   <NavBar />
-  <div class="content">
+  <main class="content">
     <RouterView />
-  </div>
+  </main>
   <Footer />
 </template>
 
@@ -22,7 +22,7 @@ import { useUsStatesStore } from './stores/usStates';
 
 const { t } = useI18n();
 const { fetchStatesData } = useUsStatesStore();
-
+ 
 const metaCanonical: string = t('canonicalUrl');
 const metaDescription: string = t('meta.description');
 const metaImage: string = t('meta.image');
@@ -50,11 +50,11 @@ useMeta({
     { property: 'og:image', content: metaImage },
     { property: 'og:description', content: metaDescription },
     // Twitter card
-    { name: 'twitter:card', content: 'summary' },
-    { name: 'twitter:site', content: metaSiteName },
-    { name: 'twitter:title', content: metaTitle },
-    { name: 'twitter:description', content: metaDescription },
-    { name: 'twitter:image:src', content: metaImage },
+    { name: 'twitter:card', Name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:site', Name: 'twitter:site', content: metaSiteName },
+    { name: 'twitter:title', Name: 'twitter:title', content: metaTitle },
+    { name: 'twitter:description', Name: 'twitter:description', content: metaDescription },
+    { name: 'twitter:image', Name: 'twitter:image', content: metaImage },
     // Google / Schema.org markup
     { itemprop: 'name', content: metaTitle },
     { itemprop: 'description', content: metaDescription },

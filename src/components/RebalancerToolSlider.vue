@@ -22,6 +22,7 @@
       type="range"
       v-model="sliderValue"
       :class="{ 'isZero': isUnallocatedItem && sliderValue <= 0 }"
+      :aria-label="sliderAriaLabel"
       :disabled="isUnallocatedItem || candidateId === null"
       min="0" 
       max="100"
@@ -37,11 +38,13 @@
 
 <script setup lang="ts">
 import { computed, ref, watchEffect, Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import RibbonIcon from '../assets/icons/ribbon-star.svg?component';
 import { useCandidatesStore } from '../stores/candidates';
 import { useUsStatesStore } from '../stores/usStates';
 
+const { t } = useI18n();
 const candidatesStore = useCandidatesStore();
 const usStatesStore = useUsStatesStore();
 
@@ -86,6 +89,14 @@ const formattedPercentage: Ref<string> = computed(() => {
 
 const maxSliderValue: Ref<number> = computed(() => {
   return props.initialValue + usStatesStore.getStateUnallocatedPercentage(props.stateId);
+});
+
+const sliderAriaLabel: Ref<string> = computed(() => {
+  if (props.isUnallocatedItem) {
+    return t('ariaLabel.rebalancerUnallocated');
+  }
+
+  return t('ariaLabel.rebalancerAllocated');
 });
 
 function onInput(): void {
@@ -189,7 +200,8 @@ function onInput(): void {
     border: none;
 		left: -4px;
     top: 12px;
-    color: $color-light-grey;
+    color: $color-dark-grey;
+    font-weight: normal;
   }
 
   &_unallocated &_wtaLine {
