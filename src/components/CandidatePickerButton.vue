@@ -19,6 +19,7 @@
             class="c-candidatePickerButton_delete"
             :class="{ 'c-candidatePickerButton_delete-hover': isHover }"
             aria-label="Delete candidate"
+            role="button"
             @click="deleteCandidate"
             @mouseover="isHover = true"
             @mouseleave="isHover = false"

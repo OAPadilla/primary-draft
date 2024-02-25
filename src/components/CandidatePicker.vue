@@ -9,7 +9,7 @@
 			v-for="candidate in candidatePickerButtons"
 			class="c-candidatePicker_buttonWrapper"
 			:class="{ selected: selectedCandidateId === candidate.id }"
-			:key="candidate.id" 
+			:key="candidate.id"
 			@click="onChoiceClick(candidate.id)"
 		>
 			<CandidatePickerButton
@@ -39,6 +39,7 @@
 				class="c-candidatePicker_buttonWrapper"
 				:class="{ selected: selectedCandidateId === noneChoiceId }"
 				aria-label="None"
+				role="button"
 				@click="onChoiceClick(noneChoiceId)"
 			>
 				<div class="c-candidatePicker_noneBtn c-candidatePickerButton">{{ $t('none') }}</div>
@@ -48,6 +49,7 @@
 			<div 
 				class="c-candidatePicker_edit"
 				aria-label="Edit candidates"
+				role="button"
 				@click="isEditMode = !isEditMode"
 			>
 				<div class="c-candidatePicker_editBtn c-candidatePickerButton"><EditIcon /></div>

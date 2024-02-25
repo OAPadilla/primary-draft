@@ -83,6 +83,7 @@
     }
   },
   "reset": "Reset",
+  "share": "Share",
   "siteName": "Primary Draft",
   "unallocated": "Unallocated",
   "wtaTrigger": "Winner-Take-All Trigger"
