@@ -16,7 +16,10 @@
         <div
             v-show="isEditMode"
             class="c-candidatePickerButton_delete"
+            :class="{ 'c-candidatePickerButton_delete-hover': isHover }"
             @click="deleteCandidate"
+            @mouseover="isHover = true"
+            @mouseleave="isHover = false"
         >
             <XCircleIcon />
         </div>
@@ -24,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 
 import XCircleIcon from '../assets/icons/x-circle.svg?component';
 
@@ -41,6 +44,8 @@ const props = defineProps({
     isEditMode: { type: Boolean, default: false },
     isSelected: { type: Boolean, default: false }
 });
+
+const isHover: Ref<boolean> = ref(false);
 
 const candidates: Ref<ICandidate[]> = computed(() => {
     return candidatesStore.getCandidates;
@@ -78,6 +83,10 @@ function deleteCandidate(): void {
             width: 23px;
             height: 23px;
             fill: $background-color-base;
+        }
+
+        &-hover {
+            scale: 1.1;
         }
     }
 
