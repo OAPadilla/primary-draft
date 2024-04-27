@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'vue-meta';
 import { RouterView } from "vue-router";
+import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n';
 
 import NavBar from "./components/NavBar.vue";
@@ -31,15 +31,14 @@ const metaTitle: string = t('meta.title');
 
 fetchStatesData();
 
-useMeta({
-  description: metaDescription,
+useHead({
   title: metaTitle,
-  htmlAttrs: { lang: 'en', amp: true },
+  htmlAttrs: { lang: 'en' },
   link: [
     { rel: 'canonical', href: metaCanonical }
   ],
   meta: [
-    { name: 'robots', Name: 'robots', content: 'index,follow' },
+    { name: 'robots', content: 'index,follow' },
     // CSP
     { 'http-equiv': 'Content-Security-Policy', content: "default-src 'none'; script-src 'self' 'unsafe-eval' https://d3js.org; connect-src 'self' https://d3js.org https://gist.githubusercontent.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://d3js.org; base-uri 'self'; form-action 'self'; manifest-src 'self'" },
     // OpenGraph data
@@ -50,15 +49,15 @@ useMeta({
     { property: 'og:image', content: metaImage },
     { property: 'og:description', content: metaDescription },
     // Twitter card
-    { name: 'twitter:card', Name: 'twitter:card', content: 'summary' },
-    { name: 'twitter:site', Name: 'twitter:site', content: metaSiteName },
-    { name: 'twitter:title', Name: 'twitter:title', content: metaTitle },
-    { name: 'twitter:description', Name: 'twitter:description', content: metaDescription },
-    { name: 'twitter:image', Name: 'twitter:image', content: metaImage },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:site', content: metaSiteName },
+    { name: 'twitter:title', content: metaTitle },
+    { name: 'twitter:description', content: metaDescription },
+    { name: 'twitter:image', content: metaImage },
     // Google / Schema.org markup
-    { itemprop: 'name', content: metaTitle },
-    { itemprop: 'description', content: metaDescription },
-    { itemprop: 'image', content: metaImage }
+    { property: 'name', content: metaTitle },
+    { property: 'description', content: metaDescription },
+    { property: 'image', content: metaImage }
   ]
 });
 </script>

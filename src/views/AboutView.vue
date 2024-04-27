@@ -73,10 +73,10 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'vue-meta';
+import { useSeoMeta } from '@unhead/vue'
 import FlagIcon from '../assets/icons/flag.svg?component';
 
-useMeta({
+useSeoMeta({
   title: 'About'
 });
 

@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'vue-meta';
+import { useHead } from '@unhead/vue'
 
-useMeta({ 
+useHead({ 
 	meta: [
-		{ name: 'robots', Name: 'robots', content: 'noindex' }
+		{ name: 'robots', content: 'noindex' }
 	]
 });
 </script>
