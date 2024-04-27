@@ -32,7 +32,7 @@
 
 			<!-- Copyright -->
 			<div class="c-footer_copyright">
-				<div>{{ $t('footer.copyright') }}</div>
+				<div>{{ $t('footer.copyright', { 'year': new Date().getFullYear() }) }}</div>
 			</div>
 		</div>
 	</footer>

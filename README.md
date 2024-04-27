@@ -74,4 +74,4 @@ Oscar Padilla - [LinkedIn](https://www.linkedin.com/in/oapadilla/) - PadillaOsca
 <!-- COPYRIGHT -->
 ## Copyright
 
-Copyright © 2023, Oscar Padilla
+Copyright © 2024, Oscar Padilla

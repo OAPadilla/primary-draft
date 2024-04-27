@@ -60,7 +60,7 @@
   "footer": {
     "contact": "Contact",
     "contactEmail": "info{'@'}PrimaryDraft.com",
-    "copyright": "{'©'} 2023 Oscar Padilla"
+    "copyright": "{'©'} {year} Oscar Padilla"
   },
   "mapPage": {
     "title": "{partyName} Party Presidential Primary"
