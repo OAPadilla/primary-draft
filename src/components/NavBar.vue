@@ -49,7 +49,7 @@
 					</RouterLink>
 					<RouterLink
 						:to="{ name: 'About' }"
-						:aria-label="$t('aboutPageTitle')"
+						:aria-label="$t('about')"
 						@click="showMenu = false"
 					>
 						<InfoIcon class="c-navBar_burgerLinks_infoIcon"/>{{ $t('about') }}
