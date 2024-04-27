@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import { createHead } from '@unhead/vue'
 import { createI18n } from "vue-i18n";
-import { createMetaManager } from 'vue-meta';
 import { createPinia } from 'pinia';
 
 import App from './App.vue';
@@ -17,14 +16,12 @@ const i18n = createI18n({
     legacy: false,
     messages: { en }
 });
-const meta = createMetaManager();
 const pinia = createPinia()
 const app = createApp(App);
 
 app.use(head);
 app.use(i18n);
 app.use(router);
-app.use(meta);
 app.use(pinia);
 
 app.mount('#app');
