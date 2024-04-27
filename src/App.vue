@@ -41,6 +41,10 @@ useHead({
     { name: 'robots', content: 'index,follow' },
     // CSP
     { 'http-equiv': 'Content-Security-Policy', content: "default-src 'none'; script-src 'self' 'unsafe-eval' https://d3js.org; connect-src 'self' https://d3js.org https://gist.githubusercontent.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://d3js.org; base-uri 'self'; form-action 'self'; manifest-src 'self'" },
+    // Google / Structured Data
+    { name: 'title', content: metaTitle },
+    { name: 'description', content: metaDescription },
+    { name: 'image', content: metaImage },
     // OpenGraph data
     { property: 'og:title', content: metaTitle },
     { property: 'og:site_name', content: metaSiteName },
@@ -49,15 +53,11 @@ useHead({
     { property: 'og:image', content: metaImage },
     { property: 'og:description', content: metaDescription },
     // Twitter card
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:site', content: metaSiteName },
-    { name: 'twitter:title', content: metaTitle },
-    { name: 'twitter:description', content: metaDescription },
-    { name: 'twitter:image', content: metaImage },
-    // Google / Schema.org markup
-    { property: 'name', content: metaTitle },
-    { property: 'description', content: metaDescription },
-    { property: 'image', content: metaImage }
+    { property: 'twitter:card', content: 'summary_large_image' },
+    { property: 'twitter:url', content: metaCanonical },
+    { property: 'twitter:title', content: metaTitle },
+    { property: 'twitter:description', content: metaDescription },
+    { property: 'twitter:image', content: metaImage },
   ]
 });
 </script>

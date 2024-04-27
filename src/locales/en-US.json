@@ -66,9 +66,9 @@
     "title": "{partyName} Party Presidential Primary"
   },
   "meta": {
-    "description": "Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!",
+    "description": "Primary Draft is an interactive tool for simulating U.S. primary elections. Experiment with state results, allocate delegates, and experience democracy on a map.",
     "image": "https://www.primarydraft.com/primary-draft-logo.png",
-    "title": "Interactive Primary Election Map"
+    "title": "Primary Draft — Interactive Primary Election Map"
   },
   "minThreshold": "Minimum Threshold",
   "none": "None",
