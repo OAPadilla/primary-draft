@@ -1,8 +1,10 @@
 import { computed, ref, watchEffect, Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
+import { useStorage } from '@vueuse/core'
 
 import { useCandidatesStore } from './candidates';
 import { useStore } from './store';
+import { useDeepMerge } from '../composables/useDeepMerge';
 
 type IAllocationType =
   | 'delegate selection'
@@ -46,6 +48,7 @@ export interface IState {
 export const useUsStatesStore = defineStore('usStates', () => {
   const candidatesStore = useCandidatesStore();
   const mainStore = useStore();
+  const { deepMerge } = useDeepMerge();
 
   const { selectedPartyId } = storeToRefs(mainStore);
 
@@ -92,6 +95,13 @@ export const useUsStatesStore = defineStore('usStates', () => {
     ]
   ]));
   const usStatesLoaded: Ref<boolean> = ref(false);
+
+  useStorage(
+    'usStates',
+    usStates,
+    localStorage,
+    { mergeDefaults: (storageValue, defaults) => deepMerge(defaults, storageValue) }
+  );
 
   // Getters (computed values)
 
@@ -490,22 +500,26 @@ export const useUsStatesStore = defineStore('usStates', () => {
    */
   async function fetchStatesData() {
     try {
+      const usStatesLocalStorage = JSON.parse(localStorage.usStates);
+      const usStatesDemLocalStorage = usStatesLocalStorage?.[0]?.[1];
+      const usStatesGopLocalStorage = usStatesLocalStorage?.[1]?.[1];
+
       const usStatesDemJSON = await fetch('/data/dem-states.json');
       const usStatesGopJSON = await fetch('/data/gop-states.json');
-    
+
       const usStatesDem = await usStatesDemJSON.json();
       const usStatesGop = await usStatesGopJSON.json();
-      
+
       for (const usState of usStatesDem) {
-        usStatesDem[usState.id].results = _defaultResults();
-        usStatesDem[usState.id].unallocatedDelegates = usStatesDem[usState.id].totalDelegates;
-        usStatesDem[usState.id].unallocatedPercentage = 100;
+        usStatesDem[usState.id].results = usStatesDemLocalStorage?.[usState.id]?.results || _defaultResults();
+        usStatesDem[usState.id].unallocatedDelegates = usStatesDemLocalStorage?.[usState.id]?.unallocatedDelegates || usStatesDem[usState.id].totalDelegates;
+        usStatesDem[usState.id].unallocatedPercentage = usStatesDemLocalStorage?.[usState.id]?.unallocatedPercentage || 100;
       };
 
       for (const usState of usStatesGop) {
-        usStatesGop[usState.id].results = _defaultResults();
-        usStatesGop[usState.id].unallocatedDelegates = usStatesGop[usState.id].totalDelegates;
-        usStatesGop[usState.id].unallocatedPercentage = 100;
+        usStatesGop[usState.id].results = usStatesGopLocalStorage?.[usState.id]?.results || _defaultResults();
+        usStatesGop[usState.id].unallocatedDelegates = usStatesGopLocalStorage?.[usState.id]?.unallocatedDelegates || usStatesGop[usState.id].totalDelegates;
+        usStatesGop[usState.id].unallocatedPercentage = usStatesGopLocalStorage?.[usState.id]?.unallocatedPercentage || 100;
       };
 
       usStates.value.set(0, usStatesDem);

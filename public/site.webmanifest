@@ -1,6 +1,9 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Primary Draft",
+    "short_name": "PrimaryDraft",
+    "description": "Simulate U.S. political party primary elections and allocate delegates among presidential primary candidates on a United States map.",
+    "background_color": "#ffffff",
+    "display": "standalone",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +16,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "lang": "en-US",
+    "orientation": "portrait",
+    "start_url": "/",
+    "theme_color": "#ffffff"
 }

@@ -1,5 +1,6 @@
 import { computed, ref, ComputedRef, Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
+import { useStorage } from '@vueuse/core'
 
 import { useStore } from './store';
 
@@ -45,6 +46,13 @@ export const useCandidatesStore = defineStore('candidates', () => {
       ]
     ]
   ]));
+
+  useStorage(
+    'candidates',
+    candidates,
+    localStorage,
+    { mergeDefaults: true }
+  );
 
   // Getters (computed values)
 
