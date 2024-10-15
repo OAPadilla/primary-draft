@@ -11,15 +11,13 @@
 				<!-- Social Share -->
 				<div class="c-footer_share">
 					<SocialShareButton
-						backgroundColor="#1DA1F2"
 						:label="$t('share')"
-						url="https://twitter.com/share?url=https%3A%2F%2Fwww.primarydraft.com"
+						url="https://x.com/share?url=https%3A%2F%2Fwww.primarydraft.com"
 					>
 						<TwitterIcon />
 					</SocialShareButton>
 
 					<SocialShareButton
-						backgroundColor="#316FF6"
 						:label="$t('share')"
 						url="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.primarydraft.com"
 					>
