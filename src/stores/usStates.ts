@@ -511,13 +511,15 @@ export const useUsStatesStore = defineStore('usStates', () => {
       const usStatesGop = await usStatesGopJSON.json();
 
       for (const usState of usStatesDem) {
-        usStatesDem[usState.id].results = usStatesDemLocalStorage?.[usState.id]?.results || _defaultResults();
+        const results: ICandidateResult[] = (usStatesDemLocalStorage?.[usState.id]?.results && usStatesDemLocalStorage?.[usState.id]?.results.length > 0) ? usStatesDemLocalStorage[usState.id].results : _defaultResults();
+        usStatesDem[usState.id].results = results;
         usStatesDem[usState.id].unallocatedDelegates = usStatesDemLocalStorage?.[usState.id]?.unallocatedDelegates || usStatesDem[usState.id].totalDelegates;
         usStatesDem[usState.id].unallocatedPercentage = usStatesDemLocalStorage?.[usState.id]?.unallocatedPercentage || 100;
       };
 
       for (const usState of usStatesGop) {
-        usStatesGop[usState.id].results = usStatesGopLocalStorage?.[usState.id]?.results || _defaultResults();
+        const results: ICandidateResult[] = (usStatesGopLocalStorage?.[usState.id]?.results && usStatesGopLocalStorage?.[usState.id]?.results.length > 0) ? usStatesGopLocalStorage[usState.id].results : _defaultResults();
+        usStatesGop[usState.id].results = results;
         usStatesGop[usState.id].unallocatedDelegates = usStatesGopLocalStorage?.[usState.id]?.unallocatedDelegates || usStatesGop[usState.id].totalDelegates;
         usStatesGop[usState.id].unallocatedPercentage = usStatesGopLocalStorage?.[usState.id]?.unallocatedPercentage || 100;
       };
