@@ -82,9 +82,11 @@
       "full": "Republican"
     }
   },
-  "reset": "Reset",
+  "resetMap": "Reset Map",
   "share": "Share",
+  "shareTo": "Share to {site}",
   "siteName": "Primary Draft",
   "unallocated": "Unallocated",
+  "usaFlagEmoji": "🇺🇸",
   "wtaTrigger": "Winner-Take-All Trigger"
 }

@@ -10,16 +10,29 @@
 
 				<!-- Social Share -->
 				<div class="c-footer_share">
+					<!-- Bluesky -->
 					<SocialShareButton
 						:label="$t('share')"
-						url="https://x.com/share?url=https%3A%2F%2Fwww.primarydraft.com"
+						:title="$t('shareTo', { 'site': 'Bluesky' })"
+						:url="`https://bsky.app/intent/compose?text=${encodedMessage}%20${encodedUrl}`"
+					>
+						<BlueskyIcon />
+					</SocialShareButton>
+
+					<!-- Twitter -->
+					<SocialShareButton
+						:label="$t('share')"
+						:title="$t('shareTo', { 'site': 'X/Twitter' })"
+						:url="`https://x.com/share?url=${encodedUrl}&text=${encodedMessage}`"
 					>
 						<TwitterIcon />
 					</SocialShareButton>
 
+					<!-- Facebook -->
 					<SocialShareButton
 						:label="$t('share')"
-						url="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.primarydraft.com"
+						:title="$t('shareTo', { 'site': 'Facebook' })"
+						:url="`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`"
 					>
 						<FacebookIcon />
 					</SocialShareButton>
@@ -37,10 +50,18 @@
 </template>
 
 <script setup lang="ts">
-import FacebookIcon from '../assets/icons/facebook.svg?component';
+import { useI18n } from 'vue-i18n';
+
+import BlueskyIcon from '../assets/icons/social-bluesky.svg?component';
+import FacebookIcon from '../assets/icons/social-facebook.svg?component';
 import LogoIcon from '../assets/logo/logo.svg?component';
-import TwitterIcon from '../assets/icons/twitter.svg?component';
+import TwitterIcon from '../assets/icons/social-twitter.svg?component';
 import SocialShareButton from './SocialShareButton.vue';
+
+const { t } = useI18n();
+
+const encodedMessage: string = encodeURIComponent(t('usaFlagEmoji'));
+const encodedUrl: string = encodeURIComponent(t('canonicalUrl'));
 </script>
 
 <style scoped lang="scss">

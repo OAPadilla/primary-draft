@@ -12,7 +12,7 @@
 		<div class="c-delegateBar_tooltip"></div>
 
 		<ConfirmModal
-			:acceptText="$t('reset')"
+			:acceptText="$t('resetMap')"
 			:message="$t('confirmModalMessageReset')"
 			:show="showResetModal"
 			@accept="onResetConfirmed"
