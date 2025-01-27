@@ -76,7 +76,11 @@ const usStatesStore = useUsStatesStore();
 const candidatePickerButtons: Ref<ICandidate[]> = ref([
 	{ ...candidatesStore.getCandidateById(0) },
 	{ ...candidatesStore.getCandidateById(1) },
-	{ ...candidatesStore.getCandidateById(2) }
+	{ ...candidatesStore.getCandidateById(2) },
+	{ ...candidatesStore.getCandidateById(3) },
+	{ ...candidatesStore.getCandidateById(4) },
+	{ ...candidatesStore.getCandidateById(5) },
+	{ ...candidatesStore.getCandidateById(6) }
 ]);
 const isEditMode: Ref<boolean> = ref(false);
 const isFirstUpdateOnRouteChange: Ref<boolean> = ref(true);

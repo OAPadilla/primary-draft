@@ -72,6 +72,7 @@
   },
   "minThreshold": "Minimum Threshold",
   "none": "None",
+  "partyMap": "{party} Map",
   "partyNames": {
     "democratic": {
       "abbr": "dem",

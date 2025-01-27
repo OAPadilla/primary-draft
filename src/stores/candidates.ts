@@ -25,11 +25,11 @@ export const useCandidatesStore = defineStore('candidates', () => {
         { id: 0, color: '#FFC8B4', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[0] ?? '' }, // light peach
         { id: 1, color: '#B5EAD7', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[1] ?? '' }, // pastel teal
         { id: 2, color: '#E8D6CB', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[2] ?? '' }, // pale pink
-        { id: 3, color: '#D4E6F1', delegates: 0, name: '' },                        // light blue
-        { id: 4, color: '#FFE0C2', delegates: 0, name: '' },                        // light orange
-        { id: 5, color: '#C7CEEA', delegates: 0, name: '' },                        // pale lavender
-        { id: 6, color: '#C9E4CA', delegates: 0, name: '' },                        // pale green
-        { id: 7, color: '#E9D1D1', delegates: 0, name: '' }                         // light rose
+        { id: 3, color: '#D4E6F1', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[3] ?? '' }, // light blue
+        { id: 4, color: '#FFE0C2', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[4] ?? '' }, // light orange
+        { id: 5, color: '#C7CEEA', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[5] ?? '' }, // pale lavender
+        { id: 6, color: '#C9E4CA', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[6] ?? '' }, // pale green
+        { id: 7, color: '#E9D1D1', delegates: 0, name: ''  } // light rose
       ]
     ],
     [ 
@@ -39,10 +39,10 @@ export const useCandidatesStore = defineStore('candidates', () => {
         { id: 1, color: '#B5EAD7', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[1] ?? '' }, // pastel teal
         { id: 2, color: '#E8D6CB', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[2] ?? '' }, // pale pink
         { id: 3, color: '#D4E6F1', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[3] ?? '' }, // light blue
-        { id: 4, color: '#FFE0C2', delegates: 0, name: '' },                        // light orange
-        { id: 5, color: '#C7CEEA', delegates: 0, name: '' },                        // pale lavender
-        { id: 6, color: '#C9E4CA', delegates: 0, name: '' },                        // pale green
-        { id: 7, color: '#E9D1D1', delegates: 0, name: '' }                         // light rose
+        { id: 4, color: '#FFE0C2', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[4] ?? '' }, // light orange
+        { id: 5, color: '#C7CEEA', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[5] ?? '' }, // pale lavender
+        { id: 6, color: '#C9E4CA', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[6] ?? '' }, // pale green
+        { id: 7, color: '#E9D1D1', delegates: 0, name: '' } // light rose
       ]
     ]
   ]));
