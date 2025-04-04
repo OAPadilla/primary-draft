@@ -1,14 +1,7 @@
 {
   "about": "About",
   "aboutPage": {
-    "aboutSection": {
-      "title": "About Primary Draft",
-      "content": "Primary Draft is an interactive web app for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool or just for fun, and experience democracy!"
-    },
-    "whatIsAPrimarySection": {
-      "title": "What is a primary election?",
-      "content": "A primary election is how a national political party selects a nominee to run for the United States presidency. While a national party oversees and sets rules for elections, state's can have their own nuanced delegate allocation process."
-    },
+    "aboutContent": "Primary Draft is an interactive tool for simulating U.S. political party primary elections, where presidential nominees are selected through a state-by-state delegate allocation process.",
     "howToUseSection": {
       "title": "How to use",
       "content": {
@@ -26,22 +19,13 @@
       "title": "Limitations",
       "content": {
         "p": "There's a balance to be made between streamlining the user experience while retaining the authenticity of simulating an election process due to the nuance of state election laws. Here are some changes we've made.",
-        "item1": "We allocate delegates in caucuses as if they were primaries.",
-        "item2": "We allocate district level and soft delegates as if they were state-wide, at-large, hard delegates.",
-        "item3": "We condense primary types into 2 main groups.",
-        "item3a": "{lead} - We allocate all of a state's delegates to the candidate with the most amount of votes.",
+        "item1": "Delegates in caucuses are allocated as if they were primaries.",
+        "item2": "District-level and soft delegates are allocated as at-large hard delegates.",
+        "item3": "Primary types are grouped into two categories.",
+        "item3a": "{lead}: State delegates are allocated to the candidate with the most votes.",
         "item3aLead": "Winner-Take-All and Winner-Take-Most",
-        "item3b": "{lead} - We distribute delegates proportionally based on the popular vote percentiles.",
+        "item3b": "{lead}: State delegates are allocated proportionally based on the popular vote percentiles.",
         "item3bLead": "Proportional and Delegate Selection"
-      }
-    },
-    "creditsSection": {
-      "title": "Credits & Notes",
-      "content": {
-        "item1": "Up-to-date election information sourced from {sourceA} and {sourceB}.",
-        "item1sourceA": "The Green Papers",
-        "item1sourceB": "Front Loading HQ",
-        "item2": "Expect more updates and improvements."
       }
     }
   },
@@ -54,7 +38,7 @@
   "comingSoon": "Coming Soon...",
   "confirm": "Confirm",
   "confirmModalMessageReset": "Are you sure you'd like to reset the map?",
-  "learnMoreHere": "Learn more here",
+  "learnMore": "Learn more",
   "numDelegates": "{num} Delegates",
   "numDelegatesAbbr": "{num} del.",
   "footer": {

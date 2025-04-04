@@ -1,13 +1,7 @@
 <template>
 	<div class="c-aboutView">
 		<div class="c-aboutView_section">
-			<h2>{{ $t('aboutPage.aboutSection.title') }}</h2>
-			<p>{{ $t('aboutPage.aboutSection.content') }}</p>
-		</div>
-
-		<div class="c-aboutView_section">
-			<h2>{{ $t('aboutPage.whatIsAPrimarySection.title') }}</h2>
-			<p>{{ $t('aboutPage.whatIsAPrimarySection.content') }}</p>
+			<p>{{ $t('aboutPage.aboutContent') }}</p>
 		</div>
 
 		<div class="c-aboutView_section">
@@ -32,15 +26,15 @@
 			<ul>
 				<li>
 					{{ $t(`aboutPage.limitationsSection.content.item1`) }}
-					<a :href="usaGovLink">{{ $t(`learnMoreHere`) }}</a>.
+					<a :href="usaGovLink">{{ $t(`learnMore`) }}</a>
 				</li>
 				<li>
 					{{ $t(`aboutPage.limitationsSection.content.item2`) }}
-					<a :href="ballotpediaLink">{{ $t(`learnMoreHere`) }}</a>.
+					<a :href="ballotpediaLink">{{ $t(`learnMore`) }}</a>
 				</li>
 				<li>
 					{{ $t(`aboutPage.limitationsSection.content.item3`) }}
-					<a :href="theGreenPapersDefsLink">{{ $t(`learnMoreHere`) }}</a>.
+					<a :href="theGreenPapersDefsLink">{{ $t(`learnMore`) }}</a>
 					<ul>
 						<i18n-t keypath="aboutPage.limitationsSection.content.item3a" tag="li">
 							<template #lead>
@@ -56,19 +50,6 @@
 				</li>
 			</ul>
 		</div>
-
-		<div class="c-aboutView_section">
-			<h2>{{ $t('aboutPage.creditsSection.title') }}</h2>
-			<i18n-t keypath="aboutPage.creditsSection.content.item1" tag="p">
-				<template #sourceA>
-					<a :href="theGreenPapersLink">{{ $t('aboutPage.creditsSection.content.item1sourceA') }}</a>
-				</template>
-				<template #sourceB>
-					<a :href="frontLoadingHQLink">{{ $t('aboutPage.creditsSection.content.item1sourceB') }}</a>
-				</template>
-			</i18n-t>
-			<p>{{ $t('aboutPage.creditsSection.content.item2') }}</p>
-		</div>
 	</div>
 </template>
 
@@ -81,8 +62,6 @@ useSeoMeta({
 });
 
 const ballotpediaLink: string = 'https://ballotpedia.org/Types_of_delegates';
-const frontLoadingHQLink: string = 'https://www.frontloadinghq.com';
-const theGreenPapersLink: string = 'https://www.TheGreenPapers.com';
 const theGreenPapersDefsLink: string = 'https://www.thegreenpapers.com/Definitions.html#Prim';
 const usaGovLink: string = 'https://www.usa.gov/primaries-caucuses';
 </script>
@@ -107,8 +86,9 @@ const usaGovLink: string = 'https://www.usa.gov/primaries-caucuses';
 	}
 
 	&_section {
-		border-left: $border-standard;
-		padding-left: 40px;
+		border: $border-standard;
+		padding: $spacing-standard;
+		border-radius: 20px;
 		margin-bottom: $spacing-standard;
 	}
 

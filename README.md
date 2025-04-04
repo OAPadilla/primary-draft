@@ -16,7 +16,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Primary Draft is an interactive single-page web application for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool and experience democracy!
+Primary Draft is an interactive single-page web application for simulating U.S. political party primary elections. Experiment with state primary election results and allocate delegates among presidential primary candidates on a United States map. Use it as an educational tool or just for fun, and experience democracy!
 
 ### Built With
 
@@ -45,6 +45,7 @@ Primary Draft is an interactive single-page web application for simulating U.S. 
 1. Clone the repo
    ```
    git clone https://github.com/OAPadilla/primary-draft.git
+
    cd primary-draft
    ```
 2. Install NPM packages
@@ -68,10 +69,10 @@ Oscar Padilla - [LinkedIn](https://www.linkedin.com/in/oapadilla/) - PadillaOsca
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [The Green Papers](https://www.thegreenpapers.com/)
-* [Front Loading HQ](https://www.frontloadinghq.com/)
+Up-to-date election information sourced from [The Green Papers](https://www.thegreenpapers.com/) and [Front Loading HQ](https://www.frontloadinghq.com/).
+
 
 <!-- COPYRIGHT -->
 ## Copyright
 
-Copyright © 2024, Oscar Padilla
+Copyright © 2025, Oscar Padilla
