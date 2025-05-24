@@ -40,8 +40,8 @@ export const useStore = defineStore(`store`, () => {
           'Josh Shapiro',
           'Gretchen Whitmer',
           'Andy Beshear',
-          'Wes Moore',
-          'JB Pritzker'
+          'JB Pritzker',
+          'Wes Moore'
         ],
         excludedStateIds: [],
         totalDelegates: 4541

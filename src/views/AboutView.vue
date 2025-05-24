@@ -6,7 +6,7 @@
 
 		<div class="c-aboutView_section">
 			<h2>{{ $t('aboutPage.howToUseSection.title') }}</h2>
-			<ul>
+			<ol>
 				<template v-for="i in 4">
 					<i18n-t :keypath="`aboutPage.howToUseSection.content.item${i}`" tag="li">
 						<template #lead>
@@ -17,7 +17,7 @@
 						</template>
 					</i18n-t>
 				</template>
-			</ul>
+			</ol>
 		</div>
 
 		<div class="c-aboutView_section">
