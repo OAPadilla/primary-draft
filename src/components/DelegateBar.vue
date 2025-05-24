@@ -13,7 +13,7 @@
 
 		<ConfirmModal
 			:acceptText="$t('resetMap')"
-			:message="$t('confirmModalMessageReset')"
+			:message="$t('confirmModalMessageResetMap')"
 			:show="showResetModal"
 			@accept="onResetConfirmed"
 			@cancel="showResetModal = false"

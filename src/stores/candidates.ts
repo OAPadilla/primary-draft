@@ -18,34 +18,7 @@ export const useCandidatesStore = defineStore('candidates', () => {
 
   // State (data)
 
-  const candidates: Ref<Map<number, ICandidate[]>> = ref(new Map([
-    [ 
-      0,
-      [
-        { id: 0, color: '#FFC8B4', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[0] ?? '' }, // light peach
-        { id: 1, color: '#B5EAD7', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[1] ?? '' }, // pastel teal
-        { id: 2, color: '#E8D6CB', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[2] ?? '' }, // pale pink
-        { id: 3, color: '#D4E6F1', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[3] ?? '' }, // light blue
-        { id: 4, color: '#FFE0C2', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[4] ?? '' }, // light orange
-        { id: 5, color: '#C7CEEA', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[5] ?? '' }, // pale lavender
-        { id: 6, color: '#C9E4CA', delegates: 0, name: mainStore.getPartyDefaultCandidates(0)?.[6] ?? '' }, // pale green
-        { id: 7, color: '#E9D1D1', delegates: 0, name: ''  } // light rose
-      ]
-    ],
-    [ 
-      1,
-      [
-        { id: 0, color: '#FFC8B4', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[0] ?? '' }, // light peach
-        { id: 1, color: '#B5EAD7', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[1] ?? '' }, // pastel teal
-        { id: 2, color: '#E8D6CB', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[2] ?? '' }, // pale pink
-        { id: 3, color: '#D4E6F1', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[3] ?? '' }, // light blue
-        { id: 4, color: '#FFE0C2', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[4] ?? '' }, // light orange
-        { id: 5, color: '#C7CEEA', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[5] ?? '' }, // pale lavender
-        { id: 6, color: '#C9E4CA', delegates: 0, name: mainStore.getPartyDefaultCandidates(1)?.[6] ?? '' }, // pale green
-        { id: 7, color: '#E9D1D1', delegates: 0, name: '' } // light rose
-      ]
-    ]
-  ]));
+  const candidates: Ref<Map<number, ICandidate[]>> = ref(createInitialCandidates());
 
   useStorage(
     'candidates',
@@ -85,6 +58,29 @@ export const useCandidatesStore = defineStore('candidates', () => {
 
   // Actions (methods)
 
+  function createInitialCandidates(): Map<number, ICandidate[]> {
+    const result = new Map<number, ICandidate[]>();
+  
+    for (const partyId of [0, 1]) {
+      const defaultNames = mainStore.getPartyDefaultCandidates(partyId) ?? [];
+  
+      const partyCandidates: ICandidate[] = [
+        { id: 0, color: '#FFC8B4', delegates: 0, name: defaultNames[0] ?? '' },
+        { id: 1, color: '#B5EAD7', delegates: 0, name: defaultNames[1] ?? '' },
+        { id: 2, color: '#E8D6CB', delegates: 0, name: defaultNames[2] ?? '' },
+        { id: 3, color: '#D4E6F1', delegates: 0, name: defaultNames[3] ?? '' },
+        { id: 4, color: '#FFE0C2', delegates: 0, name: defaultNames[4] ?? '' },
+        { id: 5, color: '#C7CEEA', delegates: 0, name: defaultNames[5] ?? '' },
+        { id: 6, color: '#C9E4CA', delegates: 0, name: defaultNames[6] ?? '' },
+        { id: 7, color: '#E9D1D1', delegates: 0, name: '' }
+      ];
+  
+      result.set(partyId, partyCandidates);
+    }
+  
+    return result;
+  }
+
   /**
    * Get a candidate by their id
    * 
@@ -113,6 +109,16 @@ export const useCandidatesStore = defineStore('candidates', () => {
   }
 
   /**
+   * Reset candidates to default initial state
+   */
+  function resetCandidatesToDefault(): void {
+    const initialCandidateForSelectedParty: ICandidate[]|undefined = createInitialCandidates().get(selectedPartyId.value);
+    if (initialCandidateForSelectedParty) {
+      candidates.value.set(selectedPartyId.value, initialCandidateForSelectedParty);
+    }
+  }
+
+  /**
    * Set a candidate's name based on their id
    * 
    * @param candidateId 
@@ -127,6 +133,7 @@ export const useCandidatesStore = defineStore('candidates', () => {
     getCandidateColor,
     getCandidateName,
     getWinnerCandidate,
+    resetCandidatesToDefault,
     setCandidateName
   }
 });

@@ -46,24 +46,44 @@
 			</div>
 
 			<!-- Edit button: To change candidate names -->
-			<div 
-				class="c-candidatePicker_edit"
-				aria-label="Edit candidates"
-				role="button"
-				@click="isEditMode = !isEditMode"
-			>
-				<div class="c-candidatePicker_editBtn c-candidatePickerButton"><EditIcon /></div>
+			<div class="c-candidatePicker_edit">
+				<ResetIcon 
+					v-show="isEditMode"
+					class="c-candidatePicker_resetBtn"
+					:aria-label="$t('resetCandidates')"
+					role="button"
+					:class="{ '-rotate': resetActivated }"
+					@click="showResetModal = true"
+				/>
+				<div
+					class="c-candidatePicker_editBtn"
+					aria-label="Edit candidates"
+					role="button"
+					@click="isEditMode = !isEditMode"
+				>
+					<EditIcon />
+				</div>
 			</div>
 		</div>
+
+		<ConfirmModal
+			:acceptText="$t('resetCandidates')"
+			:message="$t('confirmModalMessageResetCandidates')"
+			:show="showResetModal"
+			@accept="onResetConfirmed"
+			@cancel="showResetModal = false"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUpdate, ref, Ref } from 'vue';
+import { computed, onBeforeUpdate, onMounted, ref, Ref } from 'vue';
 import { onBeforeRouteLeave } from "vue-router";
 
 import EditIcon from '../assets/icons/edit.svg?component';
+import ResetIcon from '../assets/icons/reset.svg?component';
 import CandidatePickerButton from './CandidatePickerButton.vue';
+import ConfirmModal from '../components/ConfirmModal.vue';
 
 import { useCandidatesStore, ICandidate } from '../stores/candidates';
 import { useStore } from '../stores/store';
@@ -73,24 +93,21 @@ const candidatesStore = useCandidatesStore();
 const mainStore = useStore();
 const usStatesStore = useUsStatesStore();
 
-const candidatePickerButtons: Ref<ICandidate[]> = ref([
-	{ ...candidatesStore.getCandidateById(0) },
-	{ ...candidatesStore.getCandidateById(1) },
-	{ ...candidatesStore.getCandidateById(2) },
-	{ ...candidatesStore.getCandidateById(3) },
-	{ ...candidatesStore.getCandidateById(4) },
-	{ ...candidatesStore.getCandidateById(5) },
-	{ ...candidatesStore.getCandidateById(6) }
-]);
+const candidatePickerButtons: Ref<ICandidate[]> = ref([]);
 const isEditMode: Ref<boolean> = ref(false);
 const isFirstUpdateOnRouteChange: Ref<boolean> = ref(true);
 const noneChoiceId: number = -1;
+const resetActivated: Ref<boolean> = ref(false);
+const showResetModal: Ref<boolean> = ref(false);
 
 const candidates: Ref<ICandidate[]> = computed(() => {
 	return candidatesStore.getCandidates;
 });
 
-const defaultCandidatePickerButtons: Ref<ICandidate[]> = computed(() => {
+/**
+ * Initiate/reset candidate picker buttons based on most candidates store
+ */
+const resetCandidatePickerButtons: Ref<ICandidate[]> = computed(() => {
 	const buttonComponents: ICandidate[] = [];
 	candidates.value.forEach((candidate) => {
 		if (candidate?.name) {
@@ -140,6 +157,24 @@ function onChoiceClick(candidateId: number): void {
 	setSelectedCandidateId(newId);
 }
 
+/**
+ * Reset actions once user confirms
+ */
+ function onResetConfirmed(): void {
+	showResetModal.value = false; // Hide modal
+	usStatesStore.resetAllResults(); // Reset map delegates
+	candidatesStore.resetCandidatesToDefault(); // Reset candidate data to default
+	candidatePickerButtons.value = resetCandidatePickerButtons.value; // Reset buttons back to default
+
+	// Animate reset icon
+	resetActivated.value = true;
+	setTimeout(() => {
+		resetActivated.value = false;
+	}, 500);
+
+	isEditMode.value = false;
+}
+
 onBeforeRouteLeave(async (to, from) => {
 	// Reset flag before navigating to new route to track first onUpdate
 	isFirstUpdateOnRouteChange.value = true;
@@ -149,9 +184,14 @@ onBeforeUpdate(() => {
 	// Reset candidate buttons to new default if first onUpdate
 	if (isFirstUpdateOnRouteChange.value) {
 		isEditMode.value = false;
-		candidatePickerButtons.value = defaultCandidatePickerButtons.value;
+		candidatePickerButtons.value = resetCandidatePickerButtons.value;
 		isFirstUpdateOnRouteChange.value = false;
 	}
+})
+
+onMounted(() => {
+	// Initiate buttons
+	candidatePickerButtons.value = resetCandidatePickerButtons.value;
 })
 </script>
 
@@ -159,6 +199,7 @@ onBeforeUpdate(() => {
 @import '@/styles/main.scss';
 
 .c-candidatePicker {
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -168,6 +209,10 @@ onBeforeUpdate(() => {
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+
+		@media (max-width: $screen-breakpoint-xs) {
+			margin-top: 4px;
+		}
 	}
 
 	&_buttonWrapper,
@@ -200,7 +245,24 @@ onBeforeUpdate(() => {
 	}
 
 	&_edit {
-		width: 40px;
+		width: 80px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	&_resetBtn {
+		padding: 10px;
+
+		&:hover {
+			opacity: 0.7;
+			cursor: pointer;
+		}
+
+		&.-rotate {
+			transition: transform 0.5s ease;
+			transform: rotate(-360deg);
+		}
 	}
 
 	&_addBtn,
@@ -232,6 +294,7 @@ onBeforeUpdate(() => {
 
 	&_editBtn {
 		height: 24px;
+		width: 40px;
 	}
 
 	&.isEditMode {

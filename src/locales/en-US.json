@@ -18,7 +18,7 @@
     "limitationsSection": {
       "title": "Limitations",
       "content": {
-        "p": "There's a balance to be made between streamlining the user experience while retaining the authenticity of simulating an election process due to the nuance of state election laws. Here are some changes we've made.",
+        "p": "There's a balance to be made between streamlining the user experience while retaining the authenticity of simulating an election process due to the nuance of state election laws. Here are some changes we've made:",
         "item1": "Delegates in caucuses are allocated as if they were primaries.",
         "item2": "District-level and soft delegates are allocated as at-large hard delegates.",
         "item3": "Primary types are grouped into two categories.",
@@ -37,7 +37,8 @@
   "canonicalUrl": "https://www.primarydraft.com",
   "comingSoon": "Coming Soon...",
   "confirm": "Confirm",
-  "confirmModalMessageReset": "Are you sure you'd like to reset the map?",
+  "confirmModalMessageResetCandidates": "Are you sure you'd like to reset the candidates?",
+  "confirmModalMessageResetMap": "Are you sure you'd like to reset the map?",
   "learnMore": "Learn more",
   "numDelegates": "{num} Delegates",
   "numDelegatesAbbr": "{num} del.",
@@ -67,6 +68,7 @@
       "full": "Republican"
     }
   },
+  "resetCandidates": "Reset Candidates",
   "resetMap": "Reset Map",
   "share": "Share",
   "shareTo": "Share to {site}",
